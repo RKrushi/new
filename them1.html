@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EPM Wealth — Financial Independence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+:root {
+  --sage:        #B8D4C8;
+  --sage-light:  #E4F0EC;
+  --sage-dark:   #6FA090;
+  --sky:         #B6D4E8;
+  --sky-light:   #E3F0F8;
+  --sky-dark:    #6EA4C4;
+  --blush:       #E8C9C9;
+  --blush-light: #F6EDED;
+  --lavender:    #C9C0DC;
+  --lav-light:   #EDEAF5;
+  --butter:      #F0DFA0;
+  --butter-light:#FAF5DC;
+  --peach:       #F0D0B4;
+  --peach-light: #FAF0E6;
+  --white:       #FFFFFF;
+  --off-white:   #FAFBFC;
+  --cream:       #F7F5F2;
+  --ink:         #2C3340;
+  --ink-mid:     #4A5568;
+  --ink-soft:    #718096;
+  --ink-faint:   #A0AEC0;
+  --border:      #E8ECF0;
+  --radius-sm:   8px;
+  --radius:      14px;
+  --radius-lg:   22px;
+  --shadow-sm:   0 2px 12px rgba(44,51,64,0.06);
+  --shadow:      0 6px 28px rgba(44,51,64,0.09);
+  --shadow-lg:   0 16px 48px rgba(44,51,64,0.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--off-white);overflow-x:hidden;line-height:1.6;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--cream);}
+::-webkit-scrollbar-thumb{background:var(--sage);border-radius:3px;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:white;border-bottom:1px solid var(--border);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:70px;box-shadow:var(--shadow-sm);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-icon{width:38px;height:38px;border-radius:var(--radius-sm);background:var(--sage-light);border:1.5px solid var(--sage);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1.1;}
+.nav-logo-main{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--ink);letter-spacing:1px;}
+.nav-logo-sub{font-size:9px;letter-spacing:2px;color:var(--ink-soft);text-transform:uppercase;font-weight:500;}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-link{font-size:13px;color:var(--ink-mid);text-decoration:none;font-weight:500;transition:color .2s;}
+.nav-link:hover{color:var(--sage-dark);}
+.nav-cta{padding:9px 22px;background:var(--sage-light);border:1.5px solid var(--sage);border-radius:50px;font-size:13px;font-weight:600;color:var(--sage-dark);text-decoration:none;transition:background .2s;}
+.nav-cta:hover{background:var(--sage);color:white;}
+
+/* TICKER */
+.ticker-wrap{background:var(--sage-light);border-bottom:1px solid var(--sage);overflow:hidden;padding:9px 0;}
+.ticker-inner{display:flex;white-space:nowrap;width:max-content;animation:tickerSlide 30s linear infinite;}
+.ticker-item{padding:0 28px;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--sage-dark);font-weight:600;flex-shrink:0;}
+.ticker-item::after{content:'◆';margin-left:28px;opacity:0.35;}
+@keyframes tickerSlide{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* HERO */
+.hero{background:linear-gradient(150deg,var(--sky-light) 0%,var(--sage-light) 55%,var(--butter-light) 100%);padding:90px 7% 80px;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;border-bottom:1px solid var(--border);}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:white;border:1.5px solid var(--border);border-radius:50px;padding:6px 16px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:26px;}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:var(--sage-dark);}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(40px,5.5vw,70px);font-weight:600;line-height:1.1;color:var(--ink);margin-bottom:20px;}
+.hero h1 em{font-style:italic;color:var(--sage-dark);}
+.hero-sub{font-size:15.5px;color:var(--ink-mid);line-height:1.8;max-width:460px;border-left:3px solid var(--sage);padding-left:16px;margin-bottom:36px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-primary{padding:12px 28px;background:var(--sage-dark);color:white;border-radius:50px;font-size:13px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;transition:background .2s;box-shadow:0 4px 14px rgba(111,160,144,0.3);}
+.btn-primary:hover{background:var(--sage);}
+.btn-secondary{padding:12px 26px;background:white;color:var(--ink-mid);border-radius:50px;font-size:13px;font-weight:500;text-decoration:none;border:1.5px solid var(--border);display:inline-flex;align-items:center;gap:8px;transition:border-color .2s,color .2s;}
+.btn-secondary:hover{border-color:var(--sage);color:var(--sage-dark);}
+.hero-stats{display:flex;gap:36px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border);}
+.h-stat-num{font-family:'Playfair Display',serif;font-size:38px;font-weight:600;color:var(--sage-dark);line-height:1;}
+.h-stat-label{font-size:11px;color:var(--ink-soft);margin-top:4px;}
+.hero-visual{position:relative;}
+.hero-card-main{background:white;border-radius:var(--radius-lg);padding:36px;box-shadow:var(--shadow-lg);border:1px solid var(--border);}
+.hero-card-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--sage-dark);font-weight:700;margin-bottom:12px;}
+.hero-card-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--ink);margin-bottom:18px;}
+.hero-pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;}
+.hero-pill{padding:6px 14px;border-radius:50px;font-size:12px;font-weight:500;}
+.pill-sage{background:var(--sage-light);color:var(--sage-dark);}
+.pill-sky{background:var(--sky-light);color:var(--sky-dark);}
+.pill-blush{background:var(--blush-light);color:#9a5a5a;}
+.pill-lavender{background:var(--lav-light);color:#6e5ea0;}
+.hero-card-bottom{display:flex;align-items:center;gap:12px;padding-top:18px;border-top:1px solid var(--border);}
+.hc-avatar{width:40px;height:40px;border-radius:50%;background:var(--sage-light);border:2px solid var(--sage);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.hc-meta-label{font-size:10.5px;color:var(--ink-soft);}
+.hc-meta-val{font-size:13.5px;font-weight:600;color:var(--ink);}
+.hero-card-float{position:absolute;bottom:-18px;right:-18px;background:var(--butter-light);border:1.5px solid var(--butter);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);text-align:center;}
+.hcf-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:600;color:var(--ink);}
+.hcf-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-soft);margin-top:2px;}
+
+/* SECTION COMMONS */
+.s-tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--sage-dark);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.s-tag::before{content:'';width:20px;height:2px;background:var(--sage);border-radius:2px;}
+.s-tag.center{justify-content:center;}
+.s-tag.center::before{display:none;}
+.s-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3.8vw,50px);font-weight:600;color:var(--ink);line-height:1.12;margin-bottom:14px;}
+.s-sub{font-size:15px;color:var(--ink-mid);line-height:1.8;max-width:560px;}
+
+/* ABOUT BAND */
+.about-band{background:white;padding:68px 8%;border-bottom:1px solid var(--border);}
+.about-text{font-family:'Playfair Display',serif;font-size:clamp(17px,2vw,26px);font-weight:400;font-style:italic;color:var(--ink-mid);line-height:1.75;max-width:940px;margin:0 auto;text-align:center;}
+.about-hi{color:var(--sage-dark);font-style:normal;font-weight:600;}
+
+/* STATS */
+.stats-section{background:var(--sage-light);border-bottom:1px solid var(--sage);}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+.stat-card{padding:60px 32px;text-align:center;border-right:1px solid var(--sage);}
+.stat-card:last-child{border-right:none;}
+.stat-n{font-family:'Playfair Display',serif;font-size:64px;font-weight:600;color:var(--sage-dark);line-height:1;}
+.stat-l{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-soft);margin-top:10px;}
+.stat-bar{width:36px;height:2px;background:var(--sage);margin:14px auto 0;border-radius:2px;}
+
+/* FEATURES */
+.features-section{padding:92px 7%;background:var(--off-white);}
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:48px;}
+.feat-card{background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:36px 32px;display:flex;gap:22px;align-items:flex-start;box-shadow:var(--shadow-sm);transition:box-shadow .2s,border-color .2s;}
+.feat-card:hover{box-shadow:var(--shadow);border-color:var(--sage);}
+.feat-icon{width:54px;height:54px;flex-shrink:0;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:24px;}
+.fi-sage{background:var(--sage-light);}
+.fi-sky{background:var(--sky-light);}
+.fi-blush{background:var(--blush-light);}
+.fi-lav{background:var(--lav-light);}
+.feat-title{font-family:'Playfair Display',serif;font-size:19px;color:var(--ink);margin-bottom:9px;font-weight:600;}
+.feat-text{font-size:13.5px;color:var(--ink-soft);line-height:1.8;}
+
+/* SIP */
+.sip-section{padding:92px 7%;background:white;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.sip-box{max-width:800px;margin:44px auto 0;background:var(--cream);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:44px 40px;}
+.sip-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;}
+.sip-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--sage-dark);font-weight:700;display:block;margin-bottom:6px;}
+.sip-input{width:100%;padding:11px 13px;background:white;border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+.sip-input:focus{border-color:var(--sage);}
+.sip-results{display:none;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:24px;padding:26px;background:var(--sage-light);border:1.5px solid var(--sage);border-radius:var(--radius);}
+.sip-results.show{display:flex;}
+.sip-rn{font-family:'Playfair Display',serif;font-size:34px;color:var(--sage-dark);font-weight:600;text-align:center;}
+.sip-rl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-soft);margin-top:5px;text-align:center;}
+
+/* GALLERY */
+.gallery-section{padding:72px 0;background:var(--sky-light);border-top:1px solid var(--sky);border-bottom:1px solid var(--sky);overflow:hidden;}
+.gallery-hd{text-align:center;padding:0 8% 32px;}
+.gallery-track-wrap{overflow:hidden;position:relative;}
+.gallery-track-wrap::before,.gallery-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:90px;z-index:5;pointer-events:none;}
+.gallery-track-wrap::before{left:0;background:linear-gradient(to right,var(--sky-light),transparent);}
+.gallery-track-wrap::after{right:0;background:linear-gradient(to left,var(--sky-light),transparent);}
+.gallery-track{display:flex;gap:14px;width:max-content;animation:autoSlide 24s linear infinite;}
+.gallery-track:hover{animation-play-state:paused;}
+@keyframes autoSlide{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.gallery-item{flex-shrink:0;width:250px;height:172px;border-radius:var(--radius);overflow:hidden;border:1.5px solid rgba(182,212,232,0.5);background:white;box-shadow:var(--shadow-sm);transition:box-shadow .2s;}
+.gallery-item:hover{box-shadow:var(--shadow);}
+.gallery-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+.gallery-ph span{font-size:40px;}
+.gallery-ph p{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--sky-dark);font-weight:600;}
+
+/* VALUES */
+.values-section{padding:92px 7%;background:var(--off-white);}
+.risk-row{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;margin-top:52px;}
+.risk-item{text-align:center;}
+.risk-circle{width:140px;height:140px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 14px;border:2px solid var(--border);background:white;box-shadow:var(--shadow-sm);transition:box-shadow .2s,border-color .2s;}
+.risk-circle:hover{box-shadow:var(--shadow);border-color:var(--sage);}
+.risk-letter{font-family:'Playfair Display',serif;font-size:54px;font-weight:600;color:var(--sage-dark);line-height:1;}
+.risk-word{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-faint);margin-top:2px;}
+.risk-lbl{font-size:12px;color:var(--ink-soft);font-weight:500;}
+
+/* APPROACH */
+.approach-section{padding:92px 7%;background:white;border-top:1px solid var(--border);}
+.approach-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;max-width:1060px;margin:0 auto;}
+.approach-p{font-size:15px;color:var(--ink-mid);line-height:1.8;margin:14px 0;}
+.orb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px;}
+.orb-node-card{background:var(--off-white);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 14px;text-align:center;transition:border-color .2s;}
+.orb-node-card:hover{border-color:var(--sage);}
+.orb-node-icon{font-size:26px;margin-bottom:7px;display:block;}
+.orb-node-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage-dark);font-weight:600;}
+.orb-you-card{background:var(--sage-light);border:2px solid var(--sage);border-radius:var(--radius);padding:22px 14px;text-align:center;}
+.orb-you-label{font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:var(--sage-dark);}
+.orb-you-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--sage-dark);opacity:0.65;margin-top:3px;}
+
+/* WHY */
+.why-section{padding:92px 7%;background:var(--cream);}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px;}
+.why-card{background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:32px 22px;text-align:center;box-shadow:var(--shadow-sm);transition:box-shadow .2s,border-color .2s;}
+.why-card:hover{box-shadow:var(--shadow);border-color:var(--sage);}
+.why-icon-wrap{width:58px;height:58px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:26px;}
+.wi-1{background:var(--butter-light);}
+.wi-2{background:var(--sage-light);}
+.wi-3{background:var(--blush-light);}
+.wi-4{background:var(--sky-light);}
+.why-num{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:9px;font-weight:600;}
+.why-title{font-family:'Playfair Display',serif;font-size:17px;color:var(--ink);margin-bottom:9px;font-weight:600;}
+.why-desc{font-size:12.5px;color:var(--ink-soft);line-height:1.75;}
+
+/* SERVICES */
+.services-section{padding:92px 7%;background:white;border-top:1px solid var(--border);}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:48px;}
+.svc-card{background:var(--off-white);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:28px 18px;text-align:center;text-decoration:none;display:block;transition:box-shadow .2s,border-color .2s,background .2s;}
+.svc-card:hover{background:white;box-shadow:var(--shadow);border-color:var(--sky);}
+.svc-icon{width:48px;height:48px;border-radius:50%;margin:0 auto 14px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;background:white;}
+.svc-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--ink);margin-bottom:7px;font-weight:600;}
+.svc-desc{font-size:12px;color:var(--ink-soft);line-height:1.7;}
+
+/* ENTREPRENEURIAL */
+.entre-section{padding:92px 7%;background:var(--peach-light);border-top:1px solid var(--peach);border-bottom:1px solid var(--peach);}
+.entre-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.entre-list{list-style:none;margin-top:28px;}
+.entre-list li{padding:13px 0;border-bottom:1px solid rgba(240,208,180,0.4);display:flex;align-items:flex-start;gap:11px;font-size:14px;color:var(--ink-mid);}
+.entre-list li i{color:var(--sage-dark);flex-shrink:0;margin-top:2px;}
+.entre-cards{display:flex;flex-direction:column;gap:16px;}
+.e-card{background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:32px 28px;box-shadow:var(--shadow-sm);}
+.e-num{font-family:'Playfair Display',serif;font-size:44px;font-weight:600;color:var(--sage-light);line-height:1;margin-bottom:4px;}
+.e-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--ink);margin-bottom:8px;font-weight:600;}
+.e-text{font-size:13.5px;color:var(--ink-soft);line-height:1.8;}
+
+/* TESTIMONIALS */
+.testi-section{padding:92px 7%;background:var(--lav-light);border-top:1px solid var(--lavender);border-bottom:1px solid var(--lavender);}
+.testi-track-wrap{overflow:hidden;max-width:860px;margin:44px auto 0;}
+.testi-track{display:flex;transition:transform .5s ease;}
+.testi-slide{flex:0 0 100%;}
+.t-card{background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:40px 44px;box-shadow:var(--shadow);}
+.t-quote{font-family:'Playfair Display',serif;font-size:20px;line-height:1.7;color:var(--ink-mid);font-style:italic;margin-bottom:24px;padding-top:18px;position:relative;}
+.t-quote::before{content:'"';font-size:72px;color:var(--lavender);position:absolute;top:-8px;left:-6px;line-height:1;font-family:'Playfair Display',serif;}
+.t-author{display:flex;align-items:center;gap:13px;padding-top:18px;border-top:1px solid var(--border);}
+.t-av{width:44px;height:44px;border-radius:50%;background:var(--lav-light);border:2px solid var(--lavender);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:20px;color:#6e5ea0;font-weight:600;flex-shrink:0;}
+.t-name{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);font-weight:700;}
+.t-role{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+.t-nav{display:flex;justify-content:center;gap:7px;margin-top:24px;}
+.t-dot{width:8px;height:8px;border-radius:50%;background:var(--lavender);border:none;cursor:pointer;transition:width .2s,background .2s;}
+.t-dot.active{width:22px;border-radius:4px;background:#6e5ea0;}
+
+/* CTA */
+.cta-section{padding:92px 7%;background:var(--sage-light);border-top:1px solid var(--sage);text-align:center;}
+.cta-box{max-width:560px;margin:32px auto 0;background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:48px 44px;box-shadow:var(--shadow-lg);position:relative;}
+.cta-box-tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--sage-dark);color:white;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;padding:5px 16px;border-radius:50px;}
+.cta-meta{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-bottom:18px;}
+.cta-m{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft);}
+.cta-dot{width:5px;height:5px;border-radius:50%;background:var(--sage);}
+.cta-p{font-size:14px;color:var(--ink-mid);line-height:1.85;margin-bottom:26px;}
+.cta-note{font-size:11px;color:var(--ink-faint);margin-top:12px;}
+
+/* CONTACT */
+.contact-section{padding:92px 7%;background:white;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;max-width:1060px;margin:52px auto 0;}
+.contact-form-title{font-family:'Playfair Display',serif;font-size:32px;color:var(--ink);margin-bottom:5px;font-weight:400;}
+.form-sub{font-size:14px;color:var(--ink-soft);margin-bottom:24px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.form-field{margin-bottom:13px;}
+.form-field label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--sage-dark);font-weight:700;margin-bottom:6px;}
+.form-field input,.form-field textarea{width:100%;padding:11px 13px;background:var(--off-white);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+.form-field input:focus,.form-field textarea:focus{border-color:var(--sage);background:white;}
+.form-field textarea{min-height:108px;resize:vertical;}
+.form-ok{display:none;margin-top:12px;padding:13px 16px;background:var(--sage-light);border:1.5px solid var(--sage);border-radius:var(--radius-sm);color:var(--sage-dark);font-size:13px;text-align:center;}
+.contact-info-box{background:var(--cream);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:40px 34px;}
+.contact-info-box h3{font-family:'Playfair Display',serif;font-size:28px;color:var(--ink);margin-bottom:24px;font-weight:400;}
+.c-detail{display:flex;gap:13px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--border);transition:padding-left .2s;}
+.c-detail:last-child{border-bottom:none;}
+.c-detail:hover{padding-left:5px;}
+.c-icon{width:42px;height:42px;flex-shrink:0;border:1.5px solid var(--border);background:white;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:17px;}
+.c-lbl{font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--sage-dark);font-weight:700;margin-bottom:3px;}
+.c-val{font-size:13.5px;color:var(--ink-mid);line-height:1.65;}
+.c-val a{color:var(--ink-mid);text-decoration:none;transition:color .2s;}
+.c-val a:hover{color:var(--sage-dark);}
+
+/* FOOTER */
+footer{background:var(--ink);padding:68px 7% 28px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.footer-brand-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+.footer-brand-icon{width:28px;height:28px;border-radius:var(--radius-sm);background:var(--sage-light);display:flex;align-items:center;justify-content:center;font-size:14px;}
+.footer-brand-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--sage-light);letter-spacing:1px;}
+.footer-p{font-size:13px;color:rgba(255,255,255,0.35);line-height:1.85;max-width:250px;}
+.footer-badges{display:flex;gap:7px;margin-top:18px;flex-wrap:wrap;}
+.f-badge{padding:5px 11px;border:1px solid rgba(184,212,200,0.22);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(184,212,200,0.55);font-weight:600;border-radius:4px;}
+.footer-col h4{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(184,212,200,0.75);margin-bottom:18px;font-weight:700;}
+.footer-col a{display:block;color:rgba(255,255,255,0.32);font-size:13px;margin-bottom:10px;transition:all .2s;text-decoration:none;}
+.footer-col a:hover{color:var(--sage-light);padding-left:4px;}
+.f-addr{font-size:12.5px;color:rgba(255,255,255,0.28);line-height:2;}
+.f-addr strong{color:rgba(184,212,200,0.55);display:block;margin-bottom:7px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;}
+.f-addr a{color:rgba(255,255,255,0.28);text-decoration:none;transition:color .2s;}
+.f-addr a:hover{color:var(--sage-light);}
+.footer-div{height:1px;background:rgba(255,255,255,0.07);margin-bottom:22px;}
+.footer-bot{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:rgba(255,255,255,0.2);flex-wrap:wrap;gap:10px;}
+.footer-bot a{color:rgba(255,255,255,0.2);margin-left:16px;text-decoration:none;transition:color .2s;}
+.footer-bot a:hover{color:var(--sage-light);}
+
+/* SOCIAL */
+.social-float{position:fixed;left:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:7px;z-index:100;}
+.social-float a{width:32px;height:32px;border:1.5px solid var(--border);background:white;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink-soft);text-decoration:none;box-shadow:var(--shadow-sm);transition:border-color .2s,color .2s;}
+.social-float a:hover{border-color:var(--sage);color:var(--sage-dark);}
+.wa-btn{position:fixed;bottom:22px;left:18px;width:46px;height:46px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;z-index:200;box-shadow:0 4px 14px rgba(37,211,102,0.3);text-decoration:none;}
+
+.pastel-div{height:1px;background:var(--border);margin:0;}
+/* logo*/
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-logo-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.why-grid,.svc-grid{grid-template-columns:repeat(2,1fr);}.footer-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:900px){.hero,.entre-inner,.approach-inner,.contact-grid{grid-template-columns:1fr;gap:44px;}.hero-card-float{display:none;}.stats-grid{grid-template-columns:1fr;}.stat-card{border-right:none;border-bottom:1px solid var(--sage);}}
+@media(max-width:700px){nav .nav-links{display:none;}.feat-grid,.why-grid,.svc-grid{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr;}.sip-grid,.form-row{grid-template-columns:1fr;}.social-float{display:none;}.orb-grid{grid-template-columns:repeat(2,1fr);}}
+
+</style>
+</head>
+<body>
+
+<div class="social-float">
+  <a href="https://www.instagram.com/epm_wealth/" target="_blank"><i class="fab fa-instagram"></i></a>
+  <a href="https://www.youtube.com/@epmwealth101" target="_blank"><i class="fab fa-youtube"></i></a>
+  <a href="https://www.linkedin.com/company/epm-wealth/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+  <a href="https://www.facebook.com/epmwealthadvisor" target="_blank"><i class="fab fa-facebook-f"></i></a>
+</div>
+<a href="https://wa.me/919999939333" class="wa-btn" target="_blank">💬</a>
+
+<nav>
+  <a href="#home" class="nav-logo">
+    <div class="nav-logo">
+    <img src="logo-emp.png" alt="EPM Wealth Logo" class="nav-logo-img">
+    <div class="nav-logo-text">
+        <span class="nav-logo-main">EPM</span>
+        <span class="nav-logo-sub">Wealth</span>
+    </div>
+</div>
+  </a>
+  <div class="nav-links">
+    <a href="#about" class="nav-link">About</a>
+    <a href="#features" class="nav-link">Solutions</a>
+    <a href="#entrepreneurial" class="nav-link">Entrepreneurial</a>
+    <a href="#testimonials" class="nav-link">Reviews</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <a href="#contact" class="nav-cta">Let's Talk</a>
+  </div>
+</nav>
+
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span class="ticker-item">AMFI Registered — Code 100255</span>
+    <span class="ticker-item">BSE Registered — Code 1197501</span>
+    <span class="ticker-item">Wealth Management</span>
+    <span class="ticker-item">Portfolio Consultation</span>
+    <span class="ticker-item">Financial Independence</span>
+    <span class="ticker-item">Entrepreneurial Growth</span>
+    <span class="ticker-item">Wealth Creation</span>
+    <span class="ticker-item">Wealth Protection</span>
+    <span class="ticker-item">AMFI Registered — Code 100255</span>
+    <span class="ticker-item">BSE Registered — Code 1197501</span>
+    <span class="ticker-item">Wealth Management</span>
+    <span class="ticker-item">Portfolio Consultation</span>
+    <span class="ticker-item">Financial Independence</span>
+    <span class="ticker-item">Entrepreneurial Growth</span>
+    <span class="ticker-item">Wealth Creation</span>
+    <span class="ticker-item">Wealth Protection</span>
+  </div>
+</div>
+
+<section class="hero" id="home">
+  <div>
+    <div class="hero-badge"><div class="badge-dot"></div>Attaining Financial Independence</div>
+    <h1>Wealth Is<br>More Than<br>Money</h1>
+    <p class="hero-sub">It all begins with you. At EPM we believe your wealth goes beyond money. We prioritise you, your loved ones, and your business — ensuring they remain at the heart of our every action.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary"><i class="fa fa-arrow-right"></i> Let's Talk!</a>
+      <a href="#about" class="btn-secondary"><i class="fa fa-compass"></i> Discover More</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="h-stat-num">100+</div><div class="h-stat-label">Cr+ AUM</div></div>
+      <div><div class="h-stat-num">1000+</div><div class="h-stat-label">Unique Clients</div></div>
+      <div><div class="h-stat-num">25+</div><div class="h-stat-label">Cities Served</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card-main">
+      <div class="hero-card-tag">Portfolio Overview</div>
+      <div class="hero-card-title">Your Financial Journey, Personalised</div>
+      <div class="hero-pill-row">
+        <span class="hero-pill pill-sage">Mutual Funds</span>
+        <span class="hero-pill pill-sky">Equity SIPs</span>
+        <span class="hero-pill pill-blush">Insurance</span>
+        <span class="hero-pill pill-lavender">Estate Planning</span>
+        <span class="hero-pill pill-sage">Wealth Protection</span>
+        <span class="hero-pill pill-sky">Portfolio Review</span>
+      </div>
+      <div class="hero-card-bottom">
+        <div class="hc-avatar">💼</div>
+        <div><div class="hc-meta-label">Your dedicated advisor</div><div class="hc-meta-val">EPM Wealth Expert</div></div>
+        <div style="margin-left:auto;"><div class="hc-meta-label">Registered with</div><div class="hc-meta-val">AMFI &amp; BSE</div></div>
+      </div>
+    </div>
+    <div class="hero-card-float">
+      <div class="hcf-num">15+</div>
+      <div class="hcf-label">Years of Trust</div>
+    </div>
+  </div>
+</section>
+
+<section class="about-band" id="about">
+  <p class="about-text">
+    We At EPM Wealth Believe That
+    <span class="about-hi">Entrepreneurship Is A Trait Inherent In Each Individual</span>,
+    Waiting To Be Nurtured And Guided Towards Success.
+    We Recognize The Significance Of Having Diverse Streams Of Income, And As Such,
+    We Strive To Offer <span class="about-hi">Unparalleled Opportunities</span>
+    For Anyone Seeking To Establish Themselves In The Finance Industry.
+  </p>
+</section>
+
+<section class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-n">100+</div><div class="stat-l">Cr Total AUM</div><div class="stat-bar"></div></div>
+    <div class="stat-card"><div class="stat-n">1000+</div><div class="stat-l">Unique Clients</div><div class="stat-bar"></div></div>
+    <div class="stat-card"><div class="stat-n">25+</div><div class="stat-l">Cities Served</div><div class="stat-bar"></div></div>
+  </div>
+</section>
+
+<section class="features-section" id="features">
+  <div class="s-tag">Our Edge</div>
+  <h2 class="s-title">Financial Decisions Made Simpler<br><em style="font-size:0.88em;color:var(--sage-dark);">For Every Indian</h2>
+  <div class="feat-grid">
+    <div class="feat-card"><div class="feat-icon fi-sage">🧩</div><div><div class="feat-title">Customised For You</div><div class="feat-text">Easy and simple tailor-made solutions built specifically for your unique financial situation and goals.</div></div></div>
+    <div class="feat-card"><div class="feat-icon fi-sky">💻</div><div><div class="feat-title">Technically Driven</div><div class="feat-text">User-oriented digital transactions anytime, anywhere — powered by cutting-edge fintech infrastructure.</div></div></div>
+    <div class="feat-card"><div class="feat-icon fi-blush">🔍</div><div><div class="feat-title">Transparent &amp; Client Centric</div><div class="feat-text">Track where and how your money is invested at all times. Full transparency, zero surprises.</div></div></div>
+    <div class="feat-card"><div class="feat-icon fi-lav">📊</div><div><div class="feat-title">Data-Driven</div><div class="feat-text">Powered by returns, guided by data. Every recommendation is backed by rigorous research and analytics.</div></div></div>
+  </div>
+</section>
+
+<section class="sip-section" id="sip">
+  <div class="s-tag center">Plan Your Future</div>
+  <h2 class="s-title" style="text-align:center;">SIP Calculator</h2>
+  <div class="sip-box">
+    <div class="sip-grid">
+      <div><label class="sip-label">Investment Amount (₹) *</label><input class="sip-input" type="number" id="sipAmt" placeholder="e.g. 10000"/></div>
+      <div><label class="sip-label">Frequency</label><select class="sip-input" id="sipFreq"><option value="12">Monthly</option><option value="4">Quarterly</option><option value="1">Yearly</option></select></div>
+      <div><label class="sip-label">Period (Years) *</label><input class="sip-input" type="number" id="sipYrs" placeholder="e.g. 10"/></div>
+      <div><label class="sip-label">Expected Returns (%)</label><input class="sip-input" type="number" id="sipRate" placeholder="e.g. 12"/></div>
+      <div><label class="sip-label">Inflation Adjustment</label><select class="sip-input" id="sipInfl"><option value="0">No Inflation</option><option value="6">6%</option><option value="7">7%</option><option value="8">8%</option></select></div>
+    </div>
+    <div style="text-align:center;"><button class="btn-primary" onclick="calcSip()"><i class="fa fa-calculator"></i> Calculate Returns</button></div>
+    <div class="sip-results" id="sipRes">
+      <div><div class="sip-rn" id="sInv">₹0</div><div class="sip-rl">Invested</div></div>
+      <div><div class="sip-rn" id="sGain">₹0</div><div class="sip-rl">Returns</div></div>
+      <div><div class="sip-rn" id="sTotal">₹0</div><div class="sip-rl">Total Value</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="pastel-div"></div>
+
+<section class="gallery-section" id="gallery">
+  <div class="gallery-hd">
+    <div class="s-tag center">Our Moments</div>
+    <h2 class="s-title" style="text-align:center;">Awards &amp; Recognition</h2>
+  </div>
+  <div class="gallery-track-wrap">
+    <div class="gallery-track">
+      <div class="gallery-item"><div class="gallery-ph"><span>🏆</span><p>Award 2023</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>🤝</span><p>Partnership</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>🎖️</span><p>Excellence</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>📜</span><p>Certificate</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>🥇</span><p>Top Performer</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>🌟</span><p>Recognition</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>🏅</span><p>Award 2024</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>💎</span><p>Elite Partner</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>🏆</span><p>Award 2023</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>🤝</span><p>Partnership</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>🎖️</span><p>Excellence</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>📜</span><p>Certificate</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>🥇</span><p>Top Performer</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>🌟</span><p>Recognition</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>🏅</span><p>Award 2024</p></div></div>
+      <div class="gallery-item"><div class="gallery-ph"><span>💎</span><p>Elite Partner</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="pastel-div"></div>
+
+<section class="values-section" id="values">
+  <div class="s-tag center">Core Values</div>
+  <h2 class="s-title" style="text-align:center;">We Believe In</h2>
+  <div class="risk-row">
+    <div class="risk-item"><div class="risk-circle"><div class="risk-letter">R</div><div class="risk-word">Relationship</div></div><div class="risk-lbl">Relationship</div></div>
+    <div class="risk-item"><div class="risk-circle"><div class="risk-letter">I</div><div class="risk-word">Integrity</div></div><div class="risk-lbl">Integrity</div></div>
+    <div class="risk-item"><div class="risk-circle"><div class="risk-letter">S</div><div class="risk-word">Simplicity</div></div><div class="risk-lbl">Simplicity</div></div>
+    <div class="risk-item"><div class="risk-circle"><div class="risk-letter">K</div><div class="risk-word">Knowledge</div></div><div class="risk-lbl">Knowledge</div></div>
+  </div>
+</section>
+
+<section class="approach-section" id="approach">
+  <div class="approach-inner">
+    <div>
+      <div class="s-tag">Our Approach</div>
+      <h2 class="s-title">Everything Revolves<br>Around <em style="color:var(--sage-dark);">You</h2>
+      <p class="approach-p">Combining our in-depth knowledge and innovative technology, we create a plan tailored to your complex needs. Your financial consultant — backed by an experienced team — can help you navigate every important decision.</p>
+      <a href="#contact" class="btn-primary" style="display:inline-flex;margin-top:24px;"><i class="fa fa-arrow-right"></i> Let's Talk!</a>
+    </div>
+    <div>
+      <div class="orb-grid">
+        <div class="orb-node-card"><span class="orb-node-icon">🤝</span><div class="orb-node-label">Meet</div></div>
+        <div class="orb-you-card"><div class="orb-you-label">YOU</div><div class="orb-you-sub">At the centre</div></div>
+        <div class="orb-node-card"><span class="orb-node-icon">🎯</span><div class="orb-node-label">Guide</div></div>
+        <div class="orb-node-card"><span class="orb-node-icon">📋</span><div class="orb-node-label">Plan</div></div>
+        <div class="orb-node-card"><span class="orb-node-icon">💡</span><div class="orb-node-label">Implement</div></div>
+        <div class="orb-node-card"><span class="orb-node-icon">📊</span><div class="orb-node-label">Report</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="why-section" id="why">
+  <div class="s-tag">Why This Industry</div>
+  <h2 class="s-title">Four Reasons This<br><em style="color:var(--sage-dark);">Changes Everything</h2>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-icon-wrap wi-1">🏆</div><div class="why-num">01</div><div class="why-title">High-Prestige Profession</div><div class="why-desc">Join an elite circle of financial professionals who shape the wealth landscape of tomorrow.</div></div>
+    <div class="why-card"><div class="why-icon-wrap wi-2">💎</div><div class="why-num">02</div><div class="why-title">Lucrative Income Potential</div><div class="why-desc">Unlock unlimited earning potential with performance-based rewards and multiple income streams.</div></div>
+    <div class="why-card"><div class="why-icon-wrap wi-3">🎯</div><div class="why-num">03</div><div class="why-title">Luxury Rewards</div><div class="why-desc">Partners enjoy exclusive rewards, international travel, and a lifestyle reflecting their achievements.</div></div>
+    <div class="why-card"><div class="why-icon-wrap wi-4">📈</div><div class="why-num">04</div><div class="why-title">Unlimited Growth</div><div class="why-desc">Scale without ceiling. The finance industry rewards ambition with an unlimited runway.</div></div>
+  </div>
+</section>
+
+<section class="services-section" id="solutions">
+  <div class="s-tag">Our Platform</div>
+  <h2 class="s-title">Why Choose EPM Wealth</h2>
+  <div class="svc-grid">
+    <a href="#" class="svc-card"><div class="svc-icon">🌐</div><div class="svc-title">Online Portal</div><div class="svc-desc">Best-in-Class Technology platform. Free to use.</div></a>
+    <a href="#" class="svc-card"><div class="svc-icon">📱</div><div class="svc-title">Mobile App</div><div class="svc-desc">Feature-rich mobile app — manage portfolios on the go.</div></a>
+    <a href="#" class="svc-card"><div class="svc-icon">🤝</div><div class="svc-title">Sales Support</div><div class="svc-desc">Expert guidance for closing deals.</div></a>
+    <a href="#" class="svc-card"><div class="svc-icon">📣</div><div class="svc-title">Marketing Support</div><div class="svc-desc">On-demand marketing to grow your client base.</div></a>
+    <a href="#" class="svc-card"><div class="svc-icon">🔬</div><div class="svc-title">Research &amp; Reports</div><div class="svc-desc">Regular market updates and research reports.</div></a>
+    <a href="#" class="svc-card"><div class="svc-icon">💰</div><div class="svc-title">High Earnings</div><div class="svc-desc">Excellent earning opportunity with competitive payouts.</div></a>
+    <a href="#" class="svc-card"><div class="svc-icon">🏢</div><div class="svc-title">Back Office</div><div class="svc-desc">Robust infrastructure so you can focus on growth.</div></a>
+    <a href="#" class="svc-card"><div class="svc-icon">👥</div><div class="svc-title">Client Servicing</div><div class="svc-desc">Portfolio and Capital Gain Reports made seamless.</div></a>
+  </div>
+</section>
+
+<section class="entre-section" id="entrepreneurial">
+  <div class="entre-inner">
+    <div>
+      <div class="s-tag">Entrepreneurial Initiative</div>
+      <h2 class="s-title">Your Legacy<br>Awaits <em style="color:var(--sage-dark);">Here</h2>
+      <p class="s-sub" style="margin-top:14px;">Our platform offers the ideal foundation for anyone looking to make their mark in the finance industry.</p>
+      <ul class="entre-list">
+        <li><i class="fa fa-check-circle"></i> Become a Financial Partner with EPM Wealth</li>
+        <li><i class="fa fa-check-circle"></i> Access exclusive training &amp; certification programs</li>
+        <li><i class="fa fa-check-circle"></i> Build your own client portfolio from day one</li>
+        <li><i class="fa fa-check-circle"></i> Earn passive income through referral networks</li>
+        <li><i class="fa fa-check-circle"></i> Get mentored by industry veterans</li>
+        <li><i class="fa fa-check-circle"></i> Scale with our proven frameworks</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="display:inline-flex;margin-top:32px;"><i class="fa fa-rocket"></i> Start Your Journey</a>
+    </div>
+    <div class="entre-cards">
+      <div class="e-card"><div class="e-num">01</div><div class="e-title">Wealth Creation</div><div class="e-text">Strategic mutual fund investments, equity portfolios, and SIPs designed for long-term wealth accumulation.</div></div>
+      <div class="e-card"><div class="e-num">02</div><div class="e-title">Wealth Protection</div><div class="e-text">Comprehensive insurance solutions, estate planning, and risk management strategies to safeguard what you've built.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="testi-section" id="testimonials">
+  <div class="s-tag center">People Are Talking</div>
+  <h2 class="s-title" style="text-align:center;">What Our Clients Are Saying</h2>
+  <div class="testi-track-wrap">
+    <div class="testi-track" id="testiTrack">
+      <div class="testi-slide"><div class="t-card"><div class="t-quote">"I am grateful to have EPM Wealth as my financial advisor. Their services have always been exceptional in every way."</div><div class="t-author"><div class="t-av">S</div><div><div class="t-name">Shantanu Gupta</div><div class="t-role">Managing Director, Roots Group Of Institutes</div></div></div></div></div>
+      <div class="testi-slide"><div class="t-card"><div class="t-quote">"EPM Wealth helped me build a diversified portfolio and understand my financial health in a way no one else had done before."</div><div class="t-author"><div class="t-av">R</div><div><div class="t-name">Rajesh Gupta</div><div class="t-role">Business Owner, Delhi NCR</div></div></div></div></div>
+      <div class="testi-slide"><div class="t-card"><div class="t-quote">"From the first consultation to ongoing support, the team has been outstanding. I feel genuinely guided at every step."</div><div class="t-author"><div class="t-av">P</div><div><div class="t-name">Priya Verma</div><div class="t-role">IT Professional, Lucknow</div></div></div></div></div>
+      <div class="testi-slide"><div class="t-card"><div class="t-quote">"Their SIP strategy helped my family achieve financial security. Truly professional and personalised guidance."</div><div class="t-author"><div class="t-av">A</div><div><div class="t-name">Anita Sharma</div><div class="t-role">Homemaker &amp; Investor, Noida</div></div></div></div></div>
+    </div>
+  </div>
+  <div class="t-nav" id="tNav"></div>
+</section>
+
+<section class="cta-section" id="portfolio">
+  <div class="s-tag center">Schedule a Meeting</div>
+  <h2 class="s-title" style="text-align:center;font-size:clamp(28px,4.5vw,58px);">Let's Talk About<br><em style="color:var(--sage-dark);">Your Portfolio</h2>
+  <p style="text-align:center;font-size:14px;color:var(--ink-soft);margin:10px 0;">30-minute personalised consultation · No obligation · 100% free</p>
+  <div class="cta-box">
+    <div class="cta-box-tag">Free Consultation</div>
+    <div class="cta-meta">
+      <div class="cta-m"><div class="cta-dot"></div>30 minutes</div>
+      <div class="cta-m"><div class="cta-dot"></div>Web conferencing</div>
+      <div class="cta-m"><div class="cta-dot"></div>India Standard Time</div>
+    </div>
+    <p class="cta-p">Take control of your investments with a personalised consultation from an EPM Wealth expert. In just 20–30 minutes, you'll gain valuable insights into your portfolio.</p>
+    <a href="#contact" class="btn-primary" style="justify-content:center;width:100%;display:flex;"><i class="fa fa-calendar"></i> Book Your Free Consultation</a>
+    <p class="cta-note">No strings attached. No obligations. Just expert guidance.</p>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div style="text-align:center;">
+    <div class="s-tag center">Get In Touch</div>
+    <h2 class="s-title" style="text-align:center;">Contact Us</h2>
+  </div>
+  <div class="contact-grid">
+    <div>
+      <h3 class="contact-form-title">Send Us a Message</h3>
+      <p class="form-sub">Fill in the form and we'll get back to you within 24 hours.</p>
+      <form onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="form-field"><label>First Name *</label><input type="text" placeholder="First Name" required/></div>
+          <div class="form-field"><label>Last Name *</label><input type="text" placeholder="Last Name" required/></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label>Phone</label><input type="tel" placeholder="+91 XXXXX XXXXX"/></div>
+          <div class="form-field"><label>Email</label><input type="email" placeholder="you@example.com"/></div>
+        </div>
+        <div class="form-field"><label>Message</label><textarea placeholder="How can we help you?"></textarea></div>
+        <button type="submit" class="btn-primary" style="width:100%;justify-content:center;"><i class="fa fa-paper-plane"></i> Submit</button>
+      </form>
+      <div class="form-ok" id="formOk">✅ Thank you! We'll be in touch within 24 hours.</div>
+    </div>
+    <div class="contact-info-box">
+      <h3>Visit Or Call Us</h3>
+      <div class="c-detail"><div class="c-icon">📍</div><div><div class="c-lbl">Address</div><div class="c-val">612-A, 6th Floor, Wave Silver Tower,<br>Sector-18, Noida, UP 201301</div></div></div>
+      <div class="c-detail"><div class="c-icon">📞</div><div><div class="c-lbl">Phone</div><div class="c-val"><a href="tel:+911204264717">+91 0120 426 4717</a><br><a href="tel:+919899939333">+91 9899939333</a></div></div></div>
+      <div class="c-detail"><div class="c-icon">✉️</div><div><div class="c-lbl">Email</div><div class="c-val"><a href="mailto:info@epmwealth.com">info@epmwealth.com</a></div></div></div>
+      <div class="c-detail"><div class="c-icon">🏅</div><div><div class="c-lbl">Registrations</div><div class="c-val">AMFI Registered — Code 100255<br>BSE Registered — Code 1197501</div></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-row"><div class="footer-brand-icon">💰</div><span class="footer-brand-name">EPM Wealth</span></div>
+      <p class="footer-p">Bridging the gap between your reality and your purpose. AMFI &amp; BSE registered wealth management firm helping individuals achieve financial independence.</p>
+      <div class="footer-badges"><div class="f-badge">AMFI 100255</div><div class="f-badge">BSE 1197501</div></div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="#about">About Us</a><a href="#solutions">Solutions</a><a href="#entrepreneurial">Entrepreneurial</a><a href="#testimonials">Testimonials</a><a href="#contact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="https://www.instagram.com/epm_wealth/" target="_blank"><i class="fab fa-instagram"></i>&nbsp; Instagram</a>
+      <a href="https://www.youtube.com/@epmwealth101" target="_blank"><i class="fab fa-youtube"></i>&nbsp; YouTube</a>
+      <a href="https://www.linkedin.com/company/epm-wealth/" target="_blank"><i class="fab fa-linkedin-in"></i>&nbsp; LinkedIn</a>
+      <a href="https://www.facebook.com/epmwealthadvisor" target="_blank"><i class="fab fa-facebook-f"></i>&nbsp; Facebook</a>
+    </div>
+    <div class="footer-col">
+      <h4>Office</h4>
+      <div class="f-addr"><strong>EPM Wealth</strong>Wave Silver Tower,<br>Sector-18, Noida 201301<br><br><a href="tel:+911204264717">+91 0120 426 4717</a><br><a href="mailto:info@epmwealth.com">info@epmwealth.com</a></div>
+    </div>
+  </div>
+  <div class="footer-div"></div>
+  <div class="footer-bot">
+    <span>© 2025 EPM Wealth. All Rights Reserved.</span>
+    <div><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Disclaimer</a></div>
+  </div>
+</footer>
+
+<script>
+/* Testimonials */
+let idx = 0;
+const slides = document.querySelectorAll('.testi-slide');
+const nav = document.getElementById('tNav');
+slides.forEach((_,i) => {
+  const d = document.createElement('button');
+  d.className = 't-dot' + (i===0?' active':'');
+  d.onclick = () => go(i);
+  nav.appendChild(d);
+});
+function go(i) {
+  idx = i;
+  document.getElementById('testiTrack').style.transform = `translateX(${-i*100}%)`;
+  document.querySelectorAll('.t-dot').forEach((d,j) => d.classList.toggle('active', j===i));
+}
+setInterval(() => go((idx+1) % slides.length), 5500);
+
+/* SIP Calculator */
+function calcSip() {
+  const P = parseFloat(document.getElementById('sipAmt').value) || 0;
+  const n = parseInt(document.getElementById('sipFreq').value) || 12;
+  const Y = parseFloat(document.getElementById('sipYrs').value) || 0;
+  let R   = parseFloat(document.getElementById('sipRate').value) || 0;
+  const infl = parseFloat(document.getElementById('sipInfl').value) || 0;
+  R = Math.max(0, R - infl);
+  const r = R / 100 / n;
+  const tt = n * Y;
+  const mat = r > 0 ? P * ((Math.pow(1+r, tt)-1)/r)*(1+r) : P*tt;
+  const inv = P * tt;
+  const fmt = v => '₹' + Math.round(v).toLocaleString('en-IN');
+  document.getElementById('sInv').textContent   = fmt(inv);
+  document.getElementById('sGain').textContent  = fmt(mat - inv);
+  document.getElementById('sTotal').textContent = fmt(mat);
+  document.getElementById('sipRes').classList.add('show');
+}
+
+/* Contact form */
+function submitForm(e) {
+  e.preventDefault();
+  document.getElementById('formOk').style.display = 'block';
+  e.target.reset();
+}
+</script>
+</body>
+</html>

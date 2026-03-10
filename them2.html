@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPM Wealth — Financial Independence</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #F5A623;
+  --orange-dark: #D4881A;
+  --orange-light: #FFBE4D;
+  --navy: #3b485f;
+  --navy-light: #30405c;
+  --white: #FFFFFF;
+  --off-white: #F8F8F8;
+  --gray: #6B7280;
+  --gray-light: #E5E7EB;
+  --text-dark: #0a0d12;
+  --text-mid: #374151;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Jost', sans-serif;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); }
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--gray-light); }
+::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 2px; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--navy); padding: 0 5%;
+  height: 64px; display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  transition: background 0.3s;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-badge {
+  background: var(--orange); border-radius: 6px;
+  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 800; color: var(--navy);
+  font-family: var(--font-body); letter-spacing: 1px;
+}
+.nav-logo-text { font-family: var(--font-display); font-size: 22px; font-weight: 400; color: var(--white); letter-spacing: 3px; }
+.nav-logo-text span { color: var(--orange); }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-link { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.75); text-decoration: none; letter-spacing: 0.3px; transition: color 0.2s; text-transform: uppercase; }
+.nav-link:hover, .nav-link.active { color: var(--orange); }
+.nav-cta { background: var(--orange); color: var(--navy); font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; padding: 10px 24px; text-decoration: none; border-radius: 2px; transition: background 0.2s, transform 0.2s; }
+.nav-cta:hover { background: var(--orange-light); transform: translateY(-1px); }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+.nav-toggle span { width: 24px; height: 2px; background: var(--white); display: block; transition: all 0.3s; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh; position: relative;
+  background: var(--navy);
+  display: flex; align-items: center;
+  overflow: hidden;
+  padding-top: 64px;
+}
+.hero-bg-video {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0.5; filter: saturate(0.8) brightness(1.1); z-index: 0;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(100deg, rgba(30,60,110,0.4) 45%, rgba(40,80,140,0.25) 100%);
+}
+.hero-accent-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--orange); }
+.hero-content { position: relative; z-index: 2; padding: 80px 8% 80px; max-width: 1200px; }
+.hero-eyebrow {
+  font-family: var(--font-body); font-size: 12px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--orange);
+  margin-bottom: 18px; display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before { content: ''; width: 30px; height: 2px; background: var(--orange); display: block; }
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 7.5vw, 100px); font-weight: 300;
+  line-height: 1.0; color: var(--white); text-transform: none;
+  margin-bottom: 24px; letter-spacing: -1px;
+}
+.hero-title .highlight { color: var(--orange); display: block; font-weight: 400; font-style: italic; }
+.hero-sub {
+  font-size: 15px; line-height: 1.85; color: rgba(255,255,255,0.6);
+  max-width: 480px; margin-bottom: 40px; font-weight: 300; letter-spacing: 0.2px;
+}
+.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+.btn-primary {
+  background: var(--orange); color: var(--navy); font-family: var(--font-body);
+  font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+  padding: 15px 40px; text-decoration: none; border-radius: 2px;
+  border: 2px solid var(--orange); transition: all 0.25s; display: inline-block;
+}
+.btn-primary:hover { background: var(--orange-light); border-color: var(--orange-light); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(245,166,35,0.35); }
+.btn-secondary {
+  background: transparent; color: var(--white); font-family: var(--font-body);
+  font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+  padding: 13px 36px; text-decoration: none; border-radius: 2px;
+  border: 2px solid rgba(255,255,255,0.4); transition: all 0.25s; display: inline-block;
+}
+.btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+
+.hero-stats {
+  display: flex; gap: 0; margin-top: 64px;
+  border-top: 1px solid rgba(255,255,255,0.12); padding-top: 40px; flex-wrap: wrap;
+}
+.h-stat { padding-right: 48px; margin-right: 48px; border-right: 1px solid rgba(255,255,255,0.12); }
+.h-stat:last-child { border-right: none; margin-right: 0; }
+.h-stat-num { font-family: var(--font-display); font-size: 56px; font-weight: 400; color: var(--orange); line-height: 1; }
+.h-stat-label { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.5); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+
+/* ─── TICKER ─── */
+.ticker { background: var(--orange); padding: 12px 0; overflow: hidden; }
+.ticker-track { display: flex; animation: ticker 22s linear infinite; white-space: nowrap; }
+.ticker-item {
+  font-family: var(--font-body); font-size: 11px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--navy);
+  padding: 0 40px; flex-shrink: 0; display: inline-flex; align-items: center; gap: 12px;
+}
+.ticker-item::after { content: '■'; font-size: 6px; opacity: 0.4; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── LOGOS BAND ─── */
+.logos-band { background: var(--white); padding: 40px 8%; border-bottom: 1px solid var(--gray-light); }
+.logos-inner { display: flex; align-items: center; justify-content: center; gap: 60px; flex-wrap: wrap; }
+.logo-pill {
+  font-family: var(--font-body); font-size: 12px; font-weight: 500;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--gray);
+  display: flex; align-items: center; gap: 8px; opacity: 0.6; transition: opacity 0.2s;
+}
+.logo-pill:hover { opacity: 1; }
+.logo-pill-icon { width: 28px; height: 28px; background: var(--orange); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+
+/* ─── SECTION LABELS ─── */
+.section-label {
+  font-family: var(--font-body); font-size: 11px; font-weight: 500;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--orange);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+}
+.section-label::before { content: ''; width: 28px; height: 3px; background: var(--orange); display: block; }
+.section-title {
+  font-family: var(--font-display); font-size: clamp(34px, 4.5vw, 60px);
+  font-weight: 300; line-height: 1.05; text-transform: none; color: var(--navy);
+  margin-bottom: 20px; letter-spacing: -0.5px;
+}
+.section-title .orange { color: var(--orange); }
+.section-body { font-size: 15px; line-height: 1.8; color: var(--gray); font-weight: 400; max-width: 540px; }
+
+/* ─── ABOUT ─── */
+.about { padding: 100px 8%; background: var(--white); }
+.about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about-img-wrap { position: relative; }
+.about-img-main {
+  width: 100%; height: 420px; object-fit: cover;
+  background: url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=900&auto=format') center/cover;
+  border-radius: 2px;
+}
+.about-img-accent {
+  position: absolute; bottom: -28px; right: -28px;
+  width: 200px; height: 160px;
+  background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format') center/cover;
+  border: 5px solid var(--white); border-radius: 2px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+.about-badge {
+  position: absolute; top: 28px; left: -20px;
+  background: var(--orange); color: var(--navy);
+  padding: 18px 22px; border-radius: 2px;
+  font-family: var(--font-body); text-align: center;
+  box-shadow: 0 8px 24px rgba(245,166,35,0.4);
+}
+.about-badge-num { font-size: 40px; font-weight: 800; line-height: 1; }
+.about-badge-txt { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+.about-list { list-style: none; margin: 28px 0; }
+.about-list li {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 12px 0; border-bottom: 1px solid var(--gray-light);
+  font-size: 14px; color: var(--text-mid); line-height: 1.5; font-weight: 400;
+}
+.about-list li::before { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/12px no-repeat, var(--orange); content: ''; width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; margin-top: 2px; }
+
+/* ─── STATS BAND ─── */
+.stats-band { background: var(--navy); padding: 70px 8%; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.stat-card {
+  text-align: center; padding: 50px 30px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  position: relative; overflow: hidden; transition: background 0.3s;
+}
+.stat-card:last-child { border-right: none; }
+.stat-card::before {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: var(--orange); transform: scaleX(0);
+  transition: transform 0.4s ease; transform-origin: left;
+}
+.stat-card:hover::before { transform: scaleX(1); }
+.stat-card:hover { background: rgba(255,255,255,0.03); }
+.stat-num { font-family: var(--font-display); font-size: 80px; font-weight: 300; color: var(--orange); line-height: 1; }
+.stat-num span { font-size: 0.5em; vertical-align: super; color: var(--orange-light); }
+.stat-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-top: 10px; font-weight: 600; }
+
+/* ─── FEATURES ─── */
+.features { padding: 100px 8%; background: var(--off-white); }
+.features-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; flex-wrap: wrap; gap: 24px; }
+.features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.feat-card {
+  background: var(--white); padding: 40px 36px;
+  border-radius: 2px; border: 1px solid var(--gray-light);
+  display: flex; gap: 24px; align-items: flex-start;
+  transition: all 0.3s; position: relative; overflow: hidden;
+}
+.feat-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px; background: var(--orange);
+  transform: scaleY(0); transition: transform 0.35s; transform-origin: bottom;
+}
+.feat-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); transform: translateY(-4px); border-color: transparent; }
+.feat-card:hover::before { transform: scaleY(1); }
+.feat-icon-wrap {
+  width: 60px; height: 60px; flex-shrink: 0;
+  background: var(--off-white); border: 2px solid var(--gray-light);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  font-size: 26px; transition: all 0.3s;
+}
+.feat-card:hover .feat-icon-wrap { background: var(--orange); border-color: var(--orange); }
+.feat-title { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--navy); margin-bottom: 10px; text-transform: none; letter-spacing: 0px; }
+.feat-text { font-size: 14px; color: var(--gray); line-height: 1.75; font-weight: 400; }
+
+/* ─── MID BANNER ─── */
+.mid-banner { position: relative; padding: 100px 8%; overflow: hidden; }
+.mid-banner-bg {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1400&auto=format') center/cover no-repeat;
+  filter: brightness(0.2) saturate(0.5);
+}
+.mid-banner-overlay { position: absolute; inset: 0; background: var(--navy); opacity: 0.88; }
+.mid-banner-content { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center; }
+.mid-banner-title {
+  font-family: var(--font-display); font-size: clamp(30px, 4vw, 52px); font-weight: 300;
+  text-transform: none; color: var(--white); line-height: 1.15; letter-spacing: 0px;
+}
+.mid-banner-title .orange { color: var(--orange); }
+.mid-banner-sub { font-size: 15px; color: rgba(255,255,255,0.6); margin-top: 14px; line-height: 1.7; max-width: 500px; font-weight: 300; }
+
+/* ─── SERVICES ─── */
+.services { padding: 100px 8%; background: var(--white); }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px; }
+.svc-card {
+  border: 1px solid var(--gray-light); border-radius: 2px;
+  padding: 40px 28px; text-align: left;
+  transition: all 0.3s; text-decoration: none; display: block;
+  position: relative; overflow: hidden; background: var(--white);
+}
+.svc-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: var(--orange);
+  transform: scaleX(0); transition: transform 0.35s; transform-origin: left;
+}
+.svc-card:hover { box-shadow: 0 10px 36px rgba(0,0,0,0.1); transform: translateY(-5px); }
+.svc-card:hover::after { transform: scaleX(1); }
+.svc-icon {
+  width: 54px; height: 54px; background: rgba(245,166,35,0.1);
+  border: 2px solid rgba(245,166,35,0.2); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; font-size: 24px;
+  margin-bottom: 22px; transition: all 0.3s;
+}
+.svc-card:hover .svc-icon { background: var(--orange); border-color: var(--orange); }
+.svc-title { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--navy); margin-bottom: 10px; text-transform: none; letter-spacing: 0px; }
+.svc-desc { font-size: 13px; color: var(--gray); line-height: 1.75; font-weight: 400; }
+.svc-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); margin-top: 20px; text-decoration: none; transition: gap 0.2s; }
+.svc-link:hover { gap: 14px; }
+.svc-link::after { content: '→'; }
+
+/* ─── WHY ─── */
+.why { padding: 100px 8%; background: var(--navy); }
+.why .section-title { color: var(--white); }
+.why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 56px; }
+.why-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  padding: 40px 24px 36px; text-align: center;
+  transition: all 0.35s; position: relative; overflow: hidden; border-radius: 2px;
+}
+.why-card:hover { background: rgba(245,166,35,0.08); border-color: rgba(245,166,35,0.3); transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+.why-icon { font-size: 44px; margin-bottom: 16px; display: block; transition: transform 0.3s; }
+.why-card:hover .why-icon { transform: scale(1.15); }
+.why-num { font-family: var(--font-body); font-size: 10px; font-weight: 500; letter-spacing: 3px; color: var(--orange); margin-bottom: 10px; }
+.why-title { font-family: var(--font-display); font-size: 21px; font-weight: 500; color: var(--white); margin-bottom: 12px; text-transform: none; letter-spacing: 0px; }
+.why-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.75; font-weight: 400; }
+
+/* ─── SIP CALCULATOR ─── */
+.sip { padding: 100px 8%; background: var(--off-white); }
+.sip-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; max-width: 1100px; margin: 0 auto; }
+.sip-box { background: var(--white); border: 1px solid var(--gray-light); padding: 48px 40px; border-radius: 2px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+.sip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+.sip-field label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); margin-bottom: 8px; }
+.sip-input {
+  width: 100%; padding: 13px 16px; border: 2px solid var(--gray-light);
+  border-radius: 2px; font-family: var(--font-body); font-size: 14px;
+  color: var(--text-dark); outline: none; transition: border-color 0.25s; background: var(--white);
+}
+.sip-input:focus { border-color: var(--orange); }
+.sip-result { display: none; margin-top: 24px; background: var(--navy); padding: 28px; border-radius: 2px; gap: 20px; }
+.sip-result.show { display: grid; grid-template-columns: repeat(3,1fr); }
+.sip-rn { font-family: var(--font-display); font-size: 32px; font-weight: 400; color: var(--orange); }
+.sip-rl { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 4px; font-weight: 500; }
+.sip-info-title { font-family: var(--font-body); font-size: 26px; font-weight: 800; color: var(--navy); text-transform: uppercase; margin-bottom: 16px; letter-spacing: -0.3px; }
+.sip-info-body { font-size: 14px; color: var(--gray); line-height: 1.85; margin-bottom: 24px; font-weight: 400; }
+
+/* ─── VALUES ─── */
+.values { padding: 100px 8%; background: var(--white); text-align: center; }
+.values-grid { display: flex; justify-content: center; gap: 40px; margin-top: 60px; flex-wrap: wrap; }
+.val-item { text-align: center; }
+.val-circle {
+  width: 160px; height: 160px; border-radius: 50%;
+  background: var(--navy); border: 3px solid var(--orange);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  margin: 0 auto 16px; transition: all 0.35s; cursor: default;
+  box-shadow: 0 4px 20px rgba(245,166,35,0.15);
+}
+.val-circle:hover { background: var(--orange); transform: scale(1.08); box-shadow: 0 12px 40px rgba(245,166,35,0.35); }
+.val-letter { font-family: var(--font-display); font-size: 68px; font-weight: 300; color: var(--orange); line-height: 1; transition: color 0.3s; font-style: italic; }
+.val-circle:hover .val-letter { color: var(--navy); }
+.val-sub { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; }
+.val-circle:hover .val-sub { color: rgba(26,35,50,0.7); }
+.val-label { font-family: var(--font-body); font-size: 12px; font-weight: 500; text-transform: uppercase; color: var(--navy); letter-spacing: 2px; }
+
+/* ─── ENTREPRENEURIAL ─── */
+.entre { padding: 100px 8%; background: var(--off-white); }
+.entre-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.entre-list { list-style: none; margin: 32px 0; }
+.entre-list li {
+  display: flex; align-items: center; gap: 16px;
+  padding: 14px 0; border-bottom: 1px solid var(--gray-light);
+  font-size: 14px; color: var(--text-mid); font-weight: 400;
+}
+.entre-list li::before {
+  content: ''; width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/12px no-repeat, var(--orange);
+}
+.entre-cards { display: flex; flex-direction: column; gap: 20px; }
+.e-card {
+  background: var(--white); border: 1px solid var(--gray-light);
+  border-left: 4px solid var(--orange); padding: 36px 32px;
+  border-radius: 2px; transition: box-shadow 0.3s;
+}
+.e-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.1); }
+.e-num { font-family: var(--font-display); font-size: 60px; font-weight: 300; color: rgba(245,166,35,0.15); line-height: 1; }
+.e-title { font-family: var(--font-display); font-size: 26px; font-weight: 400; color: var(--navy); text-transform: none; margin-bottom: 10px; letter-spacing: 0px; }
+.e-text { font-size: 14px; color: var(--gray); line-height: 1.75; font-weight: 400; }
+
+/* ─── TESTIMONIALS ─── */
+.testimonials { padding: 100px 8%; background: var(--navy); }
+.testimonials .section-title { color: var(--white); }
+.testi-track-wrap { overflow: hidden; max-width: 900px; margin: 56px auto 0; }
+.testi-track { display: flex; transition: transform 0.7s cubic-bezier(.22,1,.36,1); }
+.testi-slide { flex: 0 0 100%; }
+.t-card {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-top: 4px solid var(--orange); padding: 52px 48px; border-radius: 2px;
+}
+.t-quote { font-family: var(--font-display); font-size: 20px; line-height: 1.75; color: rgba(255,255,255,0.85); font-style: italic; margin-bottom: 32px; font-weight: 300; }
+.t-author { display: flex; align-items: center; gap: 16px; }
+.t-av { width: 52px; height: 52px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-family: var(--font-body); font-size: 22px; font-weight: 800; color: var(--navy); flex-shrink: 0; }
+.t-name { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--white); letter-spacing: 2px; text-transform: uppercase; }
+.t-role { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 3px; font-weight: 400; }
+.t-nav { display: flex; justify-content: center; gap: 10px; margin-top: 32px; }
+.t-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; cursor: pointer; transition: all 0.3s; }
+.t-dot.active { width: 32px; border-radius: 5px; background: var(--orange); }
+
+/* ─── APPROACH ─── */
+.approach { padding: 100px 8%; background: var(--white); }
+.approach-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.approach-diagram { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ap-node {
+  background: var(--navy); padding: 30px 24px; border-radius: 2px;
+  text-align: center; transition: all 0.3s; position: relative; overflow: hidden;
+}
+.ap-node::before { content: ''; position: absolute; inset: 0; background: var(--orange); opacity: 0; transition: opacity 0.3s; }
+.ap-node:hover::before { opacity: 0.08; }
+.ap-node:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(26,35,50,0.3); }
+.ap-center { grid-column: 1 / -1; background: var(--orange); padding: 28px; text-align: center; border-radius: 2px; }
+.ap-icon { font-size: 36px; display: block; margin-bottom: 8px; position: relative; z-index: 1; }
+.ap-lbl { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--white); text-transform: uppercase; letter-spacing: 2px; position: relative; z-index: 1; }
+.ap-center .ap-lbl { color: var(--navy); font-size: 13px; letter-spacing: 2px; }
+
+/* ─── CTA SECTION ─── */
+.cta-section { padding: 120px 8%; background: var(--off-white); text-align: center; }
+.cta-box { max-width: 680px; margin: 0 auto; background: var(--navy); padding: 64px 56px; border-radius: 2px; position: relative; overflow: hidden; }
+.cta-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--orange); }
+.cta-box .section-title { color: var(--white); }
+.cta-tag {
+  display: inline-block; background: var(--orange); color: var(--navy);
+  font-family: var(--font-body); font-size: 10px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase; padding: 6px 18px; border-radius: 2px; margin-bottom: 24px;
+}
+.cta-meta { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin: 24px 0 32px; }
+.cta-m { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 400; }
+.cta-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+.cta-p { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.85; margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto; font-weight: 300; }
+
+/* ─── CONTACT ─── */
+.contact { padding: 100px 8%; background: var(--white); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; max-width: 1100px; margin: 56px auto 0; }
+.contact-form-title { font-family: var(--font-display); font-size: 40px; font-weight: 300; text-transform: none; color: var(--navy); margin-bottom: 8px; letter-spacing: 0; }
+.contact-form-title .orange { color: var(--orange); }
+.form-sub { font-size: 14px; color: var(--gray); margin-bottom: 32px; font-weight: 400; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-field { margin-bottom: 14px; }
+.form-field label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); margin-bottom: 8px; }
+.form-field input, .form-field textarea, .form-field select {
+  width: 100%; padding: 13px 16px; border: 2px solid var(--gray-light);
+  border-radius: 2px; font-family: var(--font-body); font-size: 14px;
+  color: var(--text-dark); outline: none; transition: border-color 0.25s; background: var(--white);
+  appearance: none;
+}
+.form-field input:focus, .form-field textarea:focus { border-color: var(--orange); }
+.form-field textarea { min-height: 120px; resize: vertical; }
+.form-ok { display: none; margin-top: 16px; padding: 14px 18px; background: rgba(245,166,35,0.1); border-left: 4px solid var(--orange); color: var(--text-mid); font-size: 14px; font-weight: 400; }
+.contact-info-title { font-family: var(--font-display); font-size: 38px; font-weight: 300; text-transform: none; color: var(--navy); margin-bottom: 32px; letter-spacing: 0; }
+.c-detail { display: flex; gap: 18px; margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--gray-light); transition: padding-left 0.25s; }
+.c-detail:last-child { border-bottom: none; }
+.c-detail:hover { padding-left: 6px; }
+.c-icon { width: 48px; height: 48px; flex-shrink: 0; background: rgba(245,166,35,0.1); border: 2px solid rgba(245,166,35,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; transition: all 0.3s; }
+.c-detail:hover .c-icon { background: var(--orange); border-color: var(--orange); }
+.c-lbl { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); font-weight: 700; margin-bottom: 6px; }
+.c-val { font-size: 14px; color: var(--text-mid); line-height: 1.7; font-weight: 400; }
+.c-val a { color: var(--text-mid); transition: color 0.2s; text-decoration: none; }
+.c-val a:hover { color: var(--orange); }
+
+/* ─── FOOTER ─── */
+footer { background: var(--navy); padding: 72px 8% 36px; border-top: 4px solid var(--orange); }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 48px; }
+.footer-logo { font-family: var(--font-display); font-size: 28px; font-weight: 400; color: var(--white); letter-spacing: 2px; margin-bottom: 16px; }
+.footer-logo span { color: var(--orange); }
+.footer-p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.9; max-width: 280px; margin-bottom: 24px; font-weight: 400; }
+.footer-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+.f-badge { padding: 6px 14px; border: 1px solid rgba(245,166,35,0.3); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); font-weight: 700; border-radius: 2px; }
+.footer-col h4 { font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--white); margin-bottom: 22px; position: relative; padding-bottom: 12px; }
+.footer-col h4::after { content: ''; position: absolute; bottom: 0; left: 0; width: 24px; height: 2px; background: var(--orange); }
+.footer-col a { display: block; color: rgba(255,255,255,0.38); font-size: 13px; margin-bottom: 12px; transition: all 0.2s; text-decoration: none; font-weight: 400; }
+.footer-col a:hover { color: var(--orange); padding-left: 6px; }
+.f-addr { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 2; font-weight: 400; }
+.f-addr strong { color: rgba(255,255,255,0.6); display: block; margin-bottom: 6px; font-family: var(--font-display); font-size: 16px; letter-spacing: 1px; text-transform: none; font-weight: 400; }
+.footer-div { height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 28px; }
+.footer-bot { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,255,255,0.25); flex-wrap: wrap; gap: 10px; font-weight: 400; }
+.footer-bot a { color: rgba(255,255,255,0.25); margin-left: 20px; text-decoration: none; transition: color 0.2s; }
+.footer-bot a:hover { color: var(--orange); }
+
+/* ─── SOCIAL FLOAT ─── */
+.social-float { position: fixed; left: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 200; }
+.social-float a { width: 38px; height: 38px; background: var(--navy); border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 14px; color: rgba(255,255,255,0.6); text-decoration: none; transition: all 0.25s; border-radius: 2px; }
+.social-float a:hover { background: var(--orange); border-color: var(--orange); color: var(--navy); transform: translateX(4px); }
+
+/* ─── WA BUTTON ─── */
+.wa-btn { position: fixed; bottom: 28px; left: 20px; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; z-index: 200; box-shadow: 0 6px 20px rgba(37,211,102,0.4); text-decoration: none; transition: transform 0.25s, box-shadow 0.25s; }
+.wa-btn:hover { transform: scale(1.1); box-shadow: 0 10px 30px rgba(37,211,102,0.55); }
+
+/* ─── REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── MOBILE NAV ─── */
+.mobile-nav { position: fixed; inset: 0; background: var(--navy); z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; transform: translateX(100%); transition: transform 0.4s cubic-bezier(.22,1,.36,1); }
+.mobile-nav.open { transform: translateX(0); }
+.mobile-nav a { font-family: var(--font-display); font-size: 36px; font-weight: 300; text-transform: none; color: var(--white); text-decoration: none; letter-spacing: 1px; transition: color 0.2s; }
+.mobile-nav a:hover { color: var(--orange); }
+.mobile-nav-close { position: absolute; top: 20px; right: 24px; background: none; border: none; font-size: 32px; color: var(--white); cursor: pointer; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1200px) {
+  .why-grid { grid-template-columns: repeat(2,1fr); }
+  .services-grid { grid-template-columns: repeat(2,1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 1024px) {
+  .about-inner, .entre-inner, .approach-inner, .contact-grid, .sip-inner, .mid-banner-content { grid-template-columns: 1fr; gap: 48px; }
+  .about-img-accent { display: none; }
+  .about-badge { position: static; display: inline-flex; margin-bottom: 20px; }
+  .social-float { display: none; }
+  .hero-stats { flex-wrap: wrap; gap: 20px; }
+  .h-stat { border-right: none; padding-right: 0; margin-right: 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; }
+  .h-stat:last-child { border-bottom: none; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+  .stats-grid, .why-grid, .features-grid, .services-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .sip-grid, .form-row { grid-template-columns: 1fr; }
+  .approach-diagram { grid-template-columns: 1fr 1fr; }
+  .hero-title { font-size: clamp(38px, 10vw, 62px); }
+  .t-card { padding: 36px 24px; }
+  .values-grid { gap: 24px; }
+  .val-circle { width: 130px; height: 130px; }
+  .val-letter { font-size: 50px; }
+}
+
+/* ─── NAV LOGO IMG ─── */
+.nav-logo-img { width: 60px; height: 60px; object-fit: contain; }
+</style>
+</head>
+<body>
+
+<!-- SOCIAL FLOAT -->
+<div class="social-float">
+  <a href="https://www.instagram.com/epm_wealth/" target="_blank">📷</a>
+  <a href="https://www.youtube.com/@epmwealth101" target="_blank">▶</a>
+  <a href="https://www.linkedin.com/company/epm-wealth/" target="_blank">in</a>
+  <a href="https://www.facebook.com/epmwealthadvisor" target="_blank">f</a>
+</div>
+<a href="https://wa.me/919999939333" class="wa-btn" target="_blank">💬</a>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileClose">✕</button>
+  <a href="#home" onclick="closeMobileNav()">Home</a>
+  <a href="#about" onclick="closeMobileNav()">About Us</a>
+  <a href="#services" onclick="closeMobileNav()">Solutions</a>
+  <a href="#entrepreneurial" onclick="closeMobileNav()">Entrepreneurial</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">
+    <div class="nav-logo">
+      <img src="logo-emp.png" alt="EPM Wealth Logo" class="nav-logo-img">
+      <div class="nav-logo-text">
+        <span class="nav-logo-main">EPM</span>
+        <span class="nav-logo-sub">Wealth</span>
+      </div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#about" class="nav-link">About Us</a>
+    <a href="#services" class="nav-link">Solutions</a>
+    <a href="#why" class="nav-link">Why Us</a>
+    <a href="#entrepreneurial" class="nav-link">Entrepreneurial</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <a href="#contact" class="nav-cta">Get Started</a>
+  </div>
+  <button class="nav-toggle" id="navToggle">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <video class="hero-bg-video" autoplay muted loop playsinline>
+    <source src="istockphoto-2149492727-640_adpp_is (1).mp4" type="video/mp4">
+    <source src="your-video.webm" type="video/webm">
+    Your browser does not support the video tag.
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-accent-bar"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Attaining Financial Independence</div>
+    <h1 class="hero-title">
+      Wealth Is<br>
+      More Than<br>
+      <span >Money</span>
+    </h1>
+    <p class="hero-sub">It all begins with you. At EPM we believe your wealth goes beyond money. We prioritise you, your loved ones, and your business — ensuring they remain at the heart of our every action.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Let's Talk!</a>
+      <a href="#about" class="btn-secondary">Discover More</a>
+    </div>
+    <div class="hero-stats">
+      <div class="h-stat">
+        <div class="h-stat-num" data-target="100" data-suffix="+">0+</div>
+        <div class="h-stat-label">Cr+ AUM</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num" data-target="1000" data-suffix="+">0+</div>
+        <div class="h-stat-label">Unique Clients</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-num" data-target="25" data-suffix="+">0+</div>
+        <div class="h-stat-label">Cities Served</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">AMFI Registered — Code 100255</span>
+    <span class="ticker-item">BSE Registered — Code 1197501</span>
+    <span class="ticker-item">Wealth Management</span>
+    <span class="ticker-item">Portfolio Consultation</span>
+    <span class="ticker-item">Financial Independence</span>
+    <span class="ticker-item">Entrepreneurial Growth</span>
+    <span class="ticker-item">Wealth Creation</span>
+    <span class="ticker-item">Wealth Protection</span>
+    <span class="ticker-item">AMFI Registered — Code 100255</span>
+    <span class="ticker-item">BSE Registered — Code 1197501</span>
+    <span class="ticker-item">Wealth Management</span>
+    <span class="ticker-item">Portfolio Consultation</span>
+    <span class="ticker-item">Financial Independence</span>
+    <span class="ticker-item">Entrepreneurial Growth</span>
+    <span class="ticker-item">Wealth Creation</span>
+    <span class="ticker-item">Wealth Protection</span>
+  </div>
+</div>
+
+<!-- LOGOS BAND -->
+<div class="logos-band">
+  <div class="logos-inner">
+    <div class="logo-pill"><div class="logo-pill-icon">🏦</div>AMFI Registered</div>
+    <div class="logo-pill"><div class="logo-pill-icon">📊</div>BSE Partner</div>
+    <div class="logo-pill"><div class="logo-pill-icon">🛡️</div>SEBI Compliant</div>
+    <div class="logo-pill"><div class="logo-pill-icon">🏆</div>Award Winning</div>
+    <div class="logo-pill"><div class="logo-pill-icon">🌐</div>Pan India</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-img-wrap reveal">
+      <div class="about-badge">
+        <div class="about-badge-num">25+</div>
+        <div class="about-badge-txt">Years Experience</div>
+      </div>
+      <div class="about-img-main"></div>
+      <div class="about-img-accent"></div>
+    </div>
+    <div class="reveal">
+      <div class="section-label">About Us</div>
+      <h2 class="section-title">Improving Finances For <span class="orange">Your Satisfaction</span></h2>
+      <p class="section-body">We at EPM Wealth believe that entrepreneurship is a trait inherent in each individual, waiting to be nurtured and guided towards success. We recognize the significance of having diverse streams of income.</p>
+      <ul class="about-list">
+        <li>Become a Financial Partner with EPM Wealth</li>
+        <li>Access exclusive training & certification programs</li>
+        <li>Build your own client portfolio from day one</li>
+        <li>Earn passive income through referral networks</li>
+        <li>Get mentored by industry veterans</li>
+      </ul>
+      <a href="#contact" class="btn-primary">Find Out More</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-band">
+  <div class="stats-grid">
+    <div class="stat-card reveal">
+      <div class="stat-num"><span id="s1">100</span>+</div>
+      <div class="stat-label">Cr Total AUM</div>
+    </div>
+    <div class="stat-card reveal" style="transition-delay:0.12s">
+      <div class="stat-num"><span id="s2">1000</span>+</div>
+      <div class="stat-label">Unique Clients</div>
+    </div>
+    <div class="stat-card reveal" style="transition-delay:0.24s">
+      <div class="stat-num"><span id="s3">25</span>+</div>
+      <div class="stat-label">Cities Served</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="features-header">
+    <div>
+      <div class="section-label">Our Edge</div>
+      <h2 class="section-title">Financial Decisions Made<br><span class="orange">Simpler For Every Indian</span></h2>
+    </div>
+    <a href="#contact" class="btn-primary reveal">Get Started</a>
+  </div>
+  <div class="features-grid">
+    <div class="feat-card reveal">
+      <div class="feat-icon-wrap">🧩</div>
+      <div>
+        <div class="feat-title">Customised For You</div>
+        <div class="feat-text">Easy and simple to understand tailor-made solutions built specifically for your unique financial situation and goals.</div>
+      </div>
+    </div>
+    <div class="feat-card reveal" style="transition-delay:0.1s">
+      <div class="feat-icon-wrap">💻</div>
+      <div>
+        <div class="feat-title">Technically Driven</div>
+        <div class="feat-text">User-oriented digital transaction anytime, anywhere — powered by cutting-edge fintech infrastructure.</div>
+      </div>
+    </div>
+    <div class="feat-card reveal" style="transition-delay:0.2s">
+      <div class="feat-icon-wrap">🔍</div>
+      <div>
+        <div class="feat-title">Transparent & Client Centric</div>
+        <div class="feat-text">Track where and how your money is invested at all times. Full transparency, zero surprises.</div>
+      </div>
+    </div>
+    <div class="feat-card reveal" style="transition-delay:0.3s">
+      <div class="feat-icon-wrap">📊</div>
+      <div>
+        <div class="feat-title">Data-Driven</div>
+        <div class="feat-text">Powered by returns, guided by data. Every recommendation is backed by rigorous research and analytics.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MID BANNER -->
+<div class="mid-banner">
+  <div class="mid-banner-bg"></div>
+  <div class="mid-banner-overlay"></div>
+  <div class="mid-banner-content">
+    <div class="reveal">
+      <h2 class="mid-banner-title">Let's Work Together To Create <span class="orange">Sustainable & Innovative</span> Financial Solutions</h2>
+      <p class="mid-banner-sub">Combining our in-depth knowledge and innovative technology, we create a plan tailored to your complex needs.</p>
+    </div>
+    <div class="reveal">
+      <a href="#contact" class="btn-primary">Find Out More</a>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div style="text-align:center;" class="reveal">
+    <div class="section-label" style="justify-content:center;">Our Platform</div>
+    <h2 class="section-title">Listen Better. Plan Better. <span class="orange">Build Better</span></h2>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card reveal">
+      <div class="svc-icon">🌐</div>
+      <div class="svc-title">Online Portal</div>
+      <div class="svc-desc">Best-in-class technology platform. Free to use. Manage your entire portfolio from one dashboard.</div>
+      <div class="svc-link">Learn More</div>
+    </div>
+    <div class="svc-card reveal" style="transition-delay:0.1s">
+      <div class="svc-icon">📱</div>
+      <div class="svc-title">Mobile App</div>
+      <div class="svc-desc">Feature-rich mobile app — manage portfolios on the go. Available 24/7.</div>
+      <div class="svc-link">Learn More</div>
+    </div>
+    <div class="svc-card reveal" style="transition-delay:0.2s">
+      <div class="svc-icon">🤝</div>
+      <div class="svc-title">Sales Support</div>
+      <div class="svc-desc">Expert guidance for closing deals. Our team backs you at every step.</div>
+      <div class="svc-link">Learn More</div>
+    </div>
+    <div class="svc-card reveal" style="transition-delay:0.3s">
+      <div class="svc-icon">📣</div>
+      <div class="svc-title">Marketing Support</div>
+      <div class="svc-desc">On-demand marketing to grow your client base effectively.</div>
+      <div class="svc-link">Learn More</div>
+    </div>
+    <div class="svc-card reveal" style="transition-delay:0.1s">
+      <div class="svc-icon">🔬</div>
+      <div class="svc-title">Research & Reports</div>
+      <div class="svc-desc">Regular market updates and research reports. Stay informed always.</div>
+      <div class="svc-link">Learn More</div>
+    </div>
+    <div class="svc-card reveal" style="transition-delay:0.2s">
+      <div class="svc-icon">💰</div>
+      <div class="svc-title">High Earnings</div>
+      <div class="svc-desc">Excellent earning opportunity with competitive payouts and performance rewards.</div>
+      <div class="svc-link">Learn More</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="reveal">
+    <div class="section-label">Why This Industry</div>
+    <h2 class="section-title" style="color:var(--white);">Four Reasons This <span class="orange">Changes Everything</span></h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <span class="why-icon">🏆</span>
+      <div class="why-num">01</div>
+      <div class="why-title">High-Prestige Profession</div>
+      <div class="why-desc">Join an elite circle of financial professionals who shape the wealth landscape of tomorrow.</div>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.1s">
+      <span class="why-icon">💎</span>
+      <div class="why-num">02</div>
+      <div class="why-title">Lucrative Income</div>
+      <div class="why-desc">Unlock unlimited earning potential with performance-based rewards and multiple income streams.</div>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.2s">
+      <span class="why-icon">🎯</span>
+      <div class="why-num">03</div>
+      <div class="why-title">Luxury Rewards</div>
+      <div class="why-desc">Our partners enjoy exclusive rewards, international travel, and a lifestyle that reflects their achievements.</div>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.3s">
+      <span class="why-icon">📈</span>
+      <div class="why-num">04</div>
+      <div class="why-title">Unlimited Growth</div>
+      <div class="why-desc">Scale without ceiling. The finance industry rewards ambition with an unlimited runway.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SIP CALCULATOR -->
+<section class="sip" id="sip">
+  <div class="sip-inner">
+    <div class="sip-info reveal">
+      <div class="section-label">Plan Your Future</div>
+      <h2 class="section-title">SIP <span class="orange">Calculator</span></h2>
+      <p class="sip-info-body">Use our SIP calculator to estimate your potential wealth. Plan your investments smartly and see how your money grows over time with the power of compounding.</p>
+      <a href="#contact" class="btn-primary">Start Investing</a>
+    </div>
+    <div class="sip-box reveal">
+      <div class="sip-grid">
+        <div class="sip-field">
+          <label>Investment Amount (₹)</label>
+          <input class="sip-input" type="number" id="sipAmt" placeholder="e.g. 10000">
+        </div>
+        <div class="sip-field">
+          <label>Frequency</label>
+          <select class="sip-input" id="sipFreq">
+            <option value="12">Monthly</option>
+            <option value="4">Quarterly</option>
+            <option value="1">Yearly</option>
+          </select>
+        </div>
+        <div class="sip-field">
+          <label>Period (Years)</label>
+          <input class="sip-input" type="number" id="sipYrs" placeholder="e.g. 10">
+        </div>
+        <div class="sip-field">
+          <label>Expected Returns (%)</label>
+          <input class="sip-input" type="number" id="sipRate" placeholder="e.g. 12">
+        </div>
+        <div class="sip-field" style="grid-column:1/-1">
+          <label>Inflation Adjustment</label>
+          <select class="sip-input" id="sipInfl">
+            <option value="0">No Adjustment</option>
+            <option value="6">6%</option>
+            <option value="7">7%</option>
+            <option value="8">8%</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="calcSip()" style="width:100%;font-family:var(--font-body);font-size:14px;cursor:pointer;border:none;">Calculate Returns</button>
+      <div class="sip-result" id="sipRes">
+        <div><div class="sip-rn" id="sInv">₹0</div><div class="sip-rl">Invested</div></div>
+        <div><div class="sip-rn" id="sGain">₹0</div><div class="sip-rl">Returns</div></div>
+        <div><div class="sip-rn" id="sTotal">₹0</div><div class="sip-rl">Total Value</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values" id="values">
+  <div class="reveal" style="text-align:center;">
+    <div class="section-label" style="justify-content:center;">Core Values</div>
+    <h2 class="section-title">We <span class="orange">Believe</span> In</h2>
+  </div>
+  <div class="values-grid">
+    <div class="val-item reveal">
+      <div class="val-circle"><div class="val-letter">R</div><div class="val-sub">Relationship</div></div>
+      <div class="val-label">Relationship</div>
+    </div>
+    <div class="val-item reveal" style="transition-delay:0.1s">
+      <div class="val-circle"><div class="val-letter">I</div><div class="val-sub">Integrity</div></div>
+      <div class="val-label">Integrity</div>
+    </div>
+    <div class="val-item reveal" style="transition-delay:0.2s">
+      <div class="val-circle"><div class="val-letter">S</div><div class="val-sub">Simplicity</div></div>
+      <div class="val-label">Simplicity</div>
+    </div>
+    <div class="val-item reveal" style="transition-delay:0.3s">
+      <div class="val-circle"><div class="val-letter">K</div><div class="val-sub">Knowledge</div></div>
+      <div class="val-label">Knowledge</div>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="approach" id="approach">
+  <div class="approach-inner">
+    <div class="reveal">
+      <div class="section-label">Our Approach</div>
+      <h2 class="section-title">Everything Revolves Around <span class="orange">You</span></h2>
+      <p class="section-body">Combining our in-depth knowledge and innovative technology, we create a plan tailored to your complex needs. Your financial consultant — backed by an experienced team — can help you navigate every important decision.</p>
+      <br><br>
+      <a href="#contact" class="btn-primary">Let's Talk!</a>
+    </div>
+    <div class="approach-diagram reveal" style="transition-delay:0.2s">
+      <div class="ap-node"><span class="ap-icon">🎯</span><div class="ap-lbl">Guide</div></div>
+      <div class="ap-node"><span class="ap-icon">🤝</span><div class="ap-lbl">Meet</div></div>
+      <div class="ap-center"><span class="ap-icon" style="font-size:32px;">YOU</span><div class="ap-lbl">At The Center</div></div>
+      <div class="ap-node"><span class="ap-icon">📋</span><div class="ap-lbl">Plan</div></div>
+      <div class="ap-node"><span class="ap-icon">📊</span><div class="ap-lbl">Report</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ENTREPRENEURIAL -->
+<section class="entre" id="entrepreneurial">
+  <div class="entre-inner">
+    <div class="reveal">
+      <div class="section-label">Entrepreneurial Initiative</div>
+      <h2 class="section-title">Your Legacy <span class="orange">Awaits You Here</span></h2>
+      <p class="section-body">Our platform offers the ideal foundation for anyone looking to make their mark in the finance industry.</p>
+      <ul class="entre-list">
+        <li>Become a Financial Partner with EPM Wealth</li>
+        <li>Access exclusive training & certification programs</li>
+        <li>Build your own client portfolio from day one</li>
+        <li>Earn passive income through referral networks</li>
+        <li>Get mentored by industry veterans</li>
+        <li>Scale with our proven frameworks</li>
+      </ul>
+      <a href="#contact" class="btn-primary">Start Your Journey</a>
+    </div>
+    <div class="entre-cards reveal" style="transition-delay:0.2s">
+      <div class="e-card">
+        <div class="e-num">01</div>
+        <div class="e-title">Wealth Creation</div>
+        <div class="e-text">Strategic mutual fund investments, equity portfolios, and SIPs designed for long-term wealth accumulation.</div>
+      </div>
+      <div class="e-card">
+        <div class="e-num">02</div>
+        <div class="e-title">Wealth Protection</div>
+        <div class="e-text">Comprehensive insurance solutions, estate planning, and risk management strategies to safeguard what you've built.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div style="text-align:center;" class="reveal">
+    <div class="section-label" style="justify-content:center;">People Are Talking</div>
+    <h2 class="section-title" style="color:var(--white);">What Our Clients <span class="orange">Are Saying</span></h2>
+  </div>
+  <div class="testi-track-wrap">
+    <div class="testi-track" id="testiTrack">
+      <div class="testi-slide">
+        <div class="t-card">
+          <div class="t-quote">"I am grateful to have EPM Wealth as my financial advisor. Their services have always been exceptional in every way."</div>
+          <div class="t-author">
+            <div class="t-av">S</div>
+            <div><div class="t-name">Shantanu Gupta</div><div class="t-role">Managing Director, Roots Group Of Institutes</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-slide">
+        <div class="t-card">
+          <div class="t-quote">"EPM Wealth helped me build a diversified portfolio and understand my financial health in a way no one else had done before."</div>
+          <div class="t-author">
+            <div class="t-av">R</div>
+            <div><div class="t-name">Rajesh Gupta</div><div class="t-role">Business Owner, Delhi NCR</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-slide">
+        <div class="t-card">
+          <div class="t-quote">"From the first consultation to ongoing support, the team has been outstanding. I feel genuinely guided at every step."</div>
+          <div class="t-author">
+            <div class="t-av">P</div>
+            <div><div class="t-name">Priya Verma</div><div class="t-role">IT Professional, Lucknow</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-slide">
+        <div class="t-card">
+          <div class="t-quote">"Their SIP strategy helped my family achieve financial security. Truly professional and personalised guidance."</div>
+          <div class="t-author">
+            <div class="t-av">A</div>
+            <div><div class="t-name">Anita Sharma</div><div class="t-role">Homemaker & Investor, Noida</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="t-nav" id="tNav"></div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section" id="portfolio">
+  <div class="cta-box reveal">
+    <span class="cta-tag">Free Consultation</span>
+    <div class="section-label" style="justify-content:center;">Schedule a Meeting</div>
+    <h2 class="section-title" style="color:var(--white);">Let's Talk About <span class="orange">Your Portfolio</span></h2>
+    <div class="cta-meta">
+      <div class="cta-m"><div class="cta-dot"></div>30 minutes</div>
+      <div class="cta-m"><div class="cta-dot"></div>Web conferencing</div>
+      <div class="cta-m"><div class="cta-dot"></div>India Standard Time</div>
+    </div>
+    <p class="cta-p">Take control of your investments with a personalized consultation from an EPM Wealth expert. In just 20–30 minutes, you'll gain valuable insights into your portfolio.</p>
+    <a href="#contact" class="btn-primary">Book Your Free Consultation →</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div style="text-align:center;" class="reveal">
+    <div class="section-label" style="justify-content:center;">Get In Touch</div>
+    <h2 class="section-title">Contact <span class="orange">Us</span></h2>
+  </div>
+  <div class="contact-grid">
+    <div class="reveal">
+      <h3 class="contact-form-title">Get In <span class="orange">Touch!</span></h3>
+      <p class="form-sub">Fill in the form and we'll get back to you within 24 hours.</p>
+      <form onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="form-field"><label>First Name *</label><input type="text" placeholder="First Name" required></div>
+          <div class="form-field"><label>Last Name *</label><input type="text" placeholder="Last Name" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label>Phone</label><input type="tel" placeholder="+91 XXXXX XXXXX"></div>
+          <div class="form-field"><label>Email</label><input type="email" placeholder="you@example.com"></div>
+        </div>
+        <div class="form-field"><label>Message</label><textarea placeholder="How can we help you?"></textarea></div>
+        <button type="submit" class="btn-primary" style="width:100%;font-family:var(--font-body);font-size:14px;cursor:pointer;border:none;padding:16px;">Submit Message</button>
+      </form>
+      <div class="form-ok" id="formOk">✅ Thank you! We'll get back to you within 24 hours.</div>
+    </div>
+    <div class="reveal" style="transition-delay:0.2s">
+      <h3 class="contact-info-title">Visit Or Call Us</h3>
+      <div class="c-detail">
+        <div class="c-icon">📍</div>
+        <div><div class="c-lbl">Address</div><div class="c-val">612-A, 6th Floor, Wave Silver Tower,<br>Sector-18, Noida, UP 201301</div></div>
+      </div>
+      <div class="c-detail">
+        <div class="c-icon">📞</div>
+        <div><div class="c-lbl">Phone</div><div class="c-val"><a href="tel:+911204264717">+91 0120 426 4717</a><br><a href="tel:+919899939333">+91 9899939333</a></div></div>
+      </div>
+      <div class="c-detail">
+        <div class="c-icon">✉️</div>
+        <div><div class="c-lbl">Email</div><div class="c-val"><a href="mailto:info@epmwealth.com">info@epmwealth.com</a></div></div>
+      </div>
+      <div class="c-detail">
+        <div class="c-icon">🏅</div>
+        <div><div class="c-lbl">Registrations</div><div class="c-val">AMFI Registered — Code 100255<br>BSE Registered — Code 1197501</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">EPM <span>Wealth</span></div>
+      <p class="footer-p">Bridging the gap between your reality and your purpose. AMFI & BSE registered wealth management firm helping individuals achieve financial independence.</p>
+      <div class="footer-badges">
+        <div class="f-badge">AMFI 100255</div>
+        <div class="f-badge">BSE 1197501</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="#about">About Us</a>
+      <a href="#services">Solutions</a>
+      <a href="#entrepreneurial">Entrepreneurial</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <a href="https://www.instagram.com/epm_wealth/" target="_blank">📷 Instagram</a>
+      <a href="https://www.youtube.com/@epmwealth101" target="_blank">▶ YouTube</a>
+      <a href="https://www.linkedin.com/company/epm-wealth/" target="_blank">in LinkedIn</a>
+      <a href="https://www.facebook.com/epmwealthadvisor" target="_blank">f Facebook</a>
+    </div>
+    <div class="footer-col">
+      <h4>Office</h4>
+      <div class="f-addr">
+        <strong>EPM Wealth</strong>
+        Wave Silver Tower,<br>Sector-18, Noida 201301<br><br>
+        <a href="tel:+911204264717" style="color:var(--orange);text-decoration:none;">+91 0120 426 4717</a><br>
+        <a href="mailto:info@epmwealth.com" style="color:rgba(255,255,255,0.35);text-decoration:none;">info@epmwealth.com</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-div"></div>
+  <div class="footer-bot">
+    <span>Copyright © 2025 EPM Wealth. All Rights Reserved.</span>
+    <div>
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+      <a href="#">Disclaimer</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ─── MOBILE NAV ─── */
+const navToggle = document.getElementById('navToggle');
+const mobileNav = document.getElementById('mobileNav');
+const mobileClose = document.getElementById('mobileClose');
+navToggle.addEventListener('click', () => mobileNav.classList.add('open'));
+mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
+function closeMobileNav() { mobileNav.classList.remove('open'); }
+
+/* ─── NAVBAR SCROLL ─── */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.style.boxShadow = window.scrollY > 60 ? '0 4px 30px rgba(0,0,0,0.4)' : '0 2px 20px rgba(0,0,0,0.3)';
+});
+
+/* ─── SCROLL REVEAL ─── */
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => revealObserver.observe(el));
+
+/* ─── HERO COUNTER ─── */
+function animateCounter(el, target, suffix, duration) {
+  let start = 0;
+  const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) { start = target; clearInterval(timer); }
+    el.textContent = Math.floor(start).toLocaleString() + suffix;
+  }, 16);
+}
+setTimeout(() => {
+  document.querySelectorAll('[data-target]').forEach(el => {
+    animateCounter(el, parseInt(el.dataset.target), el.dataset.suffix || '', 1800);
+  });
+}, 600);
+
+/* ─── SIP CALCULATOR ─── */
+function calcSip() {
+  const P = parseFloat(document.getElementById('sipAmt').value) || 0;
+  const n = parseInt(document.getElementById('sipFreq').value) || 12;
+  const Y = parseFloat(document.getElementById('sipYrs').value) || 0;
+  let R = parseFloat(document.getElementById('sipRate').value) || 0;
+  const infl = parseFloat(document.getElementById('sipInfl').value) || 0;
+  R = Math.max(0, R - infl);
+  const r = R / 100 / n;
+  const tt = n * Y;
+  const maturity = r === 0 ? P * tt : P * ((Math.pow(1 + r, tt) - 1) / r) * (1 + r);
+  const invested = P * tt;
+  const gains = maturity - invested;
+  const fmt = v => '₹' + Math.round(v).toLocaleString('en-IN');
+  document.getElementById('sInv').textContent = fmt(invested);
+  document.getElementById('sGain').textContent = fmt(gains);
+  document.getElementById('sTotal').textContent = fmt(maturity);
+  document.getElementById('sipRes').classList.add('show');
+}
+
+/* ─── TESTIMONIALS ─── */
+let testiIdx = 0;
+const testiSlides = document.querySelectorAll('.testi-slide');
+const tNav = document.getElementById('tNav');
+testiSlides.forEach((_, i) => {
+  const d = document.createElement('button');
+  d.className = 't-dot' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => goTesti(i));
+  tNav.appendChild(d);
+});
+function goTesti(i) {
+  testiIdx = i;
+  document.getElementById('testiTrack').style.transform = `translateX(${-i * 100}%)`;
+  document.querySelectorAll('.t-dot').forEach((d, j) => d.classList.toggle('active', j === i));
+}
+setInterval(() => goTesti((testiIdx + 1) % testiSlides.length), 5000);
+
+/* ─── CONTACT FORM ─── */
+function submitForm(e) {
+  e.preventDefault();
+  const ok = document.getElementById('formOk');
+  ok.style.display = 'block';
+  e.target.reset();
+}
+
+/* ─── SMOOTH NAV LINKS ─── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
+</body>
+</html>

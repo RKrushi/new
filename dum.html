@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buildcraft | Construction Company</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Exact theme matching the design -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F97316',
+                        dark: '#0F172A',
+                        muted: '#64748B'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .shadow-soft {
+                box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 font-sans">
+
+<!-- Sticky Navigation Bar -->
+<header class="sticky top-0 z-50 bg-white shadow-sm">
+    <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+            <div class="font-bold text-lg flex items-center gap-2">
+                <i class="fa fa-building text-primary"></i>
+                <span>Buildcraft</span>
+            </div>
+
+            <nav class="hidden md:flex items-center gap-8 text-sm">
+                <a href="#" class="text-primary font-medium">Home</a>
+                <a href="#" class="hover:text-primary transition">About Us <i class="fa fa-angle-down ml-1 text-xs"></i></a>
+                <a href="#" class="hover:text-primary transition">Services <i class="fa fa-angle-down ml-1 text-xs"></i></a>
+                <a href="#" class="hover:text-primary transition">Portfolio</a>
+                <a href="#" class="hover:text-primary transition">Pages <i class="fa fa-angle-down ml-1 text-xs"></i></a>
+                <div class="flex items-center gap-3">
+                    <input type="text" placeholder="Search" class="border rounded px-3 py-1 text-xs">
+                    <i class="fa fa-search"></i>
+                </div>
+            </nav>
+
+            <button class="md:hidden text-xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+    </div>
+</header>
+
+
+<!-- Hero Banner Section -->
+<section class="relative h-[520px] bg-gray-900 overflow-hidden">
+    <img src="https://picsum.photos/id/1031/1920/800" class="absolute inset-0 w-full h-full object-cover opacity-90" alt="Modern building">
+    
+    <!-- Gradient overlay exactly like the original -->
+    <div class="absolute inset-0 bg-gradient-to-r from-dark/80 to-transparent"></div>
+
+    <div class="container mx-auto px-6 relative h-full flex items-center">
+        <div class="max-w-xl text-white z-10">
+            <p class="text-primary mb-2 text-sm font-medium">We build. We Craft.</p>
+            <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold leading-tight mb-4">
+                Building Dreams<br>Through Construction
+            </h1>
+            <p class="text-white/80 mb-8 text-sm">
+                Deliver powerful results there is no compromise. Quality, permanent planning and impartial service.
+            </p>
+            <div class="flex gap-4 flex-wrap">
+                <button class="bg-primary px-6 py-3 rounded text-sm font-medium hover:bg-primary/90 transition">
+                    Get Started <i class="fa fa-arrow-right ml-2"></i>
+                </button>
+                <button class="border border-white/40 px-6 py-3 rounded text-sm font-medium hover:bg-white/10 transition">
+                    Our Portfolio
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Client / Partner Logo Bar -->
+<section class="py-12 border-b border-gray-100">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 items-center justify-items-center text-muted opacity-70">
+            <div class="font-bold">LOGOIPSUM</div>
+            <div class="font-bold">logoipsum</div>
+            <div class="font-bold">logoipsum</div>
+            <div class="font-bold">logoipsum</div>
+            <div class="font-bold">LOGOIPSUM</div>
+        </div>
+    </div>
+</section>
+
+
+<!-- About Us Section -->
+<section class="py-20">
+    <div class="container mx-auto px-6">
+        <div class="grid md:grid-cols-12 gap-10 items-center">
+            <div class="md:col-span-5 bg-gray-50 p-10">
+                <p class="text-xs text-muted uppercase mb-2">ABOUT US</p>
+                <h2 class="text-2xl font-bold mb-4">Improving properties for your satisfaction</h2>
+                <p class="text-muted text-sm mb-6">
+                    With years of experience in the industry, we are committed to delivering exceptional results that exceed our clients expectations.
+                </p>
+            </div>
+
+            <div class="md:col-span-4 text-sm text-muted">
+                <p>From demolition and finish performed it means complete pattern. Plausible voluptatum. Quasi and fugiat molestias. Our advantage build premium experience since 2002. Works completed and delivered on time.</p>
+            </div>
+
+            <div class="md:col-span-3 relative">
+                <img src="https://picsum.photos/id/20/600/500" class="rounded shadow-soft" alt="Construction workers">
+            </div>
+
+            <div class="md:col-start-7 md:col-span-3">
+                <button class="bg-primary px-6 py-3 rounded text-white text-sm font-medium hover:bg-primary/90 transition">
+                    Read About Us
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Overlapping CTA Section -->
+<section class="py-12">
+    <div class="container mx-auto px-6 relative">
+        <img src="https://picsum.photos/id/180/1600/500" class="w-full h-72 object-cover rounded" alt="Blueprints">
+        
+        <!-- Overlapping card exactly as in the original design -->
+        <div class="absolute right-12 top-1/2 -translate-y-1/2 bg-white shadow-soft p-8 max-w-md w-[90%]">
+            <h3 class="text-xl font-bold mb-4">Let's work together to create sustainable and innovative construction solutions</h3>
+            <p class="text-muted text-sm mb-6">Custom ground up development, general contracting and pre construction services.</p>
+            <button class="bg-primary px-6 py-3 rounded text-white text-sm font-medium">
+                Get A Quote
+            </button>
+        </div>
+    </div>
+</section>
+
+
+<!-- Services Grid Section -->
+<section class="py-20">
+    <div class="container mx-auto px-6">
+        <p class="text-xs text-muted uppercase mb-2">OUR SERVICES</p>
+        <h2 class="text-2xl font-bold mb-12">Listen Better. Plan Better. Build Better.</h2>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            
+            <!-- Highlighted Active Card -->
+            <div class="bg-primary text-white p-8 rounded shadow-soft">
+                <div class="w-10 h-10 bg-white/20 rounded flex items-center justify-center mb-4">
+                    <i class="fa fa-building-o"></i>
+                </div>
+                <h4 class="font-bold mb-3">General Contracting</h4>
+                <p class="text-white/80 text-sm mb-6">Full service commercial and residential construction management.</p>
+                <a href="#" class="text-sm font-medium underline">Learn More</a>
+            </div>
+
+            <!-- Standard Service Cards -->
+            <div class="bg-white border border-gray-100 p-8 rounded shadow-soft hover:shadow-lg transition">
+                <div class="w-10 h-10 bg-primary rounded flex items-center justify-center mb-4 text-white">
+                    <i class="fa fa-tasks"></i>
+                </div>
+                <h4 class="font-bold mb-3">Construction Management</h4>
+                <p class="text-muted text-sm mb-6">Full oversight and management for all project phases.</p>
+                <a href="#" class="text-primary text-sm font-medium">Learn More</a>
+            </div>
+
+            <div class="bg-white border border-gray-100 p-8 rounded shadow-soft hover:shadow-lg transition">
+                <div class="w-10 h-10 bg-primary rounded flex items-center justify-center mb-4 text-white">
+                    <i class="fa fa-file-text-o"></i>
+                </div>
+                <h4 class="font-bold mb-3">Design and Build</h4>
+                <p class="text-muted text-sm mb-6">Turnkey design and construction complete solution.</p>
+                <a href="#" class="text-primary text-sm font-medium">Learn More</a>
+            </div>
+
+
+            <div class="bg-white border border-gray-100 p-8 rounded shadow-soft hover:shadow-lg transition">
+                <div class="w-10 h-10 bg-primary rounded flex items-center justify-center mb-4 text-white">
+                    <i class="fa fa-bar-chart"></i>
+                </div>
+                <h4 class="font-bold mb-3">Pre-construction Consulting</h4>
+                <p class="text-muted text-sm mb-6">Feasibility, budgeting and pre project planning.</p>
+                <a href="#" class="text-primary text-sm font-medium">Learn More</a>
+            </div>
+
+            <div class="bg-white border border-gray-100 p-8 rounded shadow-soft hover:shadow-lg transition">
+                <div class="w-10 h-10 bg-primary rounded flex items-center justify-center mb-4 text-white">
+                    <i class="fa fa-wrench"></i>
+                </div>
+                <h4 class="font-bold mb-3">House Renovations</h4>
+                <p class="text-muted text-sm mb-6">Remodeling and renovation for residential properties.</p>
+                <a href="#" class="text-primary text-sm font-medium">Learn More</a>
+            </div>
+
+            <div class="bg-white border border-gray-100 p-8 rounded shadow-soft hover:shadow-lg transition">
+                <div class="w-10 h-10 bg-primary rounded flex items-center justify-center mb-4 text-white">
+                    <i class="fa fa-star-o"></i>
+                </div>
+                <h4 class="font-bold mb-3">Special Projects</h4>
+                <p class="text-muted text-sm mb-6">Custom and specialty construction projects.</p>
+                <a href="#" class="text-primary text-sm font-medium">Learn More</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    // Very simple sticky nav scroll effect
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('header')
+        header.classList.toggle('shadow-md', window.scrollY > 50)
+    })
+</script>
+
+</body>
+</html>

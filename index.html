@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Theme Selector</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    text-align:center;
+}
+
+button{
+    padding:15px 30px;
+    margin:10px;
+    font-size:18px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#1e3a8a;
+    color:white;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#0f172a;
+    transform:scale(1.05);
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>Select Theme</h2>
+
+    <button onclick="openTheme1()">Theme 1</button>
+    <button onclick="openTheme2()">Theme 2</button>
+</div>
+
+<script>
+function openTheme1(){
+    window.location.href="them2.html";
+}
+
+function openTheme2(){
+    window.location.href="them3.html";
+}
+</script>
+
+</body>
+</html>
