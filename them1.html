@@ -44,60 +44,191 @@ body{font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--off-whit
 ::-webkit-scrollbar-track{background:var(--cream);}
 ::-webkit-scrollbar-thumb{background:var(--sage);border-radius:3px;}
 
-/* NAV */
-nav{position:sticky;top:0;z-index:200;background:white;border-bottom:1px solid var(--border);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:70px;box-shadow:var(--shadow-sm);}
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:300;
+  background:white;border-bottom:1px solid var(--border);
+  padding:0 5%;display:flex;align-items:center;justify-content:space-between;
+  height:70px;box-shadow:var(--shadow-sm);
+}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.nav-logo-icon{width:38px;height:38px;border-radius:var(--radius-sm);background:var(--sage-light);border:1.5px solid var(--sage);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.nav-logo-img{height:50px;width:auto;object-fit:contain;}
 .nav-logo-text{display:flex;flex-direction:column;line-height:1.1;}
 .nav-logo-main{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--ink);letter-spacing:1px;}
 .nav-logo-sub{font-size:9px;letter-spacing:2px;color:var(--ink-soft);text-transform:uppercase;font-weight:500;}
 .nav-links{display:flex;align-items:center;gap:28px;}
 .nav-link{font-size:13px;color:var(--ink-mid);text-decoration:none;font-weight:500;transition:color .2s;}
 .nav-link:hover{color:var(--sage-dark);}
-.nav-cta{padding:9px 22px;background:var(--sage-light);border:1.5px solid var(--sage);border-radius:50px;font-size:13px;font-weight:600;color:var(--sage-dark);text-decoration:none;transition:background .2s;}
-.nav-cta:hover{background:var(--sage);color:white;}
+.nav-cta{
+  padding:9px 22px;background:var(--sage-dark);color:white;
+  border-radius:50px;font-size:13px;font-weight:600;
+  text-decoration:none;transition:background .2s,box-shadow .2s;
+  box-shadow:0 4px 14px rgba(111,160,144,0.3);
+}
+.nav-cta:hover{background:var(--sage);box-shadow:0 6px 20px rgba(111,160,144,0.4);}
 
-/* TICKER */
-.ticker-wrap{background:var(--sage-light);border-bottom:1px solid var(--sage);overflow:hidden;padding:9px 0;}
+/* ── TICKER ── */
+.ticker-wrap{background:var(--sage-dark);overflow:hidden;padding:9px 0;}
 .ticker-inner{display:flex;white-space:nowrap;width:max-content;animation:tickerSlide 30s linear infinite;}
-.ticker-item{padding:0 28px;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--sage-dark);font-weight:600;flex-shrink:0;}
+.ticker-item{padding:0 28px;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.8);font-weight:600;flex-shrink:0;}
 .ticker-item::after{content:'◆';margin-left:28px;opacity:0.35;}
 @keyframes tickerSlide{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
-/* HERO */
-.hero{background:linear-gradient(150deg,var(--sky-light) 0%,var(--sage-light) 55%,var(--butter-light) 100%);padding:90px 7% 80px;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;border-bottom:1px solid var(--border);}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:white;border:1.5px solid var(--border);border-radius:50px;padding:6px 16px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:26px;}
-.badge-dot{width:7px;height:7px;border-radius:50%;background:var(--sage-dark);}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(40px,5.5vw,70px);font-weight:600;line-height:1.1;color:var(--ink);margin-bottom:20px;}
-.hero h1 em{font-style:italic;color:var(--sage-dark);}
-.hero-sub{font-size:15.5px;color:var(--ink-mid);line-height:1.8;max-width:460px;border-left:3px solid var(--sage);padding-left:16px;margin-bottom:36px;}
+/* ══════════════════════════════════════
+   HERO — Full-screen video background
+══════════════════════════════════════ */
+.hero{
+  position:relative;       /* stacking context */
+  min-height:92vh;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+/* ① Video: true absolute background, never participates in layout */
+.hero-video-bg{
+  position:absolute !important;
+  inset:0;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover;
+  object-position:center center;
+  z-index:0;
+  display:block;
+  pointer-events:none;
+}
+
+/* ② Dark gradient overlay for readability */
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:linear-gradient(
+    110deg,
+    rgba(10,28,22,0.86) 0%,
+    rgba(15,38,30,0.80) 48%,
+    rgba(10,24,38,0.76) 100%
+  );
+  pointer-events:none;
+}
+
+/* ③ All hero content: above video + overlay */
+.hero-content{
+  position:relative;
+  z-index:2;
+  width:100%;
+  padding:90px 7% 80px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:72px;
+  align-items:center;
+}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:50px;padding:7px 18px;
+  font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(255,255,255,.85);font-weight:600;margin-bottom:26px;
+  backdrop-filter:blur(6px);
+}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:#7ECFB0;flex-shrink:0;}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(40px,5.5vw,72px);
+  font-weight:600;line-height:1.1;
+  color:#FFFFFF;margin-bottom:20px;
+}
+.hero h1 em{font-style:italic;color:#7ECFB0;}
+
+.hero-sub{
+  font-size:15.5px;color:rgba(255,255,255,.72);
+  line-height:1.85;max-width:460px;
+  border-left:3px solid rgba(126,207,176,.5);
+  padding-left:16px;margin-bottom:36px;
+}
+
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
-.btn-primary{padding:12px 28px;background:var(--sage-dark);color:white;border-radius:50px;font-size:13px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;transition:background .2s;box-shadow:0 4px 14px rgba(111,160,144,0.3);}
-.btn-primary:hover{background:var(--sage);}
-.btn-secondary{padding:12px 26px;background:white;color:var(--ink-mid);border-radius:50px;font-size:13px;font-weight:500;text-decoration:none;border:1.5px solid var(--border);display:inline-flex;align-items:center;gap:8px;transition:border-color .2s,color .2s;}
-.btn-secondary:hover{border-color:var(--sage);color:var(--sage-dark);}
-.hero-stats{display:flex;gap:36px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border);}
-.h-stat-num{font-family:'Playfair Display',serif;font-size:38px;font-weight:600;color:var(--sage-dark);line-height:1;}
-.h-stat-label{font-size:11px;color:var(--ink-soft);margin-top:4px;}
+.btn-primary{
+  padding:13px 30px;background:var(--sage-dark);color:white;
+  border-radius:50px;font-size:13.5px;font-weight:600;
+  text-decoration:none;display:inline-flex;align-items:center;gap:9px;
+  border:none;cursor:pointer;
+  transition:background .2s,box-shadow .2s,transform .15s;
+  box-shadow:0 4px 18px rgba(111,160,144,0.45);
+}
+.btn-primary:hover{background:#5a8f7e;transform:translateY(-2px);box-shadow:0 8px 28px rgba(111,160,144,0.5);}
+.btn-secondary{
+  padding:13px 28px;background:rgba(255,255,255,.1);
+  color:rgba(255,255,255,.88);
+  border-radius:50px;font-size:13.5px;font-weight:500;
+  text-decoration:none;
+  border:1.5px solid rgba(255,255,255,.3);
+  display:inline-flex;align-items:center;gap:9px;
+  backdrop-filter:blur(8px);
+  transition:background .2s,border-color .2s;
+}
+.btn-secondary:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.55);}
+
+.hero-stats{
+  display:flex;gap:44px;margin-top:52px;
+  padding-top:36px;border-top:1px solid rgba(255,255,255,.14);
+}
+.h-stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:40px;font-weight:600;color:#7ECFB0;line-height:1;
+}
+.h-stat-label{font-size:11px;color:rgba(255,255,255,.45);margin-top:5px;letter-spacing:.3px;}
+
+/* Hero right card — floats over video */
 .hero-visual{position:relative;}
-.hero-card-main{background:white;border-radius:var(--radius-lg);padding:36px;box-shadow:var(--shadow-lg);border:1px solid var(--border);}
-.hero-card-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--sage-dark);font-weight:700;margin-bottom:12px;}
-.hero-card-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--ink);margin-bottom:18px;}
+.hero-card-main{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:var(--radius-lg);padding:36px;
+  backdrop-filter:blur(18px);
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+.hero-card-tag{
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:#7ECFB0;font-weight:700;margin-bottom:12px;
+}
+.hero-card-title{
+  font-family:'Playfair Display',serif;font-size:20px;
+  color:#FFFFFF;margin-bottom:18px;
+}
 .hero-pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;}
 .hero-pill{padding:6px 14px;border-radius:50px;font-size:12px;font-weight:500;}
-.pill-sage{background:var(--sage-light);color:var(--sage-dark);}
-.pill-sky{background:var(--sky-light);color:var(--sky-dark);}
-.pill-blush{background:var(--blush-light);color:#9a5a5a;}
-.pill-lavender{background:var(--lav-light);color:#6e5ea0;}
-.hero-card-bottom{display:flex;align-items:center;gap:12px;padding-top:18px;border-top:1px solid var(--border);}
-.hc-avatar{width:40px;height:40px;border-radius:50%;background:var(--sage-light);border:2px solid var(--sage);display:flex;align-items:center;justify-content:center;font-size:18px;}
-.hc-meta-label{font-size:10.5px;color:var(--ink-soft);}
-.hc-meta-val{font-size:13.5px;font-weight:600;color:var(--ink);}
-.hero-card-float{position:absolute;bottom:-18px;right:-18px;background:var(--butter-light);border:1.5px solid var(--butter);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);text-align:center;}
+.pill-sage{background:rgba(126,207,176,.18);color:#7ECFB0;border:1px solid rgba(126,207,176,.3);}
+.pill-sky{background:rgba(182,212,232,.15);color:#a8d4e8;border:1px solid rgba(182,212,232,.25);}
+.pill-blush{background:rgba(232,201,201,.15);color:#e8c9c9;border:1px solid rgba(232,201,201,.25);}
+.pill-lavender{background:rgba(201,192,220,.15);color:#c9c0dc;border:1px solid rgba(201,192,220,.25);}
+.hero-card-bottom{
+  display:flex;align-items:center;gap:12px;
+  padding-top:18px;border-top:1px solid rgba(255,255,255,.14);
+}
+.hc-avatar{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(126,207,176,.2);border:2px solid rgba(126,207,176,.4);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+.hc-meta-label{font-size:10.5px;color:rgba(255,255,255,.45);}
+.hc-meta-val{font-size:13.5px;font-weight:600;color:rgba(255,255,255,.88);}
+.hero-card-float{
+  position:absolute;bottom:-18px;right:-18px;
+  background:rgba(250,245,220,.95);
+  border:1.5px solid var(--butter);
+  border-radius:var(--radius);padding:16px 20px;
+  box-shadow:var(--shadow-lg);text-align:center;
+  backdrop-filter:blur(8px);
+}
 .hcf-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:600;color:var(--ink);}
 .hcf-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-soft);margin-top:2px;}
 
-/* SECTION COMMONS */
+/* ── SECTION COMMONS ── */
 .s-tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--sage-dark);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
 .s-tag::before{content:'';width:20px;height:2px;background:var(--sage);border-radius:2px;}
 .s-tag.center{justify-content:center;}
@@ -105,21 +236,22 @@ nav{position:sticky;top:0;z-index:200;background:white;border-bottom:1px solid v
 .s-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3.8vw,50px);font-weight:600;color:var(--ink);line-height:1.12;margin-bottom:14px;}
 .s-sub{font-size:15px;color:var(--ink-mid);line-height:1.8;max-width:560px;}
 
-/* ABOUT BAND */
+/* ── ABOUT BAND ── */
 .about-band{background:white;padding:68px 8%;border-bottom:1px solid var(--border);}
 .about-text{font-family:'Playfair Display',serif;font-size:clamp(17px,2vw,26px);font-weight:400;font-style:italic;color:var(--ink-mid);line-height:1.75;max-width:940px;margin:0 auto;text-align:center;}
 .about-hi{color:var(--sage-dark);font-style:normal;font-weight:600;}
 
-/* STATS */
+/* ── STATS ── */
 .stats-section{background:var(--sage-light);border-bottom:1px solid var(--sage);}
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);}
-.stat-card{padding:60px 32px;text-align:center;border-right:1px solid var(--sage);}
+.stat-card{padding:60px 32px;text-align:center;border-right:1px solid var(--sage);transition:background .2s;}
 .stat-card:last-child{border-right:none;}
+.stat-card:hover{background:rgba(111,160,144,.06);}
 .stat-n{font-family:'Playfair Display',serif;font-size:64px;font-weight:600;color:var(--sage-dark);line-height:1;}
 .stat-l{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-soft);margin-top:10px;}
 .stat-bar{width:36px;height:2px;background:var(--sage);margin:14px auto 0;border-radius:2px;}
 
-/* FEATURES */
+/* ── FEATURES ── */
 .features-section{padding:92px 7%;background:var(--off-white);}
 .feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:48px;}
 .feat-card{background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:36px 32px;display:flex;gap:22px;align-items:flex-start;box-shadow:var(--shadow-sm);transition:box-shadow .2s,border-color .2s;}
@@ -132,19 +264,19 @@ nav{position:sticky;top:0;z-index:200;background:white;border-bottom:1px solid v
 .feat-title{font-family:'Playfair Display',serif;font-size:19px;color:var(--ink);margin-bottom:9px;font-weight:600;}
 .feat-text{font-size:13.5px;color:var(--ink-soft);line-height:1.8;}
 
-/* SIP */
+/* ── SIP ── */
 .sip-section{padding:92px 7%;background:white;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
 .sip-box{max-width:800px;margin:44px auto 0;background:var(--cream);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:44px 40px;}
 .sip-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;}
 .sip-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--sage-dark);font-weight:700;display:block;margin-bottom:6px;}
 .sip-input{width:100%;padding:11px 13px;background:white;border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
 .sip-input:focus{border-color:var(--sage);}
-.sip-results{display:none;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:24px;padding:26px;background:var(--sage-light);border:1.5px solid var(--sage);border-radius:var(--radius);}
+.sip-results{display:none;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:24px;padding:26px;background:var(--sage-dark);border-radius:var(--radius);}
 .sip-results.show{display:flex;}
-.sip-rn{font-family:'Playfair Display',serif;font-size:34px;color:var(--sage-dark);font-weight:600;text-align:center;}
-.sip-rl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-soft);margin-top:5px;text-align:center;}
+.sip-rn{font-family:'Playfair Display',serif;font-size:34px;color:#fff;font-weight:600;text-align:center;}
+.sip-rl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:5px;text-align:center;}
 
-/* GALLERY */
+/* ── GALLERY ── */
 .gallery-section{padding:72px 0;background:var(--sky-light);border-top:1px solid var(--sky);border-bottom:1px solid var(--sky);overflow:hidden;}
 .gallery-hd{text-align:center;padding:0 8% 32px;}
 .gallery-track-wrap{overflow:hidden;position:relative;}
@@ -154,40 +286,40 @@ nav{position:sticky;top:0;z-index:200;background:white;border-bottom:1px solid v
 .gallery-track{display:flex;gap:14px;width:max-content;animation:autoSlide 24s linear infinite;}
 .gallery-track:hover{animation-play-state:paused;}
 @keyframes autoSlide{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-.gallery-item{flex-shrink:0;width:250px;height:172px;border-radius:var(--radius);overflow:hidden;border:1.5px solid rgba(182,212,232,0.5);background:white;box-shadow:var(--shadow-sm);transition:box-shadow .2s;}
+.gallery-item{flex-shrink:0;width:250px;height:172px;border-radius:var(--radius);overflow:hidden;border:1.5px solid rgba(182,212,232,.5);background:white;box-shadow:var(--shadow-sm);transition:box-shadow .2s;}
 .gallery-item:hover{box-shadow:var(--shadow);}
 .gallery-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
 .gallery-ph span{font-size:40px;}
 .gallery-ph p{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--sky-dark);font-weight:600;}
 
-/* VALUES */
+/* ── VALUES ── */
 .values-section{padding:92px 7%;background:var(--off-white);}
 .risk-row{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;margin-top:52px;}
 .risk-item{text-align:center;}
-.risk-circle{width:140px;height:140px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 14px;border:2px solid var(--border);background:white;box-shadow:var(--shadow-sm);transition:box-shadow .2s,border-color .2s;}
-.risk-circle:hover{box-shadow:var(--shadow);border-color:var(--sage);}
+.risk-circle{width:140px;height:140px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 14px;border:2px solid var(--border);background:white;box-shadow:var(--shadow-sm);transition:box-shadow .2s,border-color .2s,transform .2s;}
+.risk-circle:hover{box-shadow:var(--shadow);border-color:var(--sage);transform:translateY(-4px);}
 .risk-letter{font-family:'Playfair Display',serif;font-size:54px;font-weight:600;color:var(--sage-dark);line-height:1;}
 .risk-word{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-faint);margin-top:2px;}
 .risk-lbl{font-size:12px;color:var(--ink-soft);font-weight:500;}
 
-/* APPROACH */
+/* ── APPROACH ── */
 .approach-section{padding:92px 7%;background:white;border-top:1px solid var(--border);}
 .approach-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;max-width:1060px;margin:0 auto;}
 .approach-p{font-size:15px;color:var(--ink-mid);line-height:1.8;margin:14px 0;}
 .orb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px;}
-.orb-node-card{background:var(--off-white);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 14px;text-align:center;transition:border-color .2s;}
-.orb-node-card:hover{border-color:var(--sage);}
+.orb-node-card{background:var(--off-white);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 14px;text-align:center;transition:border-color .2s,box-shadow .2s;}
+.orb-node-card:hover{border-color:var(--sage);box-shadow:var(--shadow-sm);}
 .orb-node-icon{font-size:26px;margin-bottom:7px;display:block;}
 .orb-node-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sage-dark);font-weight:600;}
-.orb-you-card{background:var(--sage-light);border:2px solid var(--sage);border-radius:var(--radius);padding:22px 14px;text-align:center;}
-.orb-you-label{font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:var(--sage-dark);}
-.orb-you-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--sage-dark);opacity:0.65;margin-top:3px;}
+.orb-you-card{background:var(--sage-dark);border:2px solid var(--sage-dark);border-radius:var(--radius);padding:22px 14px;text-align:center;}
+.orb-you-label{font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:white;}
+.orb-you-sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.65);margin-top:3px;}
 
-/* WHY */
+/* ── WHY ── */
 .why-section{padding:92px 7%;background:var(--cream);}
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px;}
-.why-card{background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:32px 22px;text-align:center;box-shadow:var(--shadow-sm);transition:box-shadow .2s,border-color .2s;}
-.why-card:hover{box-shadow:var(--shadow);border-color:var(--sage);}
+.why-card{background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:32px 22px;text-align:center;box-shadow:var(--shadow-sm);transition:box-shadow .2s,border-color .2s,transform .2s;}
+.why-card:hover{box-shadow:var(--shadow);border-color:var(--sage);transform:translateY(-3px);}
 .why-icon-wrap{width:58px;height:58px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:26px;}
 .wi-1{background:var(--butter-light);}
 .wi-2{background:var(--sage-light);}
@@ -197,28 +329,29 @@ nav{position:sticky;top:0;z-index:200;background:white;border-bottom:1px solid v
 .why-title{font-family:'Playfair Display',serif;font-size:17px;color:var(--ink);margin-bottom:9px;font-weight:600;}
 .why-desc{font-size:12.5px;color:var(--ink-soft);line-height:1.75;}
 
-/* SERVICES */
+/* ── SERVICES ── */
 .services-section{padding:92px 7%;background:white;border-top:1px solid var(--border);}
 .svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:48px;}
-.svc-card{background:var(--off-white);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:28px 18px;text-align:center;text-decoration:none;display:block;transition:box-shadow .2s,border-color .2s,background .2s;}
-.svc-card:hover{background:white;box-shadow:var(--shadow);border-color:var(--sky);}
+.svc-card{background:var(--off-white);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:28px 18px;text-align:center;text-decoration:none;display:block;transition:box-shadow .2s,border-color .2s,background .2s,transform .2s;}
+.svc-card:hover{background:white;box-shadow:var(--shadow);border-color:var(--sky);transform:translateY(-3px);}
 .svc-icon{width:48px;height:48px;border-radius:50%;margin:0 auto 14px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;background:white;}
 .svc-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--ink);margin-bottom:7px;font-weight:600;}
 .svc-desc{font-size:12px;color:var(--ink-soft);line-height:1.7;}
 
-/* ENTREPRENEURIAL */
+/* ── ENTREPRENEURIAL ── */
 .entre-section{padding:92px 7%;background:var(--peach-light);border-top:1px solid var(--peach);border-bottom:1px solid var(--peach);}
 .entre-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
 .entre-list{list-style:none;margin-top:28px;}
-.entre-list li{padding:13px 0;border-bottom:1px solid rgba(240,208,180,0.4);display:flex;align-items:flex-start;gap:11px;font-size:14px;color:var(--ink-mid);}
+.entre-list li{padding:13px 0;border-bottom:1px solid rgba(240,208,180,.4);display:flex;align-items:flex-start;gap:11px;font-size:14px;color:var(--ink-mid);}
 .entre-list li i{color:var(--sage-dark);flex-shrink:0;margin-top:2px;}
 .entre-cards{display:flex;flex-direction:column;gap:16px;}
-.e-card{background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:32px 28px;box-shadow:var(--shadow-sm);}
+.e-card{background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:32px 28px;box-shadow:var(--shadow-sm);transition:box-shadow .2s,transform .2s;}
+.e-card:hover{box-shadow:var(--shadow);transform:translateY(-3px);}
 .e-num{font-family:'Playfair Display',serif;font-size:44px;font-weight:600;color:var(--sage-light);line-height:1;margin-bottom:4px;}
 .e-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--ink);margin-bottom:8px;font-weight:600;}
 .e-text{font-size:13.5px;color:var(--ink-soft);line-height:1.8;}
 
-/* TESTIMONIALS */
+/* ── TESTIMONIALS ── */
 .testi-section{padding:92px 7%;background:var(--lav-light);border-top:1px solid var(--lavender);border-bottom:1px solid var(--lavender);}
 .testi-track-wrap{overflow:hidden;max-width:860px;margin:44px auto 0;}
 .testi-track{display:flex;transition:transform .5s ease;}
@@ -234,7 +367,7 @@ nav{position:sticky;top:0;z-index:200;background:white;border-bottom:1px solid v
 .t-dot{width:8px;height:8px;border-radius:50%;background:var(--lavender);border:none;cursor:pointer;transition:width .2s,background .2s;}
 .t-dot.active{width:22px;border-radius:4px;background:#6e5ea0;}
 
-/* CTA */
+/* ── CTA ── */
 .cta-section{padding:92px 7%;background:var(--sage-light);border-top:1px solid var(--sage);text-align:center;}
 .cta-box{max-width:560px;margin:32px auto 0;background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:48px 44px;box-shadow:var(--shadow-lg);position:relative;}
 .cta-box-tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--sage-dark);color:white;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;padding:5px 16px;border-radius:50px;}
@@ -244,7 +377,7 @@ nav{position:sticky;top:0;z-index:200;background:white;border-bottom:1px solid v
 .cta-p{font-size:14px;color:var(--ink-mid);line-height:1.85;margin-bottom:26px;}
 .cta-note{font-size:11px;color:var(--ink-faint);margin-top:12px;}
 
-/* CONTACT */
+/* ── CONTACT ── */
 .contact-section{padding:92px 7%;background:white;}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;max-width:1060px;margin:52px auto 0;}
 .contact-form-title{font-family:'Playfair Display',serif;font-size:32px;color:var(--ink);margin-bottom:5px;font-weight:400;}
@@ -267,52 +400,55 @@ nav{position:sticky;top:0;z-index:200;background:white;border-bottom:1px solid v
 .c-val a{color:var(--ink-mid);text-decoration:none;transition:color .2s;}
 .c-val a:hover{color:var(--sage-dark);}
 
-/* FOOTER */
+/* ── FOOTER ── */
 footer{background:var(--ink);padding:68px 7% 28px;}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
 .footer-brand-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
 .footer-brand-icon{width:28px;height:28px;border-radius:var(--radius-sm);background:var(--sage-light);display:flex;align-items:center;justify-content:center;font-size:14px;}
 .footer-brand-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--sage-light);letter-spacing:1px;}
-.footer-p{font-size:13px;color:rgba(255,255,255,0.35);line-height:1.85;max-width:250px;}
+.footer-p{font-size:13px;color:rgba(255,255,255,.35);line-height:1.85;max-width:250px;}
 .footer-badges{display:flex;gap:7px;margin-top:18px;flex-wrap:wrap;}
-.f-badge{padding:5px 11px;border:1px solid rgba(184,212,200,0.22);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(184,212,200,0.55);font-weight:600;border-radius:4px;}
-.footer-col h4{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(184,212,200,0.75);margin-bottom:18px;font-weight:700;}
-.footer-col a{display:block;color:rgba(255,255,255,0.32);font-size:13px;margin-bottom:10px;transition:all .2s;text-decoration:none;}
+.f-badge{padding:5px 11px;border:1px solid rgba(184,212,200,.22);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(184,212,200,.55);font-weight:600;border-radius:4px;}
+.footer-col h4{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(184,212,200,.75);margin-bottom:18px;font-weight:700;}
+.footer-col a{display:block;color:rgba(255,255,255,.32);font-size:13px;margin-bottom:10px;transition:all .2s;text-decoration:none;}
 .footer-col a:hover{color:var(--sage-light);padding-left:4px;}
-.f-addr{font-size:12.5px;color:rgba(255,255,255,0.28);line-height:2;}
-.f-addr strong{color:rgba(184,212,200,0.55);display:block;margin-bottom:7px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;}
-.f-addr a{color:rgba(255,255,255,0.28);text-decoration:none;transition:color .2s;}
+.f-addr{font-size:12.5px;color:rgba(255,255,255,.28);line-height:2;}
+.f-addr strong{color:rgba(184,212,200,.55);display:block;margin-bottom:7px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;}
+.f-addr a{color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s;}
 .f-addr a:hover{color:var(--sage-light);}
-.footer-div{height:1px;background:rgba(255,255,255,0.07);margin-bottom:22px;}
-.footer-bot{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:rgba(255,255,255,0.2);flex-wrap:wrap;gap:10px;}
-.footer-bot a{color:rgba(255,255,255,0.2);margin-left:16px;text-decoration:none;transition:color .2s;}
+.footer-div{height:1px;background:rgba(255,255,255,.07);margin-bottom:22px;}
+.footer-bot{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:rgba(255,255,255,.2);flex-wrap:wrap;gap:10px;}
+.footer-bot a{color:rgba(255,255,255,.2);margin-left:16px;text-decoration:none;transition:color .2s;}
 .footer-bot a:hover{color:var(--sage-light);}
 
-/* SOCIAL */
+/* ── SOCIAL FLOAT ── */
 .social-float{position:fixed;left:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:7px;z-index:100;}
 .social-float a{width:32px;height:32px;border:1.5px solid var(--border);background:white;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink-soft);text-decoration:none;box-shadow:var(--shadow-sm);transition:border-color .2s,color .2s;}
 .social-float a:hover{border-color:var(--sage);color:var(--sage-dark);}
-.wa-btn{position:fixed;bottom:22px;left:18px;width:46px;height:46px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;z-index:200;box-shadow:0 4px 14px rgba(37,211,102,0.3);text-decoration:none;}
+.wa-btn{position:fixed;bottom:22px;left:18px;width:46px;height:46px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;z-index:200;box-shadow:0 4px 14px rgba(37,211,102,.3);text-decoration:none;}
 
-.pastel-div{height:1px;background:var(--border);margin:0;}
-/* logo*/
-.nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .why-grid,.svc-grid{grid-template-columns:repeat(2,1fr);}
+  .footer-grid{grid-template-columns:1fr 1fr;}
 }
-
-.nav-logo-img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
+@media(max-width:900px){
+  .hero-content,.entre-inner,.approach-inner,.contact-grid{grid-template-columns:1fr;gap:44px;}
+  .hero-card-float{display:none;}
+  .stats-grid{grid-template-columns:1fr;}
+  .stat-card{border-right:none;border-bottom:1px solid var(--sage);}
+  .hero{min-height:100svh;}
+  .hero-content{padding:80px 6% 60px;}
 }
-
-/* RESPONSIVE */
-@media(max-width:1100px){.why-grid,.svc-grid{grid-template-columns:repeat(2,1fr);}.footer-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:900px){.hero,.entre-inner,.approach-inner,.contact-grid{grid-template-columns:1fr;gap:44px;}.hero-card-float{display:none;}.stats-grid{grid-template-columns:1fr;}.stat-card{border-right:none;border-bottom:1px solid var(--sage);}}
-@media(max-width:700px){nav .nav-links{display:none;}.feat-grid,.why-grid,.svc-grid{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr;}.sip-grid,.form-row{grid-template-columns:1fr;}.social-float{display:none;}.orb-grid{grid-template-columns:repeat(2,1fr);}}
-
+@media(max-width:700px){
+  nav .nav-links{display:none;}
+  .feat-grid,.why-grid,.svc-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .sip-grid,.form-row{grid-template-columns:1fr;}
+  .social-float{display:none;}
+  .orb-grid{grid-template-columns:repeat(2,1fr);}
+  .hero-stats{flex-direction:column;gap:20px;}
+}
 </style>
 </head>
 <body>
@@ -325,15 +461,14 @@ footer{background:var(--ink);padding:68px 7% 28px;}
 </div>
 <a href="https://wa.me/919999939333" class="wa-btn" target="_blank">💬</a>
 
+<!-- NAV -->
 <nav>
   <a href="#home" class="nav-logo">
-    <div class="nav-logo">
     <img src="logo-emp.png" alt="EPM Wealth Logo" class="nav-logo-img">
     <div class="nav-logo-text">
-        <span class="nav-logo-main">EPM</span>
-        <span class="nav-logo-sub">Wealth</span>
+      <span class="nav-logo-main">EPM Wealth</span>
+      <span class="nav-logo-sub">Financial Independence</span>
     </div>
-</div>
   </a>
   <div class="nav-links">
     <a href="#about" class="nav-link">About</a>
@@ -345,6 +480,7 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </div>
 </nav>
 
+<!-- TICKER -->
 <div class="ticker-wrap">
   <div class="ticker-inner">
     <span class="ticker-item">AMFI Registered — Code 100255</span>
@@ -366,46 +502,63 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </div>
 </div>
 
+<!-- ══════════ HERO ══════════ -->
 <section class="hero" id="home">
-  <div>
-    <div class="hero-badge"><div class="badge-dot"></div>Attaining Financial Independence</div>
-    <h1>Wealth Is<br>More Than<br>Money</h1>
-    <p class="hero-sub">It all begins with you. At EPM we believe your wealth goes beyond money. We prioritise you, your loved ones, and your business — ensuring they remain at the heart of our every action.</p>
-    <div class="hero-btns">
-      <a href="#contact" class="btn-primary"><i class="fa fa-arrow-right"></i> Let's Talk!</a>
-      <a href="#about" class="btn-secondary"><i class="fa fa-compass"></i> Discover More</a>
-    </div>
-    <div class="hero-stats">
-      <div><div class="h-stat-num">100+</div><div class="h-stat-label">Cr+ AUM</div></div>
-      <div><div class="h-stat-num">1000+</div><div class="h-stat-label">Unique Clients</div></div>
-      <div><div class="h-stat-num">25+</div><div class="h-stat-label">Cities Served</div></div>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div class="hero-card-main">
-      <div class="hero-card-tag">Portfolio Overview</div>
-      <div class="hero-card-title">Your Financial Journey, Personalised</div>
-      <div class="hero-pill-row">
-        <span class="hero-pill pill-sage">Mutual Funds</span>
-        <span class="hero-pill pill-sky">Equity SIPs</span>
-        <span class="hero-pill pill-blush">Insurance</span>
-        <span class="hero-pill pill-lavender">Estate Planning</span>
-        <span class="hero-pill pill-sage">Wealth Protection</span>
-        <span class="hero-pill pill-sky">Portfolio Review</span>
+
+  <!-- 🎬 Video fills the full hero background -->
+  <video autoplay muted loop playsinline class="hero-video-bg">
+    <source src="fotor-video_remover_object-preview-20260311170402.mp4" type="video/mp4">
+  </video>
+
+  <!-- Dark overlay for readability -->
+  <div class="hero-overlay"></div>
+
+  <!-- All content floats above video -->
+  <div class="hero-content">
+    <!-- Left: Text -->
+    <div>
+      <div class="hero-badge"><div class="badge-dot"></div>Attaining Financial Independence</div>
+      <h1>Wealth Is<br>More Than<br><em>Money</em></h1>
+      <p class="hero-sub">It all begins with you. At EPM we believe your wealth goes beyond money. We prioritise you, your loved ones, and your business — ensuring they remain at the heart of our every action.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary"><i class="fa fa-arrow-right"></i> Let's Talk!</a>
+        <a href="#about" class="btn-secondary"><i class="fa fa-compass"></i> Discover More</a>
       </div>
-      <div class="hero-card-bottom">
-        <div class="hc-avatar">💼</div>
-        <div><div class="hc-meta-label">Your dedicated advisor</div><div class="hc-meta-val">EPM Wealth Expert</div></div>
-        <div style="margin-left:auto;"><div class="hc-meta-label">Registered with</div><div class="hc-meta-val">AMFI &amp; BSE</div></div>
+      <div class="hero-stats">
+        <div><div class="h-stat-num">100+</div><div class="h-stat-label">Cr+ AUM</div></div>
+        <div><div class="h-stat-num">1000+</div><div class="h-stat-label">Unique Clients</div></div>
+        <div><div class="h-stat-num">25+</div><div class="h-stat-label">Cities Served</div></div>
       </div>
     </div>
-    <div class="hero-card-float">
-      <div class="hcf-num">15+</div>
-      <div class="hcf-label">Years of Trust</div>
+
+    <!-- Right: Floating glass card -->
+    <div class="hero-visual">
+      <div class="hero-card-main">
+        <div class="hero-card-tag">Portfolio Overview</div>
+        <div class="hero-card-title">Your Financial Journey, Personalised</div>
+        <div class="hero-pill-row">
+          <span class="hero-pill pill-sage">Mutual Funds</span>
+          <span class="hero-pill pill-sky">Equity SIPs</span>
+          <span class="hero-pill pill-blush">Insurance</span>
+          <span class="hero-pill pill-lavender">Estate Planning</span>
+          <span class="hero-pill pill-sage">Wealth Protection</span>
+          <span class="hero-pill pill-sky">Portfolio Review</span>
+        </div>
+        <div class="hero-card-bottom">
+          <div class="hc-avatar">💼</div>
+          <div><div class="hc-meta-label">Your dedicated advisor</div><div class="hc-meta-val">EPM Wealth Expert</div></div>
+          <div style="margin-left:auto;"><div class="hc-meta-label">Registered with</div><div class="hc-meta-val">AMFI &amp; BSE</div></div>
+        </div>
+      </div>
+      <div class="hero-card-float">
+        <div class="hcf-num">15+</div>
+        <div class="hcf-label">Years of Trust</div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- ABOUT BAND -->
 <section class="about-band" id="about">
   <p class="about-text">
     We At EPM Wealth Believe That
@@ -417,6 +570,7 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </p>
 </section>
 
+<!-- STATS -->
 <section class="stats-section">
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-n">100+</div><div class="stat-l">Cr Total AUM</div><div class="stat-bar"></div></div>
@@ -425,9 +579,10 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </div>
 </section>
 
+<!-- FEATURES -->
 <section class="features-section" id="features">
   <div class="s-tag">Our Edge</div>
-  <h2 class="s-title">Financial Decisions Made Simpler<br><em style="font-size:0.88em;color:var(--sage-dark);">For Every Indian</h2>
+  <h2 class="s-title">Financial Decisions Made Simpler<br><em style="font-size:.88em;color:var(--sage-dark);">For Every Indian</em></h2>
   <div class="feat-grid">
     <div class="feat-card"><div class="feat-icon fi-sage">🧩</div><div><div class="feat-title">Customised For You</div><div class="feat-text">Easy and simple tailor-made solutions built specifically for your unique financial situation and goals.</div></div></div>
     <div class="feat-card"><div class="feat-icon fi-sky">💻</div><div><div class="feat-title">Technically Driven</div><div class="feat-text">User-oriented digital transactions anytime, anywhere — powered by cutting-edge fintech infrastructure.</div></div></div>
@@ -436,6 +591,7 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </div>
 </section>
 
+<!-- SIP CALCULATOR -->
 <section class="sip-section" id="sip">
   <div class="s-tag center">Plan Your Future</div>
   <h2 class="s-title" style="text-align:center;">SIP Calculator</h2>
@@ -456,8 +612,7 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </div>
 </section>
 
-<div class="pastel-div"></div>
-
+<!-- GALLERY -->
 <section class="gallery-section" id="gallery">
   <div class="gallery-hd">
     <div class="s-tag center">Our Moments</div>
@@ -485,8 +640,7 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </div>
 </section>
 
-<div class="pastel-div"></div>
-
+<!-- VALUES -->
 <section class="values-section" id="values">
   <div class="s-tag center">Core Values</div>
   <h2 class="s-title" style="text-align:center;">We Believe In</h2>
@@ -498,11 +652,12 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </div>
 </section>
 
+<!-- APPROACH -->
 <section class="approach-section" id="approach">
   <div class="approach-inner">
     <div>
       <div class="s-tag">Our Approach</div>
-      <h2 class="s-title">Everything Revolves<br>Around <em style="color:var(--sage-dark);">You</h2>
+      <h2 class="s-title">Everything Revolves<br>Around <em style="color:var(--sage-dark);">You</em></h2>
       <p class="approach-p">Combining our in-depth knowledge and innovative technology, we create a plan tailored to your complex needs. Your financial consultant — backed by an experienced team — can help you navigate every important decision.</p>
       <a href="#contact" class="btn-primary" style="display:inline-flex;margin-top:24px;"><i class="fa fa-arrow-right"></i> Let's Talk!</a>
     </div>
@@ -519,9 +674,10 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </div>
 </section>
 
+<!-- WHY INDUSTRY -->
 <section class="why-section" id="why">
   <div class="s-tag">Why This Industry</div>
-  <h2 class="s-title">Four Reasons This<br><em style="color:var(--sage-dark);">Changes Everything</h2>
+  <h2 class="s-title">Four Reasons This<br><em style="color:var(--sage-dark);">Changes Everything</em></h2>
   <div class="why-grid">
     <div class="why-card"><div class="why-icon-wrap wi-1">🏆</div><div class="why-num">01</div><div class="why-title">High-Prestige Profession</div><div class="why-desc">Join an elite circle of financial professionals who shape the wealth landscape of tomorrow.</div></div>
     <div class="why-card"><div class="why-icon-wrap wi-2">💎</div><div class="why-num">02</div><div class="why-title">Lucrative Income Potential</div><div class="why-desc">Unlock unlimited earning potential with performance-based rewards and multiple income streams.</div></div>
@@ -530,6 +686,7 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </div>
 </section>
 
+<!-- SERVICES -->
 <section class="services-section" id="solutions">
   <div class="s-tag">Our Platform</div>
   <h2 class="s-title">Why Choose EPM Wealth</h2>
@@ -545,11 +702,12 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </div>
 </section>
 
+<!-- ENTREPRENEURIAL -->
 <section class="entre-section" id="entrepreneurial">
   <div class="entre-inner">
     <div>
       <div class="s-tag">Entrepreneurial Initiative</div>
-      <h2 class="s-title">Your Legacy<br>Awaits <em style="color:var(--sage-dark);">Here</h2>
+      <h2 class="s-title">Your Legacy<br>Awaits <em style="color:var(--sage-dark);">Here</em></h2>
       <p class="s-sub" style="margin-top:14px;">Our platform offers the ideal foundation for anyone looking to make their mark in the finance industry.</p>
       <ul class="entre-list">
         <li><i class="fa fa-check-circle"></i> Become a Financial Partner with EPM Wealth</li>
@@ -568,6 +726,7 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </div>
 </section>
 
+<!-- TESTIMONIALS -->
 <section class="testi-section" id="testimonials">
   <div class="s-tag center">People Are Talking</div>
   <h2 class="s-title" style="text-align:center;">What Our Clients Are Saying</h2>
@@ -582,9 +741,10 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   <div class="t-nav" id="tNav"></div>
 </section>
 
+<!-- CTA -->
 <section class="cta-section" id="portfolio">
   <div class="s-tag center">Schedule a Meeting</div>
-  <h2 class="s-title" style="text-align:center;font-size:clamp(28px,4.5vw,58px);">Let's Talk About<br><em style="color:var(--sage-dark);">Your Portfolio</h2>
+  <h2 class="s-title" style="text-align:center;font-size:clamp(28px,4.5vw,58px);">Let's Talk About<br><em style="color:var(--sage-dark);">Your Portfolio</em></h2>
   <p style="text-align:center;font-size:14px;color:var(--ink-soft);margin:10px 0;">30-minute personalised consultation · No obligation · 100% free</p>
   <div class="cta-box">
     <div class="cta-box-tag">Free Consultation</div>
@@ -599,6 +759,7 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </div>
 </section>
 
+<!-- CONTACT -->
 <section class="contact-section" id="contact">
   <div style="text-align:center;">
     <div class="s-tag center">Get In Touch</div>
@@ -632,6 +793,7 @@ footer{background:var(--ink);padding:68px 7% 28px;}
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div>
@@ -664,45 +826,45 @@ footer{background:var(--ink);padding:68px 7% 28px;}
 
 <script>
 /* Testimonials */
-let idx = 0;
-const slides = document.querySelectorAll('.testi-slide');
-const nav = document.getElementById('tNav');
-slides.forEach((_,i) => {
-  const d = document.createElement('button');
-  d.className = 't-dot' + (i===0?' active':'');
-  d.onclick = () => go(i);
+let idx=0;
+const slides=document.querySelectorAll('.testi-slide');
+const nav=document.getElementById('tNav');
+slides.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='t-dot'+(i===0?' active':'');
+  d.onclick=()=>go(i);
   nav.appendChild(d);
 });
-function go(i) {
-  idx = i;
-  document.getElementById('testiTrack').style.transform = `translateX(${-i*100}%)`;
-  document.querySelectorAll('.t-dot').forEach((d,j) => d.classList.toggle('active', j===i));
+function go(i){
+  idx=i;
+  document.getElementById('testiTrack').style.transform=`translateX(${-i*100}%)`;
+  document.querySelectorAll('.t-dot').forEach((d,j)=>d.classList.toggle('active',j===i));
 }
-setInterval(() => go((idx+1) % slides.length), 5500);
+setInterval(()=>go((idx+1)%slides.length),5500);
 
 /* SIP Calculator */
-function calcSip() {
-  const P = parseFloat(document.getElementById('sipAmt').value) || 0;
-  const n = parseInt(document.getElementById('sipFreq').value) || 12;
-  const Y = parseFloat(document.getElementById('sipYrs').value) || 0;
-  let R   = parseFloat(document.getElementById('sipRate').value) || 0;
-  const infl = parseFloat(document.getElementById('sipInfl').value) || 0;
-  R = Math.max(0, R - infl);
-  const r = R / 100 / n;
-  const tt = n * Y;
-  const mat = r > 0 ? P * ((Math.pow(1+r, tt)-1)/r)*(1+r) : P*tt;
-  const inv = P * tt;
-  const fmt = v => '₹' + Math.round(v).toLocaleString('en-IN');
-  document.getElementById('sInv').textContent   = fmt(inv);
-  document.getElementById('sGain').textContent  = fmt(mat - inv);
-  document.getElementById('sTotal').textContent = fmt(mat);
+function calcSip(){
+  const P=parseFloat(document.getElementById('sipAmt').value)||0;
+  const n=parseInt(document.getElementById('sipFreq').value)||12;
+  const Y=parseFloat(document.getElementById('sipYrs').value)||0;
+  let R=parseFloat(document.getElementById('sipRate').value)||0;
+  const infl=parseFloat(document.getElementById('sipInfl').value)||0;
+  R=Math.max(0,R-infl);
+  const r=R/100/n;
+  const tt=n*Y;
+  const mat=r>0?P*((Math.pow(1+r,tt)-1)/r)*(1+r):P*tt;
+  const inv=P*tt;
+  const fmt=v=>'₹'+Math.round(v).toLocaleString('en-IN');
+  document.getElementById('sInv').textContent=fmt(inv);
+  document.getElementById('sGain').textContent=fmt(mat-inv);
+  document.getElementById('sTotal').textContent=fmt(mat);
   document.getElementById('sipRes').classList.add('show');
 }
 
 /* Contact form */
-function submitForm(e) {
+function submitForm(e){
   e.preventDefault();
-  document.getElementById('formOk').style.display = 'block';
+  document.getElementById('formOk').style.display='block';
   e.target.reset();
 }
 </script>
