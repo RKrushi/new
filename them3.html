@@ -208,12 +208,14 @@ nav{
 ══════════════════════════════════════ */
 .hero{
   background:var(--gNavy);
-  padding:96px 2% 88px 10%;
-  display:grid;grid-template-columns:minmax(500px, 600px) 1fr;
-  gap:120px;align-items:flex-start;
+  padding:100px 7% 96px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
   border-bottom:1px solid rgba(255,255,255,.05);
   position:relative;overflow:hidden;
-  justify-content:start;
+  min-height:92vh;
+  justify-content:center;
 }
 .hero-bg-video{
   position:absolute;
@@ -229,16 +231,17 @@ nav{
 .hero-overlay{
   position:absolute;
   inset:0;
-  background:linear-gradient(120deg, rgba(10,42,94,0.5) 0%, rgba(37,99,235,0.35) 100%);
+  background:linear-gradient(120deg, rgba(10,42,94,0.55) 0%, rgba(37,99,235,0.3) 100%);
   z-index:1;
 }
 .hero > div{
   position:relative;
   z-index:2;
   text-align:left;
+  max-width:620px;
 }
 .hero > div:first-of-type{
-  padding-right:20px;
+  padding-right:0;
 }
 /* Static radial glow decorations */
 .hero::before{
@@ -263,15 +266,23 @@ nav{
 }
 .hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--g400);flex-shrink:0;}
 
+/* ── HERO HEADING — reduced size & lighter weight ── */
 .hero h1{
   font-family:'Playfair Display',serif;
-  font-size:clamp(52px,7.5vw,100px);
-  font-weight:300;line-height:.92;
-  color:var(--white);margin-bottom:28px;
-  letter-spacing:-1px;
+  font-size:clamp(36px,5.2vw,68px);   /* was clamp(52px,7.5vw,100px) */
+  font-weight:300;                      /* keeps the light/elegant feel */
+  line-height:1.05;
+  color:var(--white);
+  margin-bottom:28px;
+  letter-spacing:-.5px;                 /* slightly reduced from -1px */
   text-align:left;
 }
-.hero h1 em{font-style:italic;color:var(--g400);display:block;font-weight:400;}
+.hero h1 em{
+  font-style:italic;
+  color:var(--g400);
+  display:block;
+  font-weight:300;                      /* was 400, now matches the heading weight */
+}
 
 .hero-sub{
   font-size:15.5px;color:rgba(255,255,255,.58);line-height:1.88;
@@ -875,11 +886,14 @@ footer{
   .footer-grid{grid-template-columns:1fr 1fr;}
 }
 @media(max-width:900px){
-  .hero,.entre-grid,.approach-grid,.contact-grid{grid-template-columns:1fr;gap:48px;}
+  .entre-grid,.approach-grid,.contact-grid{grid-template-columns:1fr;gap:48px;}
+  .hero{padding:72px 6% 72px 6%;min-height:auto;}
   .hero::before,.hero::after{display:none;}
   .stats-grid{grid-template-columns:1fr;}
   .stat-card{border-right:none;border-bottom:1px solid rgba(255,255,255,.06);}
   .feat-grid{grid-template-columns:1fr;}
+  .hero > div{text-align:left;}
+  .hero h1{font-size:clamp(32px,8vw,52px);}
 }
 @media(max-width:700px){
   nav .nav-links{display:none;}
@@ -892,16 +906,16 @@ footer{
   .risk-row{gap:20px;}
   .risk-circle{width:128px;height:128px;}
   .risk-letter{font-size:52px;}
+  .hero h1{font-size:clamp(30px,9vw,46px);}
   .logo-badge{
     display:flex;
     align-items:center;
-}
-
-.logo-img{
-    height:60px;      /* control logo height */
-    width: 180px;       /* keep aspect ratio */
+  }
+  .logo-img{
+    height:60px;
+    width:180px;
     object-fit:contain;
-}
+  }
 }
 </style>
 </head>
@@ -915,9 +929,6 @@ footer{
   <a href="https://www.facebook.com/epmwealthadvisor" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
 </div>
 <a href="https://wa.me/919999939333" class="wa" target="_blank" title="WhatsApp">💬</a>
-
-<!-- ──────────── TICKER ──────────── -->
-
 
 <!-- ──────────── NAV ──────────── -->
 <nav id="top">
@@ -939,7 +950,7 @@ footer{
 <!-- ──────────── HERO ──────────── -->
 <section class="hero" id="home">
   <video class="hero-bg-video" autoplay muted loop playsinline>
-    <source src="build.mp4" type="video/mp4">
+    <source src="Build 1 .mp4" type="video/mp4">
     <source src="your-video.webm" type="video/webm">
     Your browser does not support the video tag.
   </video>
@@ -949,12 +960,13 @@ footer{
       <div class="hero-badge-dot"></div>
       Attaining Financial Independence
     </div>
-    <h1>Wealth Is<br>More Than<br>Money</h1>
+    <h1>Wealth Is<br>More Than<br>Money</em></h1>
     <p class="hero-sub">It all begins with you. At EPM we believe your wealth goes beyond money. We prioritise you, your loved ones, and your business — ensuring they remain at the heart of our every action.</p>
     <div class="hero-btns">
       <a href="#contact" class="btn btn-gold"><i class="fa fa-arrow-right"></i> Let's Talk!</a>
       <a href="#about"   class="btn btn-ghost-gold">Discover More</a>
     </div>
+    
     <div class="hero-stats">
       <div>
         <div class="hs-num">100<sup>+</sup></div>
@@ -968,34 +980,6 @@ footer{
         <div class="hs-num">25<sup>+</sup></div>
         <div class="hs-lbl">Cities Served</div>
       </div>
-    </div>
-  </div>
-
-  <div>
-    <div class="hero-card">
-      <div class="hero-card-pill">15+ Years of Trust</div>
-      <div class="hc-label">Portfolio Overview</div>
-      <div class="hc-title">Your Financial Journey,<br>Personalised</div>
-      <div class="hc-pills">
-        <span class="hcp hcp-g">Mutual Funds</span>
-        <span class="hcp hcp-b">Equity SIPs</span>
-        <span class="hcp hcp-w">Insurance</span>
-        <span class="hcp hcp-g">Estate Planning</span>
-        <span class="hcp hcp-b">Wealth Protection</span>
-        <span class="hcp hcp-w">Portfolio Review</span>
-      </div>
-      <div class="hc-foot">
-        <div class="hc-av">💼</div>
-        <div>
-          <div class="hc-av-lbl">Your dedicated advisor</div>
-          <div class="hc-av-val">EPM Wealth Expert</div>
-        </div>
-        <div style="margin-left:auto;text-align:right;">
-          <div class="hc-av-lbl">Registered with</div>
-          <div class="hc-av-val">AMFI &amp; BSE</div>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1035,7 +1019,7 @@ footer{
 <!-- ──────────── FEATURES ──────────── -->
 <section class="features-wrap pad" id="features">
   <div class="eyebrow navy"><span class="eyebrow-bar"></span>Our Edge</div>
-  <h2 class="h1 sz-lg">Financial Decisions Made Simpler<br>For Every Indian</h2>
+  <h3 class="h1 sz-lg">Financial Decisions Made Simpler<br>For Every Indian</h3>
   <div class="feat-grid">
     <div class="feat-card">
       <div class="feat-icon">🧩</div>
@@ -1072,7 +1056,7 @@ footer{
 <section class="sip-wrap pad" id="sip">
   <div class="ctr">
     <div class="eyebrow navy" style="justify-content:center;display:flex;"><span class="eyebrow-bar"></span>Plan Your Future<span class="eyebrow-bar"></span></div>
-    <h2 class="h1 sz-lg">SIP Calculator</h2>
+    <h3 class="h1 sz-lg">SIP Calculator</h3>
   </div>
   <div class="sip-box">
     <div class="sip-grid">
@@ -1095,7 +1079,7 @@ footer{
 <section class="gallery-wrap" id="gallery">
   <div class="gallery-hd">
     <div class="eyebrow navy" style="justify-content:center;display:flex;"><span class="eyebrow-bar"></span>Our Moments<span class="eyebrow-bar"></span></div>
-    <h2 class="h1 sz-lg">Awards &amp; Recognition</h2>
+    <h3 class="h1 sz-lg">Awards &amp; Recognition</h3>
   </div>
   <div class="gallery-track-outer">
     <div class="gallery-track">
@@ -1107,7 +1091,7 @@ footer{
       <div class="g-item"><div class="g-ph"><span>🌟</span><p>Recognition</p></div></div>
       <div class="g-item"><div class="g-ph"><span>🏅</span><p>Award 2024</p></div></div>
       <div class="g-item"><div class="g-ph"><span>💎</span><p>Elite Partner</p></div></div>
-      <!-- duplicate -->
+      <!-- duplicate for seamless loop -->
       <div class="g-item"><div class="g-ph"><span>🏆</span><p>Award 2023</p></div></div>
       <div class="g-item"><div class="g-ph"><span>🤝</span><p>Partnership</p></div></div>
       <div class="g-item"><div class="g-ph"><span>🎖️</span><p>Excellence</p></div></div>
@@ -1124,7 +1108,7 @@ footer{
 <section class="values-wrap pad" id="values">
   <div class="ctr">
     <div class="eyebrow gold" style="justify-content:center;display:flex;"><span class="eyebrow-bar"></span>Core Values<span class="eyebrow-bar"></span></div>
-    <h2 class="h1 sz-lg on-dark">We Believe In</h2>
+    <h3 class="h1 sz-lg on-dark">We Believe In</h3>
   </div>
   <div class="risk-row">
     <div class="risk-item">
@@ -1151,7 +1135,7 @@ footer{
   <div class="approach-grid">
     <div>
       <div class="eyebrow navy"><span class="eyebrow-bar"></span>Our Approach</div>
-      <h2 class="h1 sz-lg">Everything Revolves<br>Around You</h2>
+      <h3 class="h1 sz-lg">Everything Revolves<br>Around You</h3>
       <p class="approach-body">Combining our in-depth knowledge and innovative technology, we create a plan tailored to your complex needs. Your financial consultant — backed by an experienced team — can help you navigate every important decision.</p>
       <a href="#contact" class="btn btn-navy" style="background:var(--n800);color:#fff;box-shadow:0 4px 18px rgba(10,42,94,.3);">
         <i class="fa fa-arrow-right"></i> Let's Talk!
@@ -1173,7 +1157,7 @@ footer{
 <!-- ──────────── WHY INDUSTRY ──────────── -->
 <section class="why-wrap pad" id="why">
   <div class="eyebrow navy"><span class="eyebrow-bar"></span>Why This Industry</div>
-  <h2 class="h1 sz-lg">Four Reasons This Changes Everything</h2>
+  <h3 class="h1 sz-lg">Four Reasons This Changes Everything</h3>
   <div class="why-grid">
     <div class="why-card">
       <div class="why-icon wi-a">🏆</div>
@@ -1205,7 +1189,7 @@ footer{
 <!-- ──────────── SERVICES ──────────── -->
 <section class="svc-wrap pad" id="solutions">
   <div class="eyebrow navy"><span class="eyebrow-bar"></span>Our Platform</div>
-  <h2 class="h1 sz-lg">Why Choose EPM Wealth</h2>
+  <h3 class="h1 sz-lg">Why Choose EPM Wealth</h3>
   <div class="svc-grid">
     <a href="#" class="svc-card"><div class="svc-icon">🌐</div><div class="svc-title">Online Portal</div><div class="svc-body">Best-in-Class Technology platform. Free to use.</div></a>
     <a href="#" class="svc-card"><div class="svc-icon">📱</div><div class="svc-title">Mobile App</div><div class="svc-body">Feature-rich mobile app — manage portfolios on the go.</div></a>
@@ -1223,7 +1207,7 @@ footer{
   <div class="entre-grid">
     <div>
       <div class="eyebrow gold"><span class="eyebrow-bar"></span>Entrepreneurial Initiative</div>
-      <h2 class="h1 sz-lg on-dark">Your Legacy<br>Awaits Here</h2>
+      <h3 class="h1 sz-lg on-dark">Your Legacy<br>Awaits Here</h3>
       <p class="lead on-dark" style="margin-top:18px;">Our platform offers the ideal foundation for anyone looking to make their mark in the finance industry.</p>
       <ul class="entre-list">
         <li><i class="fa fa-check-circle"></i> Become a Financial Partner with EPM Wealth</li>
@@ -1254,7 +1238,7 @@ footer{
 <section class="testi-wrap-outer pad" id="testimonials">
   <div class="ctr">
     <div class="eyebrow gold" style="justify-content:center;display:flex;"><span class="eyebrow-bar"></span>People Are Talking<span class="eyebrow-bar"></span></div>
-    <h2 class="h1 sz-lg on-dark">What Our Clients Are Saying</h2>
+    <h3 class="h1 sz-lg on-dark">What Our Clients Are Saying</h3>
   </div>
   <div class="testi-slider-wrap">
     <div class="testi-track" id="tTrack">
@@ -1283,7 +1267,7 @@ footer{
 <section class="cta-band pad" id="portfolio">
   <div class="cta-inner">
     <div class="eyebrow navy" style="justify-content:center;display:flex;"><span class="eyebrow-bar"></span>Schedule a Meeting<span class="eyebrow-bar"></span></div>
-    <h2 class="h1" style="font-size:clamp(32px,5vw,68px);text-align:center;">Let's Talk About<br>Your Portfolio</h2>
+    <h3 class="h1" style="font-size:clamp(32px,5vw,68px);text-align:center;">Let's Talk About<br>Your Portfolio</h3>
     <p style="text-align:center;font-size:14px;color:var(--s500);margin:12px 0 0;">30-minute personalised consultation · No obligation · 100% free</p>
     <div class="cta-box">
       <div class="cta-pill-badge">Free Consultation</div>
@@ -1303,7 +1287,7 @@ footer{
 <section class="contact-wrap pad" id="contact">
   <div class="ctr">
     <div class="eyebrow navy" style="justify-content:center;display:flex;"><span class="eyebrow-bar"></span>Get In Touch<span class="eyebrow-bar"></span></div>
-    <h2 class="h1 sz-lg">Contact Us</h2>
+    <h3 class="h1 sz-lg">Contact Us</h3>
   </div>
   <div class="contact-grid">
     <div>
