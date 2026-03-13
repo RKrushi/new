@@ -18,9 +18,7 @@
   --transition: all 0.3s ease;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html {`r`n  scroll-behavior: smooth;`r`n  font-size: 17px;`r`n}
 
 body {
   font-family: 'Poppins', sans-serif;

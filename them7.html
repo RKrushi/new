@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>EPM Wealth — Bridging the gap between your reality & your Purpose</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+/* ═══════════════════════════════════
+   TOKENS — Waterfield editorial palette
+═══════════════════════════════════ */
+:root{
+  --cream:   #f5f0e8;
+  --cream2:  #ede8df;
+  --warm:    #8b6f47;
+  --warm2:   #c9a55a;
+  --warm3:   #e2c47a;
+  --char:    #1a1a1a;
+  --char2:   #2a2a2a;
+  --navy:    #0d1f3c;
+  --navy2:   #152c52;
+  --gold:    #c9a55a;
+  --gold2:   #e2c47a;
+  --border:  #e0d8cc;
+  --border2: #d0c8bb;
+  --muted:   #6b6050;
+  --muted2:  #887a68;
+  --white:   #ffffff;
+  --offwh:   #faf8f4;
+  --dark-text: rgba(255,255,255,0.85);
+  --dark-sub:  rgba(255,255,255,0.48);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Jost',sans-serif;color:var(--char);background:var(--white);overflow-x:hidden;line-height:1.65;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--cream);}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+
+/* ═══════════════════════════════════
+   UTILITY
+═══════════════════════════════════ */
+.serif{font-family:'Cormorant Garamond',Georgia,serif;}
+.section{padding:88px 7%;}
+.section-sm{padding:64px 7%;}
+.section-xs{padding:48px 7%;}
+.ctr{text-align:center;}
+
+.label{
+  font-size:9px;letter-spacing:3.5px;text-transform:uppercase;
+  font-weight:600;color:var(--warm);display:block;margin-bottom:14px;
+}
+.label.light{color:rgba(255,255,255,0.4);}
+.label.gold{color:var(--gold2);}
+
+.h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,4.5vw,58px);
+  font-weight:400;line-height:1.12;color:var(--char);
+}
+.h2.light{color:var(--white);}
+.h2 em{font-style:italic;color:var(--warm);}
+.h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(24px,3vw,40px);
+  font-weight:400;line-height:1.2;
+}
+.body-text{font-size:14px;color:var(--muted);line-height:1.9;}
+.body-text.light{color:var(--dark-sub);}
+
+.rule{height:1px;background:var(--border);margin:0;}
+.rule.dark{background:rgba(255,255,255,0.1);}
+
+/* Reveal animations */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal-left.visible{opacity:1;transform:translateX(0);}
+
+/* ═══════════════════════════════════
+   TOP BAR
+═══════════════════════════════════ */
+.topbar{
+  background:var(--char);
+  padding:8px 5%;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.topbar-left{display:flex;gap:28px;}
+.topbar-left a,.topbar-right a{
+  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(255,255,255,0.35);transition:color 0.2s;
+}
+.topbar-left a:hover,.topbar-right a:hover{color:var(--gold2);}
+.topbar-right{display:flex;gap:22px;align-items:center;}
+
+/* ═══════════════════════════════════
+   NAV
+═══════════════════════════════════ */
+nav{
+  position:sticky;top:0;z-index:500;
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  padding:0 5%;height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:box-shadow 0.3s;
+}
+nav.scrolled{box-shadow:0 2px 30px rgba(0,0,0,0.08);}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:500;letter-spacing:1.5px;
+  color:var(--char);
+}
+.nav-logo span{color:var(--gold);font-style:italic;}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-a{
+  font-size:12px;letter-spacing:0.5px;color:var(--muted);
+  font-weight:500;transition:color 0.2s;
+}
+.nav-a:hover{color:var(--char);}
+.nav-cta{
+  font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+  font-weight:600;color:var(--char);border:1.5px solid var(--char);
+  padding:9px 22px;transition:all 0.25s;
+}
+.nav-cta:hover{background:var(--char);color:var(--white);}
+
+/* ═══════════════════════════════════
+   HERO
+═══════════════════════════════════ */
+.hero{
+  position:relative;min-height:100vh;
+  background:var(--char);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  overflow:hidden;
+}
+/* Architectural background via CSS + SVG overlay */
+.hero-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(160deg,#1a2a1a 0%,#0d1a2a 40%,#1a1205 100%);
+}
+/* Bridge SVG overlay */
+.hero-svg-wrap{
+  position:absolute;inset:0;
+  overflow:hidden;
+}
+.hero-overlay-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.2) 0%,
+    rgba(10,10,10,0.1) 40%,
+    rgba(10,10,10,0.65) 75%,
+    rgba(10,10,10,0.88) 100%
+  );
+  z-index:1;
+}
+.hero-content{
+  position:relative;z-index:2;
+  padding:0 7% 80px;
+  max-width:900px;
+}
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(52px,8vw,110px);
+  font-weight:300;line-height:1.0;
+  color:var(--white);
+  letter-spacing:-1px;
+}
+.hero h1 em{
+  font-style:italic;color:var(--gold2);display:block;
+}
+.hero-sub{
+  font-size:14px;color:rgba(255,255,255,0.5);
+  margin-top:24px;max-width:440px;line-height:1.9;
+}
+.hero-stats{
+  display:flex;gap:60px;margin-top:52px;
+  padding-top:32px;border-top:1px solid rgba(255,255,255,0.12);
+  position:absolute;right:7%;bottom:80px;z-index:2;text-align:right;
+}
+.hs-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:48px;font-weight:300;color:var(--gold2);line-height:1;
+}
+.hs-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:6px;}
+
+/* ═══════════════════════════════════
+   INTRO — 2 col
+═══════════════════════════════════ */
+.intro-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  max-width:1200px;margin:0 auto;
+}
+.intro-h{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(36px,4vw,52px);
+  font-weight:400;line-height:1.15;color:var(--char);
+}
+.intro-h em{font-style:italic;color:var(--warm);}
+.intro-body{font-size:14.5px;color:var(--muted);line-height:1.95;margin-top:22px;}
+.intro-link{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--char);font-weight:600;margin-top:28px;
+  border-bottom:1px solid var(--char);padding-bottom:2px;
+  transition:gap 0.2s;
+}
+.intro-link:hover{gap:14px;}
+
+/* ═══════════════════════════════════
+   WEALTH MANAGEMENT — section with cards
+═══════════════════════════════════ */
+.wm-intro{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:end;
+  margin-bottom:40px;
+}
+.wm-desc{font-size:14px;color:var(--muted);line-height:1.9;}
+.wm-cards{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border2);
+  border:1px solid var(--border2);
+}
+.wm-card{
+  background:var(--white);padding:32px 24px;
+  position:relative;overflow:hidden;
+  transition:background 0.25s;
+}
+.wm-card:hover{background:var(--offwh);}
+.wm-card-img{
+  width:100%;height:140px;object-fit:cover;margin-bottom:18px;
+  background:var(--cream);display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.wm-card-ph{
+  width:100%;height:140px;background:var(--cream2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;margin-bottom:18px;
+}
+.wm-card-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-weight:500;color:var(--char);
+  margin-bottom:8px;line-height:1.3;
+}
+.wm-card-body{font-size:12px;color:var(--muted2);line-height:1.8;}
+.wm-card-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--warm);margin-top:16px;font-weight:600;
+  transition:gap 0.2s;
+}
+.wm-card-link:hover{gap:10px;}
+.wm-card-link i{font-size:9px;}
+
+/* row 2 of cards - 4 col */
+.wm-cards-row2{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border2);
+  border:1px solid var(--border2);border-top:none;
+}
+
+/* ═══════════════════════════════════
+   ASSET MANAGEMENT — dark bg
+═══════════════════════════════════ */
+.am-wrap{background:var(--char);color:var(--white);}
+.am-intro{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:40px;}
+.am-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.1);}
+.am-card{
+  background:var(--char2);padding:40px 32px;
+  transition:background 0.2s;
+}
+.am-card:hover{background:#333;}
+.am-card-ph{
+  width:100%;height:180px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:48px;margin-bottom:22px;
+  background:rgba(255,255,255,0.04);
+}
+.am-card-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:400;color:var(--white);
+  margin-bottom:10px;
+}
+.am-card-body{font-size:12.5px;color:rgba(255,255,255,0.4);line-height:1.85;}
+.am-card-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--gold2);margin-top:18px;font-weight:600;
+  transition:gap 0.2s;
+}
+.am-card-link:hover{gap:10px;}
+
+/* ═══════════════════════════════════
+   INSIGHTS
+═══════════════════════════════════ */
+.insights-intro{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:40px;align-items:start;margin-bottom:48px;
+}
+.insights-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.insight-card{border:1px solid var(--border);background:var(--white);overflow:hidden;transition:box-shadow 0.2s;}
+.insight-card:hover{box-shadow:0 8px 40px rgba(0,0,0,0.08);}
+.insight-card-ph{
+  width:100%;height:160px;background:var(--cream);
+  display:flex;align-items:center;justify-content:center;font-size:40px;
+}
+.insight-card-body{padding:20px;}
+.insight-card-cat{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--warm);font-weight:600;margin-bottom:8px;}
+.insight-card-title{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;line-height:1.35;color:var(--char);}
+.insight-card-date{font-size:11px;color:var(--muted2);margin-top:10px;}
+
+/* ═══════════════════════════════════
+   SIP + VALUES — split
+═══════════════════════════════════ */
+.split-wrap{background:var(--cream);display:grid;grid-template-columns:1fr 1fr;}
+.split-left{padding:80px 7% 80px 7%;border-right:1px solid var(--border2);}
+.split-right{padding:80px 5%;}
+
+/* SIP calculator */
+.sip-field{margin-bottom:16px;}
+.sip-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--warm);font-weight:600;display:block;margin-bottom:6px;}
+.sip-inp{
+  width:100%;padding:10px 14px;background:var(--white);
+  border:1px solid var(--border2);color:var(--char);
+  font-family:'Jost',sans-serif;font-size:13px;outline:none;
+  transition:border-color 0.2s;
+}
+.sip-inp:focus{border-color:var(--warm);}
+.sip-btn{
+  width:100%;padding:13px;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  font-weight:600;font-family:'Jost',sans-serif;
+  background:var(--char);color:var(--white);
+  border:none;cursor:pointer;margin-top:10px;
+  transition:background 0.2s;
+}
+.sip-btn:hover{background:var(--navy);}
+.sip-results{
+  margin-top:24px;display:none;
+  background:var(--char);padding:28px;
+}
+.sip-results.show{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.sip-rn{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--gold2);}
+.sip-rl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:4px;}
+
+/* Values / RISK */
+.values-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:10px;}
+.val-item{
+  background:var(--white);border:1px solid var(--border);
+  padding:28px 22px;text-align:center;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.val-item:hover{border-color:var(--warm);box-shadow:0 4px 20px rgba(139,111,71,0.1);}
+.val-letter{
+  font-family:'Cormorant Garamond',serif;
+  font-size:56px;font-weight:300;color:var(--warm);line-height:1;
+}
+.val-word{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);margin-top:6px;}
+
+/* ═══════════════════════════════════
+   TESTIMONIAL — full bleed
+═══════════════════════════════════ */
+.testi-wrap{
+  background:var(--cream2);
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:520px;
+}
+.testi-left{
+  padding:80px 7%;display:flex;flex-direction:column;justify-content:center;
+}
+.testi-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(22px,3vw,36px);font-style:italic;
+  font-weight:300;line-height:1.55;color:var(--char);
+  position:relative;
+}
+.testi-quote::before{
+  content:'"';
+  font-size:120px;color:rgba(139,111,71,0.12);
+  position:absolute;top:-40px;left:-20px;
+  font-family:'Cormorant Garamond',serif;
+  line-height:1;
+}
+.testi-name{
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--warm);font-weight:600;margin-top:28px;
+}
+.testi-role{font-size:12px;color:var(--muted2);margin-top:4px;}
+.testi-right{
+  position:relative;overflow:hidden;
+  background:var(--cream);
+  display:flex;align-items:center;justify-content:center;
+}
+/* Illustrated portrait SVG */
+
+.testi-dots{display:flex;gap:8px;margin-top:32px;}
+.testi-dot{
+  width:24px;height:3px;background:var(--border2);
+  cursor:pointer;transition:background 0.2s,width 0.2s;
+}
+.testi-dot.on{background:var(--warm);width:40px;}
+
+/* ═══════════════════════════════════
+   RECOGNITION
+═══════════════════════════════════ */
+.recog-wrap{background:var(--white);text-align:center;}
+.recog-stats{display:flex;justify-content:center;gap:80px;margin-top:48px;padding-top:48px;border-top:1px solid var(--border);}
+.recog-num{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;color:var(--char);}
+.recog-lbl{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+.award-row{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-top:48px;}
+.award-item{
+  width:120px;height:120px;border:1px solid var(--border);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;transition:border-color 0.2s;
+}
+.award-item:hover{border-color:var(--warm);}
+.award-item span{font-size:32px;}
+.award-item p{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);text-align:center;}
+
+/* ═══════════════════════════════════
+   PRESS
+═══════════════════════════════════ */
+.press-wrap{background:var(--offwh);}
+.press-main-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:24px;}
+.press-card{background:var(--white);border:1px solid var(--border);overflow:hidden;transition:box-shadow 0.2s;}
+.press-card:hover{box-shadow:0 6px 30px rgba(0,0,0,0.07);}
+.press-card-ph{width:100%;height:200px;background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:48px;}
+.press-card-body{padding:22px;}
+.press-card-source{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--warm);font-weight:600;margin-bottom:8px;}
+.press-card-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;line-height:1.35;color:var(--char);}
+.press-small-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+.press-small{background:var(--white);border:1px solid var(--border);display:grid;grid-template-columns:140px 1fr;overflow:hidden;transition:box-shadow 0.2s;}
+.press-small:hover{box-shadow:0 6px 30px rgba(0,0,0,0.07);}
+.press-small-ph{background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:32px;}
+.press-small-body{padding:20px;}
+.press-small-source{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--warm);font-weight:600;margin-bottom:6px;}
+.press-small-title{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:500;line-height:1.35;}
+
+/* ═══════════════════════════════════
+   CAREERS — image slider
+═══════════════════════════════════ */
+.careers-wrap{background:var(--cream);display:grid;grid-template-columns:1fr 1fr;min-height:560px;}
+.careers-left{padding:80px 7%;}
+.careers-list{list-style:none;margin-top:24px;}
+.careers-list li{
+  padding:13px 0;border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:14px;color:var(--muted);transition:color 0.2s;
+}
+.careers-list li:hover{color:var(--char);}
+.careers-list li::before{content:'→';color:var(--warm);flex-shrink:0;margin-top:1px;}
+.careers-right{position:relative;overflow:hidden;}
+.career-slider{width:100%;height:100%;position:relative;}
+.career-slide{
+  position:absolute;inset:0;
+  opacity:0;transition:opacity 0.7s;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:64px;
+}
+.career-slide.active{opacity:1;}
+.career-slide-bg{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.career-slide-label{
+  position:absolute;bottom:36px;left:36px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;font-weight:400;color:var(--white);
+  text-shadow:0 2px 12px rgba(0,0,0,0.4);
+  z-index:2;
+}
+.career-controls{
+  position:absolute;bottom:36px;right:36px;
+  display:flex;gap:10px;z-index:2;
+}
+.career-btn{
+  width:36px;height:36px;background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.3);
+  color:var(--white);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:12px;transition:background 0.2s;
+}
+.career-btn:hover{background:rgba(255,255,255,0.35);}
+.career-dots-wrap{
+  position:absolute;top:36px;right:36px;
+  display:flex;gap:6px;z-index:2;
+}
+.career-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,0.4);cursor:pointer;
+  transition:background 0.2s,transform 0.2s;
+}
+.career-dot.active{background:var(--white);transform:scale(1.3);}
+
+/* ═══════════════════════════════════
+   RESPONSIBLE / CSR — dark
+═══════════════════════════════════ */
+.csr-wrap{
+  background:var(--navy);
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:480px;
+  align-items:center;
+}
+.csr-left{padding:80px 7%;}
+.csr-right{
+  display:flex;align-items:center;justify-content:center;
+  padding:60px;position:relative;overflow:hidden;
+}
+
+/* ═══════════════════════════════════
+   CONTACT + LEGACY
+═══════════════════════════════════ */
+.contact-wrap{background:var(--cream);}
+.legacy-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(28px,3.5vw,48px);font-weight:300;
+  color:var(--char);margin-bottom:48px;line-height:1.2;
+}
+.legacy-title em{font-style:italic;color:var(--warm);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.contact-info-row{
+  display:flex;gap:14px;margin-bottom:22px;
+  padding-bottom:22px;border-bottom:1px solid var(--border);
+  transition:padding-left 0.2s;
+}
+.contact-info-row:hover{padding-left:6px;}
+.ci-icon{
+  width:40px;height:40px;background:var(--white);
+  border:1px solid var(--border);display:flex;align-items:center;
+  justify-content:center;font-size:16px;flex-shrink:0;
+}
+.ci-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--warm);font-weight:600;margin-bottom:4px;}
+.ci-val{font-size:13px;color:var(--muted);line-height:1.7;}
+.ci-val a{color:var(--muted);transition:color 0.2s;}
+.ci-val a:hover{color:var(--char);}
+
+/* Contact form */
+.form-group{margin-bottom:14px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--warm);font-weight:600;display:block;margin-bottom:6px;}
+.form-inp,.form-textarea{
+  width:100%;padding:11px 14px;
+  background:var(--white);border:1px solid var(--border2);
+  color:var(--char);font-family:'Jost',sans-serif;font-size:13px;
+  outline:none;transition:border-color 0.2s;
+}
+.form-inp:focus,.form-textarea:focus{border-color:var(--warm);}
+.form-textarea{min-height:110px;resize:vertical;}
+.form-submit{
+  width:100%;padding:14px;background:var(--char);color:var(--white);
+  border:none;cursor:pointer;font-family:'Jost',sans-serif;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;
+  margin-top:6px;transition:background 0.2s;
+}
+.form-submit:hover{background:var(--navy);}
+.form-ok{
+  display:none;margin-top:12px;padding:12px;
+  background:var(--white);border:1px solid var(--border);
+  font-size:13px;color:var(--muted);text-align:center;
+}
+
+/* ═══════════════════════════════════
+   FOOTER
+═══════════════════════════════════ */
+footer{
+  background:var(--char);
+  padding:72px 5% 32px;
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+.footer-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;
+  gap:48px;margin-bottom:56px;
+}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:var(--white);margin-bottom:18px;letter-spacing:1px;}
+.footer-brand span{font-style:italic;color:var(--gold2);}
+.footer-about{font-size:12.5px;color:rgba(255,255,255,0.25);line-height:1.9;max-width:240px;}
+.footer-badges{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;}
+.footer-badge{
+  padding:4px 10px;border:1px solid rgba(201,165,90,0.25);
+  font-size:9px;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(201,165,90,0.5);font-weight:600;
+}
+.footer-col h4{
+  font-size:9px;letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);margin-bottom:18px;font-weight:600;
+}
+.footer-col a{
+  display:block;color:rgba(255,255,255,0.22);font-size:12.5px;
+  margin-bottom:10px;transition:all 0.2s;
+}
+.footer-col a:hover{color:var(--gold2);padding-left:4px;}
+.footer-socials{display:flex;gap:10px;margin-top:18px;}
+.footer-soc{
+  width:32px;height:32px;border:1px solid rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:rgba(255,255,255,0.3);
+  transition:border-color 0.2s,color 0.2s;
+}
+.footer-soc:hover{border-color:var(--gold);color:var(--gold2);}
+.footer-rule{height:1px;background:rgba(255,255,255,0.06);margin-bottom:22px;}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:11px;color:rgba(255,255,255,0.15);flex-wrap:wrap;gap:12px;
+}
+.footer-bottom a{color:rgba(255,255,255,0.15);margin-left:16px;transition:color 0.2s;}
+.footer-bottom a:hover{color:var(--gold2);}
+
+/* ═══════════════════════════════════
+   SOCIAL FLOAT + WA
+═══════════════════════════════════ */
+.sf{
+  position:fixed;left:16px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:6px;z-index:200;
+}
+.sf a{
+  width:32px;height:32px;border:1px solid rgba(0,0,0,0.08);
+  background:var(--white);display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:var(--muted);box-shadow:0 2px 10px rgba(0,0,0,0.06);
+  transition:border-color 0.2s,color 0.2s;
+}
+.sf a:hover{border-color:var(--warm);color:var(--warm);}
+.wa{
+  position:fixed;bottom:22px;left:16px;
+  width:44px;height:44px;background:#25D366;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;z-index:200;box-shadow:0 4px 16px rgba(37,211,102,0.3);
+  transition:transform 0.2s;
+}
+.wa:hover{transform:scale(1.08);}
+
+/* ═══════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════ */
+@media(max-width:1100px){
+  .wm-cards,.wm-cards-row2{grid-template-columns:repeat(2,1fr);}
+  .am-cards{grid-template-columns:1fr 1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:900px){
+  .intro-grid,.wm-intro,.am-intro,.careers-wrap,
+  .testi-wrap,.csr-wrap,.contact-grid,.split-wrap{grid-template-columns:1fr;}
+  .hero-stats{position:static;border-top:1px solid rgba(255,255,255,0.12);padding-top:28px;margin-top:36px;flex-wrap:wrap;gap:32px;}
+  .hero-content{padding-bottom:48px;}
+  .insights-intro{grid-template-columns:1fr;}
+  .press-main-grid{grid-template-columns:1fr;}
+  .press-small-grid{grid-template-columns:1fr;}
+  .split-left{border-right:none;border-bottom:1px solid var(--border2);}
+}
+@media(max-width:640px){
+  nav .nav-links{display:none;}
+  .sf{display:none;}
+  .wm-cards,.wm-cards-row2,.am-cards,.insights-cards{grid-template-columns:1fr;}
+  .recog-stats{flex-direction:column;gap:32px;align-items:center;}
+  .topbar{display:none;}
+  .hero h1{font-size:clamp(44px,12vw,72px);}
+  .form-row{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- Social float -->
+<div class="sf">
+  <a href="https://www.instagram.com/epm_wealth/" target="_blank"><i class="fab fa-instagram"></i></a>
+  <a href="https://www.youtube.com/@epmwealth101" target="_blank"><i class="fab fa-youtube"></i></a>
+  <a href="https://www.linkedin.com/company/epm-wealth/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+  <a href="https://www.facebook.com/epmwealthadvisor" target="_blank"><i class="fab fa-facebook-f"></i></a>
+</div>
+<a href="https://wa.me/919999939333" class="wa" target="_blank" title="WhatsApp">💬</a>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="#">AMFI Registered — 100255</a>
+    <a href="#">BSE Registered — 1197501</a>
+    <a href="#">Disclaimer</a>
+  </div>
+  <div class="topbar-right">
+    <a href="tel:+911204264717">+91 0120 426 4717</a>
+    <a href="mailto:info@epmwealth.com">info@epmwealth.com</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#home" class="nav-logo">EPM <span>Wealth</span></a>
+  <div class="nav-links">
+    <a href="#about" class="nav-a">About</a>
+    <a href="#wealth" class="nav-a">Wealth Management</a>
+    <a href="#assets" class="nav-a">Asset Management</a>
+    <a href="#insights" class="nav-a">Insights</a>
+    <a href="#careers" class="nav-a">Careers</a>
+    <a href="#contact" class="nav-cta">Let's Talk</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <!-- Atmospheric bridge illustration using SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.45;" preserveAspectRatio="xMidYMid slice">
+      <!-- Sky gradient -->
+      <defs>
+        <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0a1628"/>
+          <stop offset="60%" stop-color="#1a2d1a"/>
+          <stop offset="100%" stop-color="#0d1205"/>
+        </linearGradient>
+        <linearGradient id="waterG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0a1a2a"/>
+          <stop offset="100%" stop-color="#050c15"/>
+        </linearGradient>
+        <filter id="blur1"><feGaussianBlur stdDeviation="3"/></filter>
+        <filter id="glow"><feGaussianBlur stdDeviation="6" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <!-- Moon glow -->
+        <radialGradient id="moonGlow" cx="70%" cy="20%" r="25%">
+          <stop offset="0%" stop-color="#c9a55a" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+      </defs>
+      <!-- Background -->
+      <rect width="1440" height="900" fill="url(#skyG)"/>
+      <rect width="1440" height="900" fill="url(#moonGlow)"/>
+      <!-- Stars -->
+      <g fill="#ffffff" opacity="0.6">
+        <circle cx="120" cy="60" r="1"/><circle cx="240" cy="40" r="0.8"/><circle cx="380" cy="80" r="1.2"/>
+        <circle cx="520" cy="30" r="0.9"/><circle cx="680" cy="55" r="1.1"/><circle cx="820" cy="25" r="0.7"/>
+        <circle cx="950" cy="70" r="1.3"/><circle cx="1100" cy="45" r="0.8"/><circle cx="1280" cy="60" r="1"/>
+        <circle cx="160" cy="110" r="0.7"/><circle cx="340" cy="120" r="1"/><circle cx="600" cy="95" r="0.6"/>
+        <circle cx="860" cy="115" r="0.9"/><circle cx="1180" cy="90" r="1.1"/><circle cx="1380" cy="105" r="0.7"/>
+      </g>
+      <!-- Moon -->
+      <circle cx="1010" cy="130" r="30" fill="none" stroke="#c9a55a" stroke-width="0.5" opacity="0.4"/>
+      <circle cx="1010" cy="130" r="24" fill="#c9a55a" opacity="0.15"/>
+      <!-- Distant mountains -->
+      <path d="M0,600 L200,350 L400,480 L550,300 L720,420 L900,280 L1100,400 L1280,310 L1440,380 L1440,700 L0,700Z" fill="#0f1a0a" opacity="0.8"/>
+      <path d="M0,650 L150,500 L300,580 L500,440 L700,560 L900,420 L1100,520 L1300,450 L1440,500 L1440,750 L0,750Z" fill="#121e0d" opacity="0.9"/>
+      <!-- Bridge structure -->
+      <!-- River/water -->
+      <rect x="0" y="700" width="1440" height="200" fill="url(#waterG)" opacity="0.9"/>
+      <!-- Water reflections -->
+      <path d="M0,720 Q180,710 360,718 Q540,726 720,715 Q900,704 1080,718 Q1260,728 1440,718 L1440,730 Q1260,740 1080,728 Q900,718 720,728 Q540,740 360,730 Q180,722 0,730Z" fill="rgba(201,165,90,0.06)"/>
+      <!-- Bridge deck -->
+      <rect x="0" y="690" width="1440" height="12" fill="#1a1a0a" opacity="0.9"/>
+      <!-- Bridge towers -->
+      <rect x="380" y="280" width="18" height="410" fill="#1e2212" opacity="0.95"/>
+      <rect x="1040" y="280" width="18" height="410" fill="#1e2212" opacity="0.95"/>
+      <!-- Tower caps -->
+      <polygon points="380,280 389,260 398,280" fill="#c9a55a" opacity="0.4"/>
+      <polygon points="1040,280 1049,260 1058,280" fill="#c9a55a" opacity="0.4"/>
+      <!-- Bridge cables from towers -->
+      <g stroke="#c9a55a" stroke-width="0.5" opacity="0.25" fill="none">
+        <!-- Left tower cables -->
+        <path d="M389,270 Q280,400 0,700"/>
+        <path d="M389,270 Q340,420 200,700"/>
+        <path d="M389,270 Q380,480 280,700"/>
+        <path d="M389,270 Q400,500 380,700"/>
+        <!-- right from left tower -->
+        <path d="M389,270 Q500,420 600,700"/>
+        <path d="M389,270 Q550,430 700,700"/>
+        <!-- Right tower cables -->
+        <path d="M1049,270 Q1200,420 1440,700"/>
+        <path d="M1049,270 Q1160,430 1300,700"/>
+        <path d="M1049,270 Q1080,500 1200,700"/>
+        <path d="M1049,270 Q1040,500 1060,700"/>
+        <!-- left from right tower -->
+        <path d="M1049,270 Q930,420 820,700"/>
+        <path d="M1049,270 Q880,430 750,700"/>
+      </g>
+      <!-- Suspension cable main line -->
+      <path d="M0,400 Q389,200 700,320 Q900,380 1049,200 Q1200,350 1440,420" stroke="#c9a55a" stroke-width="1" fill="none" opacity="0.2"/>
+      <!-- Lights on bridge deck -->
+      <g fill="#c9a55a" opacity="0.5">
+        <circle cx="100" cy="690" r="2" filter="url(#glow)"/>
+        <circle cx="200" cy="690" r="2" filter="url(#glow)"/>
+        <circle cx="300" cy="690" r="2" filter="url(#glow)"/>
+        <circle cx="500" cy="690" r="2" filter="url(#glow)"/>
+        <circle cx="600" cy="690" r="2" filter="url(#glow)"/>
+        <circle cx="700" cy="690" r="2" filter="url(#glow)"/>
+        <circle cx="800" cy="690" r="2" filter="url(#glow)"/>
+        <circle cx="900" cy="690" r="2" filter="url(#glow)"/>
+        <circle cx="1100" cy="690" r="2" filter="url(#glow)"/>
+        <circle cx="1200" cy="690" r="2" filter="url(#glow)"/>
+        <circle cx="1300" cy="690" r="2" filter="url(#glow)"/>
+        <circle cx="1400" cy="690" r="2" filter="url(#glow)"/>
+      </g>
+      <!-- Water reflections of bridge -->
+      <path d="M380,700 L380,800" stroke="#1e2212" stroke-width="3" opacity="0.3"/>
+      <path d="M1040,700 L1040,790" stroke="#1e2212" stroke-width="3" opacity="0.3"/>
+      <!-- Gold glow on water -->
+      <ellipse cx="720" cy="720" rx="300" ry="30" fill="#c9a55a" opacity="0.04"/>
+    </svg>
+  </div>
+  <div class="hero-overlay-grad"></div>
+
+  <div class="hero-content">
+    <div class="label light reveal">EPM Wealth · Financial Independence</div>
+    <h1 class="reveal">Bridging the gap between<br>your reality &amp; your
+      <em>Purpose</em>
+    </h1>
+    <p class="hero-sub reveal">It all begins with you. At EPM we believe your wealth goes beyond money. We prioritise you, your loved ones, and your business — ensuring they remain at the heart of our every action.</p>
+    <div style="display:flex;gap:14px;margin-top:36px;" class="reveal">
+      <a href="#contact" style="display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;background:var(--gold);color:var(--char);padding:13px 28px;transition:background 0.2s;" onmouseover="this.style.background='#d4b06a'" onmouseout="this.style.background='var(--gold)'">
+        Let's Talk <i class="fa fa-arrow-right"></i>
+      </a>
+      <a href="#about" style="display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.25);padding:13px 28px;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.6)';this.style.color='var(--white)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.25)';this.style.color='rgba(255,255,255,0.7)'">
+        Discover More
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-stats reveal">
+    <div>
+      <div class="hs-num">100<sup style="font-size:0.4em;vertical-align:super;font-style:italic;">+</sup></div>
+      <div class="hs-lbl">Cr+ AUM</div>
+    </div>
+    <div>
+      <div class="hs-num">1000<sup style="font-size:0.4em;vertical-align:super;font-style:italic;">+</sup></div>
+      <div class="hs-lbl">Unique Clients</div>
+    </div>
+    <div>
+      <div class="hs-num">25<sup style="font-size:0.4em;vertical-align:super;font-style:italic;">+</sup></div>
+      <div class="hs-lbl">Cities Served</div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO / LEGACY -->
+<section class="section" id="about" style="background:var(--white);border-bottom:1px solid var(--border);">
+  <div class="intro-grid">
+    <div class="reveal-left">
+      <span class="label">About EPM Wealth</span>
+      <h2 class="intro-h">Helping you create an <em>enduring legacy</em></h2>
+      <a href="#contact" class="intro-link">Start the conversation <i class="fa fa-arrow-right"></i></a>
+    </div>
+    <div class="reveal">
+      <p class="intro-body">We at EPM Wealth believe that Entrepreneurship is a trait inherent in each individual, waiting to be nurtured and guided towards success. We recognise the significance of having diverse streams of income, and as such, we strive to offer unparalleled opportunities for anyone seeking to establish themselves in the Finance industry.</p>
+      <p class="intro-body" style="margin-top:18px;">Combining our in-depth knowledge and innovative technology, we create a plan tailored to your complex needs. Your financial consultant — backed by an experienced team — can help you navigate every important decision.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WEALTH MANAGEMENT -->
+<section class="section" id="wealth" style="background:var(--white);">
+  <div class="wm-intro reveal">
+    <div>
+      <span class="label">Our Solutions</span>
+      <h2 class="h2">Wealth Management</h2>
+    </div>
+    <div>
+      <p class="body-text">The most enduring fortunes are built with intention. Our wealth management approach brings clarity to complexity, aligning every financial decision with the legacy you wish to build.</p>
+    </div>
+  </div>
+
+  <!-- Row 1: 4 cards -->
+  <div class="wm-cards reveal">
+    <div class="wm-card">
+      <div class="wm-card-ph">🏢</div>
+      <div class="wm-card-title">Business Owners</div>
+      <div class="wm-card-body">Bespoke strategies that address the unique intersection of personal and business wealth.</div>
+      <div class="wm-card-link">Learn more <i class="fa fa-arrow-right"></i></div>
+    </div>
+    <div class="wm-card">
+      <div class="wm-card-ph">📊</div>
+      <div class="wm-card-title">Portfolio Management</div>
+      <div class="wm-card-body">Data-driven portfolio construction tailored to your risk appetite and growth horizons.</div>
+      <div class="wm-card-link">Learn more <i class="fa fa-arrow-right"></i></div>
+    </div>
+    <div class="wm-card">
+      <div class="wm-card-ph">🛡️</div>
+      <div class="wm-card-title">Wealth Protection</div>
+      <div class="wm-card-body">Comprehensive insurance and estate planning solutions to safeguard what you've built.</div>
+      <div class="wm-card-link">Learn more <i class="fa fa-arrow-right"></i></div>
+    </div>
+    <div class="wm-card">
+      <div class="wm-card-ph">🏛️</div>
+      <div class="wm-card-title">Family Offices</div>
+      <div class="wm-card-body">Dedicated family office services designed to address multi-generational wealth needs.</div>
+      <div class="wm-card-link">Learn more <i class="fa fa-arrow-right"></i></div>
+    </div>
+  </div>
+  <!-- Row 2: 4 cards -->
+  <div class="wm-cards-row2 reveal">
+    <div class="wm-card">
+      <div class="wm-card-ph">👔</div>
+      <div class="wm-card-title">CEOs &amp; CXOs</div>
+      <div class="wm-card-body">Customised solutions for senior executives managing complex compensation and equity.</div>
+      <div class="wm-card-link">Learn more <i class="fa fa-arrow-right"></i></div>
+    </div>
+    <div class="wm-card">
+      <div class="wm-card-ph">🤝</div>
+      <div class="wm-card-title">Financial Partners</div>
+      <div class="wm-card-body">Join EPM's partner network and build your own financial advisory practice.</div>
+      <div class="wm-card-link">Learn more <i class="fa fa-arrow-right"></i></div>
+    </div>
+    <div class="wm-card">
+      <div class="wm-card-ph">📈</div>
+      <div class="wm-card-title">SIP &amp; Mutual Funds</div>
+      <div class="wm-card-body">Systematic investment strategies to build long-term wealth through disciplined saving.</div>
+      <div class="wm-card-link">Learn more <i class="fa fa-arrow-right"></i></div>
+    </div>
+    <div class="wm-card">
+      <div class="wm-card-ph">🔒</div>
+      <div class="wm-card-title">Insurance Solutions</div>
+      <div class="wm-card-body">Holistic risk management and insurance planning to protect your legacy.</div>
+      <div class="wm-card-link">Learn more <i class="fa fa-arrow-right"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSET MANAGEMENT -->
+<section class="section am-wrap" id="assets">
+  <div class="am-intro reveal">
+    <div>
+      <span class="label gold">Asset Management</span>
+      <h2 class="h2 light">Asset Management</h2>
+    </div>
+    <div>
+      <p class="body-text light">Our asset management philosophy is grounded in rigorous research and long-term discipline — creating portfolios designed to compound wealth across market cycles.</p>
+    </div>
+  </div>
+  <div class="am-cards reveal">
+    <div class="am-card">
+      <div class="am-card-ph">📉</div>
+      <div class="am-card-title">Equity</div>
+      <div class="am-card-body">High-conviction equity investing focused on quality businesses with sustainable competitive advantages and superior return potential.</div>
+      <div class="am-card-link">Explore <i class="fa fa-arrow-right"></i></div>
+    </div>
+    <div class="am-card">
+      <div class="am-card-ph">🏗️</div>
+      <div class="am-card-title">Real Assets</div>
+      <div class="am-card-body">Strategic exposure to real estate, infrastructure, and alternative assets that provide inflation protection and portfolio diversification.</div>
+      <div class="am-card-link">Explore <i class="fa fa-arrow-right"></i></div>
+    </div>
+    <div class="am-card">
+      <div class="am-card-ph">🌐</div>
+      <div class="am-card-title">Global Investments</div>
+      <div class="am-card-body">Access to international markets and global opportunities that diversify beyond domestic portfolios for superior risk-adjusted returns.</div>
+      <div class="am-card-link">Explore <i class="fa fa-arrow-right"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section class="section" id="insights" style="background:var(--offwh);">
+  <div class="insights-intro reveal">
+    <div>
+      <span class="label">Research & Insights</span>
+      <h2 class="h2" style="font-size:clamp(28px,3.5vw,46px);">Your access to<br>rich insights</h2>
+    </div>
+    <div>
+      <p class="body-text" style="margin-top:18px;">Stay ahead of the market with EPM Wealth's curated research, market analysis, and thought leadership — helping you make informed financial decisions.</p>
+    </div>
+    <div style="display:flex;align-items:flex-end;padding-bottom:4px;">
+      <a href="#contact" class="intro-link" style="font-size:10px;">View all insights <i class="fa fa-arrow-right"></i></a>
+    </div>
+  </div>
+  <div class="insights-cards reveal">
+    <div class="insight-card">
+      <div class="insight-card-ph">📊</div>
+      <div class="insight-card-body">
+        <div class="insight-card-cat">Market Outlook</div>
+        <div class="insight-card-title">India's Growth Story: Opportunities for Long-Term Investors</div>
+        <div class="insight-card-date">March 2026</div>
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-card-ph">💡</div>
+      <div class="insight-card-body">
+        <div class="insight-card-cat">Wealth Planning</div>
+        <div class="insight-card-title">Estate Planning Essentials for Business Owners</div>
+        <div class="insight-card-date">February 2026</div>
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-card-ph">🌍</div>
+      <div class="insight-card-body">
+        <div class="insight-card-cat">Global Markets</div>
+        <div class="insight-card-title">Diversifying Into Global Equities: A Practical Guide</div>
+        <div class="insight-card-date">January 2026</div>
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-card-ph">📋</div>
+      <div class="insight-card-body">
+        <div class="insight-card-cat">SIP Strategy</div>
+        <div class="insight-card-title">The Power of Compounding: Why Starting Early Matters</div>
+        <div class="insight-card-date">January 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIP CALCULATOR + VALUES -->
+<div class="split-wrap">
+  <div class="split-left">
+    <span class="label">Plan Your Future</span>
+    <h3 class="h3" style="margin-bottom:28px;">SIP Calculator</h3>
+    <div class="sip-field">
+      <label class="sip-label">Investment Amount (₹) *</label>
+      <input class="sip-inp" type="number" id="sipAmt" placeholder="e.g. 10,000"/>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="sip-field">
+        <label class="sip-label">Period (Years)</label>
+        <input class="sip-inp" type="number" id="sipYrs" placeholder="e.g. 10"/>
+      </div>
+      <div class="sip-field">
+        <label class="sip-label">Frequency</label>
+        <select class="sip-inp" id="sipFreq"><option value="12">Monthly</option><option value="4">Quarterly</option><option value="1">Yearly</option></select>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="sip-field">
+        <label class="sip-label">Expected Returns (%)</label>
+        <input class="sip-inp" type="number" id="sipRate" placeholder="e.g. 12"/>
+      </div>
+      <div class="sip-field">
+        <label class="sip-label">Inflation Adj.</label>
+        <select class="sip-inp" id="sipInfl"><option value="0">None</option><option value="6">6%</option><option value="7">7%</option><option value="8">8%</option></select>
+      </div>
+    </div>
+    <button class="sip-btn" onclick="calcSip()">Calculate Returns</button>
+    <div class="sip-results" id="sipRes">
+      <div><div class="sip-rn" id="sInv">₹0</div><div class="sip-rl">Invested</div></div>
+      <div><div class="sip-rn" id="sGain">₹0</div><div class="sip-rl">Returns</div></div>
+      <div><div class="sip-rn" id="sTotal">₹0</div><div class="sip-rl">Total Value</div></div>
+    </div>
+  </div>
+  <div class="split-right">
+    <div style="width:100%;">
+      <span class="label">Core Values</span>
+      <h3 class="h3" style="margin-bottom:28px;">We Believe In</h3>
+      <div class="values-grid">
+        <div class="val-item">
+          <div class="val-letter">R</div>
+          <div class="val-word">Relationship</div>
+        </div>
+        <div class="val-item">
+          <div class="val-letter">I</div>
+          <div class="val-word">Integrity</div>
+        </div>
+        <div class="val-item">
+          <div class="val-letter">S</div>
+          <div class="val-word">Simplicity</div>
+        </div>
+        <div class="val-item">
+          <div class="val-letter">K</div>
+          <div class="val-word">Knowledge</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIAL -->
+<div class="testi-wrap" id="testimonials">
+  <div class="testi-left">
+    <span class="label">What Clients Say</span>
+    <div class="testi-quote" id="testiQuote">
+      "I am grateful to have EPM Wealth as my financial advisor. Their services have always been exceptional in every way."
+    </div>
+    <div class="testi-name" id="testiName">Shantanu Gupta</div>
+    <div class="testi-role" id="testiRole">Managing Director, Roots Group Of Institutes</div>
+    <div class="testi-dots" id="testiDots" style="margin-top:32px;"></div>
+  </div>
+  <div class="testi-right">
+    <!-- Illustrated Indian woman portrait SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 600" width="360" height="450" style="opacity:0.85;">
+      <defs>
+        <linearGradient id="bgG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e8e0d0"/>
+          <stop offset="100%" stop-color="#d8cfc0"/>
+        </linearGradient>
+        <linearGradient id="sariG" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#8b2252"/>
+          <stop offset="50%" stop-color="#a0335e"/>
+          <stop offset="100%" stop-color="#6b1a42"/>
+        </linearGradient>
+        <linearGradient id="skinG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#c8956a"/>
+          <stop offset="100%" stop-color="#b07c52"/>
+        </linearGradient>
+        <linearGradient id="hairG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1a0a00"/>
+          <stop offset="100%" stop-color="#2d1500"/>
+        </linearGradient>
+      </defs>
+      <!-- Background circle -->
+      <ellipse cx="240" cy="420" rx="200" ry="220" fill="#e0d4c0" opacity="0.6"/>
+      <!-- Body / Sari -->
+      <path d="M100,580 L90,340 Q100,280 160,260 L240,250 L320,260 Q380,280 390,340 L380,580Z" fill="url(#sariG)"/>
+      <!-- Sari blouse detail -->
+      <path d="M160,260 L240,255 L320,260 L310,310 L240,320 L170,310Z" fill="#6b1a42"/>
+      <!-- Sari border (gold) -->
+      <path d="M100,580 L90,380 Q95,330 120,300" stroke="#c9a55a" stroke-width="3" fill="none" opacity="0.7"/>
+      <path d="M380,580 L390,380 Q385,330 360,300" stroke="#c9a55a" stroke-width="3" fill="none" opacity="0.7"/>
+      <!-- Sari drape over shoulder -->
+      <path d="M165,265 Q140,300 120,380 Q115,420 125,460" stroke="#7a2050" stroke-width="18" fill="none" stroke-linecap="round"/>
+      <!-- Neck -->
+      <rect x="215" y="220" width="50" height="42" rx="10" fill="url(#skinG)"/>
+      <!-- Necklace -->
+      <path d="M210,240 Q240,260 270,240" stroke="#c9a55a" stroke-width="2" fill="none"/>
+      <circle cx="240" cy="254" r="4" fill="#c9a55a"/>
+      <!-- Head / Face -->
+      <ellipse cx="240" cy="175" rx="68" ry="78" fill="url(#skinG)"/>
+      <!-- Hair - top bun style -->
+      <path d="M175,155 Q180,80 240,70 Q300,80 305,155" fill="url(#hairG)"/>
+      <!-- Hair sides -->
+      <path d="M175,155 Q165,190 168,220 Q175,240 190,245 L190,200 Q180,185 180,165Z" fill="url(#hairG)"/>
+      <path d="M305,155 Q315,190 312,220 Q305,240 290,245 L290,200 Q300,185 300,165Z" fill="url(#hairG)"/>
+      <!-- Hair bun -->
+      <circle cx="240" cy="82" r="24" fill="url(#hairG)"/>
+      <!-- Bindi -->
+      <circle cx="240" cy="148" r="5" fill="#c9a55a"/>
+      <!-- Eyebrows -->
+      <path d="M210,158 Q222,152 234,156" stroke="#3d1a00" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M246,156 Q258,152 270,158" stroke="#3d1a00" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <!-- Eyes -->
+      <ellipse cx="222" cy="170" rx="12" ry="8" fill="#fff"/>
+      <ellipse cx="222" cy="171" rx="7" ry="6" fill="#5c3010"/>
+      <circle cx="222" cy="170" r="4" fill="#1a0800"/>
+      <circle cx="225" cy="168" r="1.5" fill="white"/>
+      <!-- Eyeliner -->
+      <path d="M210,170 Q215,166 222,168 Q229,166 234,170 Q229,175 222,176 Q215,175 210,170Z" fill="none" stroke="#1a0800" stroke-width="1"/>
+      <path d="M234,170 L238,168" stroke="#1a0800" stroke-width="1" stroke-linecap="round"/>
+      <ellipse cx="258" cy="170" rx="12" ry="8" fill="#fff"/>
+      <ellipse cx="258" cy="171" rx="7" ry="6" fill="#5c3010"/>
+      <circle cx="258" cy="170" r="4" fill="#1a0800"/>
+      <circle cx="261" cy="168" r="1.5" fill="white"/>
+      <path d="M246,170 Q251,166 258,168 Q265,166 270,170 Q265,175 258,176 Q251,175 246,170Z" fill="none" stroke="#1a0800" stroke-width="1"/>
+      <path d="M246,170 L242,168" stroke="#1a0800" stroke-width="1" stroke-linecap="round"/>
+      <!-- Nose -->
+      <path d="M237,175 Q235,188 232,194 Q238,197 248,194 Q245,188 243,175" fill="url(#skinG)" stroke="rgba(150,90,50,0.3)" stroke-width="0.5"/>
+      <!-- Nose ring (nath) small -->
+      <circle cx="232" cy="196" r="4" fill="none" stroke="#c9a55a" stroke-width="1.5"/>
+      <!-- Lips -->
+      <path d="M224,205 Q232,200 240,202 Q248,200 256,205 Q250,214 240,216 Q230,214 224,205Z" fill="#8b2252"/>
+      <!-- Smile line -->
+      <path d="M228,208 Q240,213 252,208" stroke="#6b1a42" stroke-width="1" fill="none"/>
+      <!-- Ears + earrings -->
+      <ellipse cx="172" cy="185" rx="8" ry="10" fill="url(#skinG)"/>
+      <ellipse cx="308" cy="185" rx="8" ry="10" fill="url(#skinG)"/>
+      <!-- Jhumka earrings -->
+      <circle cx="172" cy="193" r="6" fill="#c9a55a"/>
+      <circle cx="308" cy="193" r="6" fill="#c9a55a"/>
+      <!-- Hair decoration -->
+      <circle cx="240" cy="82" r="8" fill="#c9a55a" opacity="0.7"/>
+      <!-- Arms (simple) -->
+      <path d="M100,340 Q80,380 85,430" stroke="url(#skinG)" stroke-width="22" fill="none" stroke-linecap="round"/>
+      <path d="M380,340 Q400,380 395,430" stroke="url(#skinG)" stroke-width="22" fill="none" stroke-linecap="round"/>
+      <!-- Bangles -->
+      <circle cx="82" cy="415" r="12" fill="none" stroke="#c9a55a" stroke-width="2.5"/>
+      <circle cx="82" cy="415" r="9" fill="none" stroke="#8b2252" stroke-width="1.5"/>
+      <circle cx="398" cy="415" r="12" fill="none" stroke="#c9a55a" stroke-width="2.5"/>
+      <circle cx="398" cy="415" r="9" fill="none" stroke="#8b2252" stroke-width="1.5"/>
+    </svg>
+    <div style="position:absolute;bottom:28px;right:28px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--muted2);text-align:right;">
+      Tailor-made personalised<br>approach for every client
+    </div>
+  </div>
+</div>
+
+<!-- RECOGNITION -->
+<section class="section recog-wrap" id="recognition">
+  <span class="label ctr" style="display:block;">Recognition driven by</span>
+  <h2 class="h2 ctr">Awards &amp; Recognition</h2>
+  <div class="recog-stats reveal">
+    <div>
+      <div class="recog-num">100+</div>
+      <div class="recog-lbl">Cr Total AUM</div>
+    </div>
+    <div>
+      <div class="recog-num">1000+</div>
+      <div class="recog-lbl">Unique Clients</div>
+    </div>
+    <div>
+      <div class="recog-num">25+</div>
+      <div class="recog-lbl">Cities Served</div>
+    </div>
+  </div>
+  <div class="award-row reveal">
+    <div class="award-item"><span>🏆</span><p>Award 2023</p></div>
+    <div class="award-item"><span>🎖️</span><p>Excellence</p></div>
+    <div class="award-item"><span>🥇</span><p>Top Performer</p></div>
+    <div class="award-item"><span>🌟</span><p>Recognition</p></div>
+    <div class="award-item"><span>💎</span><p>Elite Partner</p></div>
+  </div>
+</section>
+
+<!-- PRESS -->
+<section class="section press-wrap" id="press">
+  <span class="label">Media</span>
+  <h2 class="h2" style="margin-bottom:40px;">What the press<br>has been saying</h2>
+  <div class="press-main-grid reveal">
+    <div class="press-card">
+      <div class="press-card-ph">📰</div>
+      <div class="press-card-body">
+        <div class="press-card-source">Economic Times</div>
+        <div class="press-card-title">EPM Wealth charts ambitious growth plan across 25 Indian cities</div>
+      </div>
+    </div>
+    <div class="press-card">
+      <div class="press-card-ph">💼</div>
+      <div class="press-card-body">
+        <div class="press-card-source">Business Standard</div>
+        <div class="press-card-title">How EPM Wealth is democratising access to quality financial planning</div>
+      </div>
+    </div>
+    <div class="press-card">
+      <div class="press-card-ph">🏦</div>
+      <div class="press-card-body">
+        <div class="press-card-source">Mint</div>
+        <div class="press-card-title">The rising tide of independent wealth advisors in India's Tier-2 cities</div>
+      </div>
+    </div>
+  </div>
+  <div class="press-small-grid reveal">
+    <div class="press-small">
+      <div class="press-small-ph">📊</div>
+      <div class="press-small-body">
+        <div class="press-small-source">Financial Express</div>
+        <div class="press-small-title">EPM's SIP-first approach yields consistent client outcomes</div>
+      </div>
+    </div>
+    <div class="press-small">
+      <div class="press-small-ph">🎯</div>
+      <div class="press-small-body">
+        <div class="press-small-source">Outlook Money</div>
+        <div class="press-small-title">Why more families are turning to boutique wealth managers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAREERS with image slider -->
+<div class="careers-wrap" id="careers">
+  <div class="careers-left">
+    <span class="label">Join Our Team</span>
+    <h2 class="h2" style="margin-bottom:8px;">If ethics and integrity<br>drive you,<br><em>look no further</em></h2>
+    <p class="body-text" style="margin-top:16px;margin-bottom:24px;">Our platform offers the ideal foundation for anyone looking to make their mark in the finance industry.</p>
+    <ul class="careers-list">
+      <li>Become a Financial Partner with EPM Wealth</li>
+      <li>Access exclusive training &amp; certification programs</li>
+      <li>Build your own client portfolio from day one</li>
+      <li>Earn passive income through referral networks</li>
+      <li>Get mentored by industry veterans</li>
+      <li>Scale with our proven frameworks</li>
+      <li>Unlock unlimited earning potential</li>
+      <li>Join a high-prestige profession shaping tomorrow's wealth</li>
+    </ul>
+    <a href="#contact" style="display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--char);border-bottom:1.5px solid var(--char);padding-bottom:2px;margin-top:28px;transition:gap 0.2s;" onmouseover="this.style.gap='14px'" onmouseout="this.style.gap='8px'">
+      Start Your Journey <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="careers-right">
+    <div class="career-slider" id="careerSlider">
+      <!-- Slide 1: Wealth Creation -->
+      <div class="career-slide active" style="background:linear-gradient(135deg,#0d1f3c,#1a3a6b);">
+        <div class="career-slide-bg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 560" width="100%" height="100%" style="position:absolute;inset:0;opacity:0.35;">
+            <defs>
+              <linearGradient id="chartG" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#c9a55a" stop-opacity="0.1"/>
+                <stop offset="100%" stop-color="#c9a55a" stop-opacity="0.5"/>
+              </linearGradient>
+            </defs>
+            <!-- Grid lines -->
+            <g stroke="rgba(201,165,90,0.15)" stroke-width="1">
+              <line x1="50" y1="100" x2="550" y2="100"/>
+              <line x1="50" y1="180" x2="550" y2="180"/>
+              <line x1="50" y1="260" x2="550" y2="260"/>
+              <line x1="50" y1="340" x2="550" y2="340"/>
+              <line x1="50" y1="420" x2="550" y2="420"/>
+              <line x1="50" y1="500" x2="550" y2="500"/>
+            </g>
+            <!-- Growth area -->
+            <path d="M50,480 L150,420 L250,350 L320,280 L400,200 L480,130 L550,80 L550,500 L50,500Z" fill="url(#chartG)"/>
+            <!-- Growth line -->
+            <path d="M50,480 L150,420 L250,350 L320,280 L400,200 L480,130 L550,80" stroke="#c9a55a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Data points -->
+            <g fill="#c9a55a">
+              <circle cx="150" cy="420" r="5"/><circle cx="250" cy="350" r="5"/><circle cx="320" cy="280" r="5"/>
+              <circle cx="400" cy="200" r="5"/><circle cx="480" cy="130" r="5"/><circle cx="550" cy="80" r="7"/>
+            </g>
+            <!-- Up arrow -->
+            <path d="M520,60 L550,30 L580,60" stroke="#c9a55a" stroke-width="2.5" fill="none"/>
+            <line x1="550" y1="30" x2="550" y2="80" stroke="#c9a55a" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div class="career-slide-label">Wealth Creation</div>
+      </div>
+
+      <!-- Slide 2: Wealth Protection -->
+      <div class="career-slide" style="background:linear-gradient(135deg,#1a0a0a,#3d1a00);">
+        <div class="career-slide-bg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 560" width="100%" height="100%" style="position:absolute;inset:0;opacity:0.4;">
+            <!-- Shield -->
+            <path d="M300,60 L460,130 L460,300 Q460,420 300,500 Q140,420 140,300 L140,130Z" fill="none" stroke="#c9a55a" stroke-width="3" opacity="0.5"/>
+            <path d="M300,90 L430,148 L430,295 Q430,395 300,465 Q170,395 170,295 L170,148Z" fill="rgba(201,165,90,0.07)"/>
+            <!-- Checkmark inside -->
+            <path d="M225,280 L275,330 L375,220" stroke="#c9a55a" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Concentric rings -->
+            <circle cx="300" cy="280" r="80" fill="none" stroke="rgba(201,165,90,0.15)" stroke-width="1"/>
+            <circle cx="300" cy="280" r="130" fill="none" stroke="rgba(201,165,90,0.1)" stroke-width="1"/>
+            <circle cx="300" cy="280" r="180" fill="none" stroke="rgba(201,165,90,0.07)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="career-slide-label">Wealth Protection</div>
+      </div>
+
+      <!-- Slide 3: Partner Programme -->
+      <div class="career-slide" style="background:linear-gradient(135deg,#0a1a0a,#1a3d1a);">
+        <div class="career-slide-bg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 560" width="100%" height="100%" style="position:absolute;inset:0;opacity:0.4;">
+            <!-- Network nodes -->
+            <circle cx="300" cy="280" r="40" fill="rgba(201,165,90,0.2)" stroke="#c9a55a" stroke-width="2"/>
+            <circle cx="300" cy="280" r="22" fill="#c9a55a" opacity="0.4"/>
+            <!-- Satellite nodes -->
+            <circle cx="160" cy="180" r="22" fill="rgba(201,165,90,0.15)" stroke="#c9a55a" stroke-width="1.5"/>
+            <circle cx="440" cy="180" r="22" fill="rgba(201,165,90,0.15)" stroke="#c9a55a" stroke-width="1.5"/>
+            <circle cx="160" cy="380" r="22" fill="rgba(201,165,90,0.15)" stroke="#c9a55a" stroke-width="1.5"/>
+            <circle cx="440" cy="380" r="22" fill="rgba(201,165,90,0.15)" stroke="#c9a55a" stroke-width="1.5"/>
+            <circle cx="300" cy="120" r="18" fill="rgba(201,165,90,0.12)" stroke="#c9a55a" stroke-width="1.5"/>
+            <circle cx="300" cy="440" r="18" fill="rgba(201,165,90,0.12)" stroke="#c9a55a" stroke-width="1.5"/>
+            <!-- Connections -->
+            <g stroke="#c9a55a" stroke-width="1" opacity="0.3">
+              <line x1="300" y1="280" x2="160" y2="180"/>
+              <line x1="300" y1="280" x2="440" y2="180"/>
+              <line x1="300" y1="280" x2="160" y2="380"/>
+              <line x1="300" y1="280" x2="440" y2="380"/>
+              <line x1="300" y1="280" x2="300" y2="120"/>
+              <line x1="300" y1="280" x2="300" y2="440"/>
+            </g>
+          </svg>
+        </div>
+        <div class="career-slide-label">Partner Programme</div>
+      </div>
+
+      <!-- Slide 4: Training & Support -->
+      <div class="career-slide" style="background:linear-gradient(135deg,#1a1a0d,#3d3d1a);">
+        <div class="career-slide-bg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 560" width="100%" height="100%" style="position:absolute;inset:0;opacity:0.4;">
+            <!-- Graduation cap -->
+            <polygon points="300,140 460,210 300,280 140,210" fill="rgba(201,165,90,0.2)" stroke="#c9a55a" stroke-width="2"/>
+            <!-- Cap top -->
+            <rect x="275" y="120" width="50" height="20" rx="4" fill="rgba(201,165,90,0.3)"/>
+            <!-- Diploma/scroll -->
+            <rect x="200" y="310" width="200" height="140" rx="8" fill="rgba(201,165,90,0.1)" stroke="#c9a55a" stroke-width="1.5"/>
+            <line x1="220" y1="340" x2="380" y2="340" stroke="#c9a55a" stroke-width="1" opacity="0.5"/>
+            <line x1="220" y1="360" x2="380" y2="360" stroke="#c9a55a" stroke-width="1" opacity="0.5"/>
+            <line x1="220" y1="380" x2="320" y2="380" stroke="#c9a55a" stroke-width="1" opacity="0.5"/>
+            <!-- Ribbon -->
+            <circle cx="300" cy="420" r="16" fill="rgba(201,165,90,0.3)" stroke="#c9a55a" stroke-width="1.5"/>
+            <!-- Tassel line -->
+            <line x1="460" y1="210" x2="460" y2="280" stroke="#c9a55a" stroke-width="2.5"/>
+            <circle cx="460" cy="285" r="5" fill="#c9a55a" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="career-slide-label">Training &amp; Support</div>
+      </div>
+
+      <!-- Slider controls -->
+      <div class="career-dots-wrap" id="careerDots">
+        <div class="career-dot active" onclick="goCareer(0)"></div>
+        <div class="career-dot" onclick="goCareer(1)"></div>
+        <div class="career-dot" onclick="goCareer(2)"></div>
+        <div class="career-dot" onclick="goCareer(3)"></div>
+      </div>
+      <div class="career-controls">
+        <button class="career-btn" onclick="moveCareer(-1)"><i class="fa fa-chevron-left"></i></button>
+        <button class="career-btn" onclick="moveCareer(1)"><i class="fa fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESPONSIBLE / CSR -->
+<div class="csr-wrap">
+  <div class="csr-left">
+    <span class="label gold">Responsible Wealth</span>
+    <h2 class="h2 light">Our responsible vision for a better &amp; <em style="color:var(--gold2);">brighter future</em></h2>
+    <p class="body-text light" style="margin-top:24px;">At EPM Wealth, we believe that financial success comes with a responsibility to society. We are committed to ethical practices, transparent dealings, and creating value not just for our clients, but for the communities we serve.</p>
+    <p class="body-text light" style="margin-top:16px;">We prioritise you, your loved ones, and your business — ensuring they remain at the heart of every action we take, every decision we make.</p>
+    <a href="#contact" style="display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--gold2);border-bottom:1px solid rgba(201,165,90,0.4);padding-bottom:2px;margin-top:32px;transition:gap 0.2s;" onmouseover="this.style.gap='14px'" onmouseout="this.style.gap='8px'">
+      Learn More <i class="fa fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="csr-right">
+    <!-- Group illustration SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="380" height="380">
+      <defs>
+        <radialGradient id="circleBg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="rgba(201,165,90,0.08)"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+      </defs>
+      <circle cx="240" cy="240" r="200" fill="url(#circleBg)" stroke="rgba(201,165,90,0.15)" stroke-width="1"/>
+      <circle cx="240" cy="240" r="155" fill="none" stroke="rgba(201,165,90,0.08)" stroke-width="1"/>
+      <!-- Central figure (larger) -->
+      <!-- Head -->
+      <circle cx="240" cy="160" r="34" fill="#b07c52"/>
+      <!-- Hair -->
+      <path d="M208,148 Q215,118 240,112 Q265,118 272,148" fill="#1a0800"/>
+      <!-- Body -->
+      <path d="M200,340 L200,220 Q210,195 240,190 Q270,195 280,220 L280,340Z" fill="#1a4db5" opacity="0.8"/>
+      <!-- Arms spread slightly -->
+      <path d="M200,230 Q165,250 150,280" stroke="#b07c52" stroke-width="20" fill="none" stroke-linecap="round"/>
+      <path d="M280,230 Q315,250 330,280" stroke="#b07c52" stroke-width="20" fill="none" stroke-linecap="round"/>
+      <!-- Left figure -->
+      <circle cx="130" cy="200" r="24" fill="#c8956a"/>
+      <path d="M108,200 Q112,183 130,178 Q148,183 152,200" fill="#1a0800"/>
+      <path d="M105,320 L105,235 Q112,218 130,215 Q148,218 155,235 L155,320Z" fill="#8b2252" opacity="0.8"/>
+      <!-- Right figure -->
+      <circle cx="350" cy="200" r="24" fill="#a07040"/>
+      <path d="M328,200 Q332,183 350,178 Q368,183 372,200" fill="#1a0800"/>
+      <path d="M325,320 L325,235 Q332,218 350,215 Q368,218 375,235 L375,320Z" fill="#2d7a3a" opacity="0.8"/>
+      <!-- Connecting dots/lines - partnership visual -->
+      <line x1="154" y1="280" x2="200" y2="280" stroke="rgba(201,165,90,0.4)" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <line x1="280" y1="280" x2="326" y2="280" stroke="rgba(201,165,90,0.4)" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <!-- Gold star / rising sun above center -->
+      <circle cx="240" cy="90" r="18" fill="rgba(201,165,90,0.2)" stroke="#c9a55a" stroke-width="1.5"/>
+      <circle cx="240" cy="90" r="10" fill="rgba(201,165,90,0.4)"/>
+      <!-- Rays -->
+      <g stroke="#c9a55a" stroke-width="1" opacity="0.4">
+        <line x1="240" y1="66" x2="240" y2="60"/><line x1="256" y1="72" x2="260" y2="67"/>
+        <line x1="262" y1="88" x2="268" y2="88"/><line x1="256" y1="104" x2="260" y2="109"/>
+        <line x1="240" y1="110" x2="240" y2="116"/><line x1="224" y1="104" x2="220" y2="109"/>
+        <line x1="218" y1="88" x2="212" y2="88"/><line x1="224" y1="72" x2="220" y2="67"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<!-- CONTACT / LEGACY -->
+<section class="section contact-wrap" id="contact">
+  <h2 class="legacy-title">Your legacy <em>awaits here</em></h2>
+  <div class="contact-grid">
+    <div>
+      <div class="contact-info-row">
+        <div class="ci-icon">📍</div>
+        <div>
+          <div class="ci-lbl">Address</div>
+          <div class="ci-val">612-A, 6th Floor, Wave Silver Tower,<br>Sector-18, Noida, UP 201301</div>
+        </div>
+      </div>
+      <div class="contact-info-row">
+        <div class="ci-icon">📞</div>
+        <div>
+          <div class="ci-lbl">Phone</div>
+          <div class="ci-val"><a href="tel:+911204264717">+91 0120 426 4717</a><br><a href="tel:+919899939333">+91 9899939333</a></div>
+        </div>
+      </div>
+      <div class="contact-info-row">
+        <div class="ci-icon">✉️</div>
+        <div>
+          <div class="ci-lbl">Email</div>
+          <div class="ci-val"><a href="mailto:info@epmwealth.com">info@epmwealth.com</a></div>
+        </div>
+      </div>
+      <div class="contact-info-row">
+        <div class="ci-icon">🏅</div>
+        <div>
+          <div class="ci-lbl">Registrations</div>
+          <div class="ci-val">AMFI Registered — Code 100255<br>BSE Registered — Code 1197501</div>
+        </div>
+      </div>
+      <div style="margin-top:28px;">
+        <div class="ci-lbl" style="margin-bottom:12px;">Follow Us</div>
+        <div style="display:flex;gap:10px;">
+          <a href="https://www.instagram.com/epm_wealth/" target="_blank" style="width:36px;height:36px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--warm)';this.style.color='var(--warm)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/@epmwealth101" target="_blank" style="width:36px;height:36px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--warm)';this.style.color='var(--warm)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.linkedin.com/company/epm-wealth/" target="_blank" style="width:36px;height:36px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--warm)';this.style.color='var(--warm)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.facebook.com/epmwealthadvisor" target="_blank" style="width:36px;height:36px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--warm)';this.style.color='var(--warm)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"><i class="fab fa-facebook-f"></i></a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <form onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">First Name *</label><input class="form-inp" type="text" placeholder="First Name" required/></div>
+          <div class="form-group"><label class="form-label">Last Name *</label><input class="form-inp" type="text" placeholder="Last Name" required/></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Phone</label><input class="form-inp" type="tel" placeholder="+91 XXXXX XXXXX"/></div>
+          <div class="form-group"><label class="form-label">Email</label><input class="form-inp" type="email" placeholder="you@example.com"/></div>
+        </div>
+        <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="How can we help you?"></textarea></div>
+        <button type="submit" class="form-submit">Submit Message</button>
+      </form>
+      <div class="form-ok" id="formOk">✅ Thank you! We'll be in touch within 24 hours.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">EPM <span>Wealth</span></div>
+      <p class="footer-about">Bridging the gap between your reality and your purpose. AMFI &amp; BSE registered wealth management firm helping individuals achieve financial independence.</p>
+      <div class="footer-badges">
+        <div class="footer-badge">AMFI 100255</div>
+        <div class="footer-badge">BSE 1197501</div>
+      </div>
+      <div class="footer-socials" style="margin-top:20px;">
+        <a href="https://www.instagram.com/epm_wealth/" class="footer-soc" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@epmwealth101" class="footer-soc" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.linkedin.com/company/epm-wealth/" class="footer-soc" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.facebook.com/epmwealthadvisor" class="footer-soc" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="#about">About Us</a>
+      <a href="#wealth">Wealth Management</a>
+      <a href="#assets">Asset Management</a>
+      <a href="#insights">Insights</a>
+      <a href="#careers">Careers</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Solutions</h4>
+      <a href="#">Business Owners</a>
+      <a href="#">Portfolio Management</a>
+      <a href="#">Family Offices</a>
+      <a href="#">CEOs &amp; CXOs</a>
+      <a href="#">SIP &amp; Mutual Funds</a>
+      <a href="#">Insurance</a>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#">Market Reports</a>
+      <a href="#">SIP Calculator</a>
+      <a href="#">Partner Programme</a>
+      <a href="#">Training Portal</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer-col">
+      <h4>Office</h4>
+      <a href="#">Wave Silver Tower</a>
+      <a href="#">Sector-18, Noida 201301</a>
+      <a href="tel:+911204264717">+91 0120 426 4717</a>
+      <a href="tel:+919899939333">+91 9899939333</a>
+      <a href="mailto:info@epmwealth.com">info@epmwealth.com</a>
+      <a href="https://wa.me/919999939333" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+  <div class="footer-rule"></div>
+  <div class="footer-bottom">
+    <span>© 2025 EPM Wealth. All Rights Reserved. AMFI Reg. 100255 | BSE Reg. 1197501</span>
+    <div>
+      <a href="#">Terms</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Disclaimer</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* NAV scroll */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>50);
+});
+
+/* REVEAL on scroll */
+const revealEls = document.querySelectorAll('.reveal,.reveal-left');
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+  });
+},{threshold:0.1});
+revealEls.forEach(el=>io.observe(el));
+
+/* ── TESTIMONIALS ── */
+const testis = [
+  {q:'"I am grateful to have EPM Wealth as my financial advisor. Their services have always been exceptional in every way."',n:'Shantanu Gupta',r:'Managing Director, Roots Group Of Institutes'},
+  {q:'"EPM Wealth helped me build a diversified portfolio and understand my financial health in a way no one else had done before."',n:'Rajesh Gupta',r:'Business Owner, Delhi NCR'},
+  {q:'"From the first consultation to ongoing support, the team has been outstanding. I feel genuinely guided at every step."',n:'Priya Verma',r:'IT Professional, Lucknow'},
+  {q:'"Their SIP strategy helped my family achieve financial security. Truly professional and personalised guidance."',n:'Anita Sharma',r:'Homemaker & Investor, Noida'}
+];
+let tIdx=0;
+const tQuote=document.getElementById('testiQuote');
+const tName=document.getElementById('testiName');
+const tRole=document.getElementById('testiRole');
+const tDots=document.getElementById('testiDots');
+testis.forEach((_,i)=>{
+  const d=document.createElement('div');
+  d.className='testi-dot'+(i===0?' on':'');
+  d.onclick=()=>goTesti(i);
+  tDots.appendChild(d);
+});
+function goTesti(i){
+  tIdx=i;
+  tQuote.style.opacity='0';tName.style.opacity='0';tRole.style.opacity='0';
+  setTimeout(()=>{
+    tQuote.textContent=testis[i].q;
+    tName.textContent=testis[i].n;
+    tRole.textContent=testis[i].r;
+    tQuote.style.opacity='1';tName.style.opacity='1';tRole.style.opacity='1';
+  },300);
+  document.querySelectorAll('.testi-dot').forEach((d,j)=>d.classList.toggle('on',j===i));
+}
+[tQuote,tName,tRole].forEach(el=>{el.style.transition='opacity 0.3s';});
+setInterval(()=>goTesti((tIdx+1)%testis.length),5500);
+
+/* ── CAREER SLIDER ── */
+const careerSlides=document.querySelectorAll('.career-slide');
+const careerDotEls=document.querySelectorAll('.career-dot');
+let cIdx=0;
+function goCareer(i){
+  careerSlides[cIdx].classList.remove('active');
+  careerDotEls[cIdx].classList.remove('active');
+  cIdx=i;
+  careerSlides[cIdx].classList.add('active');
+  careerDotEls[cIdx].classList.add('active');
+}
+function moveCareer(dir){
+  goCareer((cIdx+dir+careerSlides.length)%careerSlides.length);
+}
+setInterval(()=>moveCareer(1),5000);
+
+/* ── SIP CALCULATOR ── */
+function calcSip(){
+  const P=parseFloat(document.getElementById('sipAmt').value)||0;
+  const n=parseInt(document.getElementById('sipFreq').value)||12;
+  const Y=parseFloat(document.getElementById('sipYrs').value)||0;
+  let R=parseFloat(document.getElementById('sipRate').value)||0;
+  const infl=parseFloat(document.getElementById('sipInfl').value)||0;
+  R=Math.max(0,R-infl);
+  const r=R/100/n;
+  const tt=n*Y;
+  const mat=r>0?P*((Math.pow(1+r,tt)-1)/r)*(1+r):P*tt;
+  const inv=P*tt;
+  const fmt=v=>'₹'+Math.round(v).toLocaleString('en-IN');
+  document.getElementById('sInv').textContent=fmt(inv);
+  document.getElementById('sGain').textContent=fmt(mat-inv);
+  document.getElementById('sTotal').textContent=fmt(mat);
+  document.getElementById('sipRes').classList.add('show');
+}
+
+/* ── CONTACT FORM ── */
+function submitForm(e){
+  e.preventDefault();
+  document.getElementById('formOk').style.display='block';
+  e.target.reset();
+}
+</script>
+</body>
+</html>

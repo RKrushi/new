@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waterfield Advisors – Bridging the gap between your reality & your Purpose</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;font-size:17px;}
+  body{font-family:'Georgia',serif;background:#f8f4ef;color:#2c2c2c;overflow-x:hidden;}
+
+  /* ── NAV ── */
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:58px;border-bottom:1px solid rgba(0,0,0,0.07);}
+  .nav-left{display:flex;gap:28px;align-items:center;}
+  .nav-left a,.nav-right a{text-decoration:none;color:#2c2c2c;font-family:Arial,sans-serif;font-size:13px;letter-spacing:.02em;transition:color .2s;}
+  .nav-left a:hover,.nav-right a:hover{color:#8b1a1a;}
+  .logo{font-family:'Georgia',serif;font-size:17px;font-weight:bold;letter-spacing:5px;color:#2c2c2c;display:flex;align-items:center;gap:8px;text-transform:uppercase;text-decoration:none;}
+  .logo-w{color:#8b1a1a;font-size:20px;font-weight:900;}
+  .nav-right{display:flex;gap:20px;align-items:center;}
+  .nav-badge{position:relative;background:#fdf6ee;border:1px solid #d4b483;padding:7px 14px;border-radius:2px;font-size:12px;font-family:Arial,sans-serif;color:#2c2c2c;cursor:pointer;transition:.2s;}
+  .badge-new{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:#8b1a1a;color:#fff;font-size:8px;padding:2px 6px;border-radius:2px;letter-spacing:.08em;font-family:Arial,sans-serif;}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+  .hamburger span{display:block;width:24px;height:2px;background:#333;border-radius:2px;}
+
+  /* ── HERO ── */
+  .hero{min-height:100vh;background:linear-gradient(160deg,#0d1220 0%,#131b30 25%,#1a2540 50%,#1c1008 80%,#120a04 100%);position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 40px 140px;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 60%,rgba(180,100,20,.12) 0%,transparent 70%);}
+  .hero-road{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);font-size:120px;opacity:.06;white-space:nowrap;letter-spacing:-10px;}
+  .hero h1{font-size:clamp(1.8rem,4.5vw,3.4rem);color:#fff;font-weight:400;line-height:1.2;position:relative;z-index:1;max-width:720px;}
+  .italic-gold{font-style:italic;color:#c9a96e;display:block;font-size:1.15em;}
+  .hero-sub{color:rgba(255,255,255,.78);font-size:14px;max-width:380px;line-height:1.8;position:relative;z-index:1;margin-top:22px;font-family:Arial,sans-serif;}
+  .slide-dots{display:flex;gap:6px;justify-content:center;margin-top:28px;position:relative;z-index:2;}
+  .slide-dot{width:24px;height:3px;background:rgba(255,255,255,.3);border-radius:2px;cursor:pointer;transition:.3s;}
+  .slide-dot.active{background:#fff;}
+
+  /* Waterfield Today bar */
+  .wf-today{position:absolute;bottom:0;left:0;right:0;background:rgba(18,12,8,.88);padding:14px 40px;display:flex;align-items:center;gap:32px;z-index:2;}
+  .today-label{color:rgba(255,255,255,.7);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-family:Arial,sans-serif;white-space:nowrap;min-width:110px;}
+  .today-articles{display:flex;gap:20px;flex:1;overflow:hidden;}
+  .today-article{display:flex;gap:10px;align-items:center;flex:1;min-width:0;}
+  .ta-img{width:52px;height:38px;border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;}
+  .ta-tag{font-size:9px;color:rgba(255,255,255,.45);letter-spacing:.1em;font-family:Arial,sans-serif;text-transform:uppercase;}
+  .ta-title{font-size:11px;color:#fff;line-height:1.35;font-family:Arial,sans-serif;margin-top:2px;}
+
+  /* ── SECTIONS ── */
+  section{padding:80px 40px;}
+  .section-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8b1a1a;font-family:Arial,sans-serif;margin-bottom:10px;}
+  hr.divider{border:none;border-top:1px solid #ddd;margin:0 40px;}
+
+  /* Solutions */
+  .solutions{background:#f8f4ef;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+  .solutions h2{font-size:clamp(1.7rem,2.8vw,2.5rem);font-weight:400;line-height:1.25;color:#1a1a2e;}
+  .solutions p{font-size:14px;line-height:1.85;color:#555;font-family:Arial,sans-serif;}
+
+  /* Service Cards */
+  .wm-section{background:#f8f4ef;}
+  .wm-section h2,.am-section h2{font-size:clamp(1.9rem,3vw,2.8rem);font-weight:400;margin-bottom:10px;color:#1a1a2e;}
+  .wm-section>p,.am-section>p{font-family:Arial,sans-serif;font-size:14px;color:#555;margin-bottom:36px;max-width:700px;}
+  .cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .scard{border-radius:4px;padding:26px;color:#fff;position:relative;overflow:hidden;min-height:210px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform .2s;}
+  .scard:hover{transform:translateY(-3px);}
+  .scard-emoji{position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:64px;opacity:.12;}
+  .scard h3{font-size:1.25rem;font-weight:400;line-height:1.25;margin-bottom:10px;}
+  .scard p{font-size:12px;line-height:1.65;opacity:.82;font-family:Arial,sans-serif;max-width:220px;}
+  .ia-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;opacity:.55;font-family:Arial,sans-serif;margin-top:18px;}
+  .ia-val{font-size:13px;font-weight:600;font-family:Arial,sans-serif;margin-top:3px;}
+  .c-family{background:linear-gradient(145deg,#2c1a10,#1a0f08);}
+  .c-pro{background:linear-gradient(145deg,#181828,#0d0d1c);}
+  .c-found{background:linear-gradient(145deg,#1c1c1c,#0a0a0a);}
+  .c-women{background:linear-gradient(145deg,#2a281a,#1a1a0d);}
+  .c-pms{background:linear-gradient(145deg,#1e2e1e,#0e1e0e);}
+  .c-fof{background:linear-gradient(145deg,#182232,#0d1520);}
+  .c-sb{background:linear-gradient(145deg,#162626,#0b1818);}
+  .c-gl{background:linear-gradient(145deg,#2e221a,#1a140d);}
+
+  /* Vault */
+  .vault-section{background:#f8f4ef;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+  .vault-left h2{font-size:clamp(1.7rem,2.8vw,2.4rem);font-weight:400;line-height:1.25;margin-bottom:14px;color:#1a1a2e;}
+  .vault-left p{font-size:14px;color:#555;line-height:1.8;font-family:Arial,sans-serif;margin-bottom:18px;}
+  .lnk{color:#8b1a1a;text-decoration:none;font-size:13px;font-family:Arial,sans-serif;border-bottom:1px solid #8b1a1a;padding-bottom:1px;}
+  .signup-box{margin-top:38px;}
+  .signup-box h3{font-size:1rem;font-weight:600;margin-bottom:6px;font-family:Arial,sans-serif;color:#1a1a2e;}
+  .signup-box p{font-size:13px;color:#555;margin-bottom:14px;font-family:Arial,sans-serif;}
+  .email-form{display:flex;gap:12px;align-items:flex-end;}
+  .email-form input{flex:1;border:none;border-bottom:1px solid #aaa;background:transparent;padding:8px 0;font-size:13px;font-family:Arial,sans-serif;outline:none;color:#333;}
+  .email-form input::placeholder{color:#aaa;}
+  .sub-btn{background:none;border:none;color:#8b1a1a;font-size:13px;cursor:pointer;font-family:Arial,sans-serif;white-space:nowrap;padding-bottom:8px;border-bottom:1px solid #8b1a1a;}
+  .vault-card{background:linear-gradient(145deg,#7a3c12,#4a200a);border-radius:4px;padding:30px;color:#fff;min-height:240px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;}
+  .vault-card::before{content:'〰';position:absolute;top:-10px;right:-10px;font-size:100px;opacity:.1;transform:rotate(20deg);}
+  .v-tag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;opacity:.65;font-family:Arial,sans-serif;margin-bottom:8px;}
+  .vault-card h3{font-size:1.2rem;font-weight:400;margin-bottom:10px;line-height:1.3;}
+  .vault-card p{font-size:12px;opacity:.8;font-family:Arial,sans-serif;line-height:1.55;}
+  .v-date{font-size:11px;opacity:.55;font-family:Arial,sans-serif;margin-top:14px;}
+
+  /* Articles grid */
+  .articles-section{background:#f8f4ef;padding-top:0;}
+  .articles-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .art-thumb{cursor:pointer;}
+  .art-img{width:100%;height:130px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:38px;margin-bottom:12px;}
+  .ai1{background:linear-gradient(135deg,#e8d5b8,#c9a96e);}
+  .ai2{background:linear-gradient(135deg,#c9a920,#8b7010);}
+  .ai3{background:linear-gradient(135deg,#b8cfe8,#6e9ac9);}
+  .ai4{background:linear-gradient(135deg,#d0d0cc,#9090a0);}
+  .art-tag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#8b1a1a;font-family:Arial,sans-serif;margin-bottom:5px;}
+  .art-thumb h4{font-size:13px;line-height:1.45;color:#1a1a2e;font-weight:400;margin-bottom:5px;}
+  .art-date{font-size:11px;color:#aaa;font-family:Arial,sans-serif;}
+
+  /* UHNW Banner */
+  .uhnw-banner{background:#f5ede0;display:grid;grid-template-columns:1fr 1fr;}
+  .uhnw-left{display:flex;gap:22px;align-items:center;padding:40px;}
+  .cal-cover{width:116px;height:136px;background:linear-gradient(145deg,#192636,#0d1622);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;flex-shrink:0;padding:10px;text-align:center;}
+  .cal-cover .c-year{font-size:11px;opacity:.55;font-family:Arial,sans-serif;}
+  .cal-cover .c-icon{font-size:24px;margin:6px 0;}
+  .cal-cover .c-title{font-size:10px;font-style:italic;line-height:1.35;opacity:.8;}
+  .uhnw-text h3{font-size:1.45rem;font-weight:400;color:#1a1a2e;margin-bottom:8px;}
+  .uhnw-text p{font-size:13px;color:#555;font-family:Arial,sans-serif;margin-bottom:10px;}
+  .uhnw-right{background:linear-gradient(145deg,#18182a,#2a1408);display:flex;align-items:center;justify-content:center;min-height:200px;position:relative;}
+  .uhnw-play{font-size:60px;opacity:.35;cursor:pointer;}
+  .play-btn{position:absolute;width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;cursor:pointer;}
+
+  /* CEO Quote */
+  .ceo-quote{background:#f8f4ef;display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center;padding:80px 80px;}
+  .ceo-blockquote{font-size:clamp(.95rem,1.8vw,1.25rem);font-style:italic;line-height:1.85;color:#2c2c2c;margin-bottom:22px;}
+  .ceo-sig{font-style:italic;color:#8b1a1a;font-size:1.3rem;display:block;margin-bottom:4px;}
+  .ceo-role{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#aaa;font-family:Arial,sans-serif;}
+  .ceo-photo{width:210px;height:270px;background:linear-gradient(145deg,#e8c4b0,#c09070);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:80px;flex-shrink:0;}
+
+  /* Awards */
+  .awards-section{background:#f8f4ef;text-align:center;}
+  .awards-section h2{font-size:clamp(1.7rem,2.8vw,2.5rem);font-weight:400;color:#1a1a2e;}
+  .awards-section .italic-gold{display:block;font-size:1.6rem;color:#c9a96e;font-style:italic;margin:4px 0 18px;}
+  .awards-section>p{font-size:14px;color:#555;max-width:500px;margin:0 auto 36px;font-family:Arial,sans-serif;line-height:1.7;}
+  .award-dome{background:linear-gradient(180deg,#e8e0f0,#f0eaf8 70%,#f8f4ef 100%);border-radius:50% 50% 0 0 / 28% 28% 0 0;max-width:460px;margin:0 auto;padding:36px 40px 28px;}
+  .award-name{font-size:1rem;color:#1a1a2e;margin-bottom:14px;font-family:Arial,sans-serif;font-weight:600;}
+  .award-icon{font-size:38px;margin-bottom:6px;}
+  .award-org{font-size:12px;color:#888;font-family:Arial,sans-serif;}
+  .year-line{display:flex;justify-content:center;gap:20px;margin-top:36px;border-top:1px solid #e0e0e0;padding-top:14px;flex-wrap:wrap;}
+  .yr{font-size:12px;color:#aaa;font-family:Arial,sans-serif;cursor:pointer;padding:4px 0;border-bottom:2px solid transparent;transition:.2s;}
+  .yr.active{color:#1a1a2e;border-bottom:2px solid #8b1a1a;}
+
+  /* Press */
+  .press-section{background:#f8f4ef;}
+  .press-section h2{font-size:clamp(1.7rem,2.8vw,2.5rem);font-weight:400;color:#1a1a2e;max-width:320px;line-height:1.2;}
+  .press-links{display:flex;gap:20px;margin:12px 0 36px;}
+  .press-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .pcard{background:#fff;border-radius:4px;overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,.06);cursor:pointer;transition:transform .2s;}
+  .pcard:hover{transform:translateY(-3px);}
+  .pcard-img{width:100%;height:158px;display:flex;align-items:center;justify-content:center;font-size:46px;}
+  .pi1{background:linear-gradient(135deg,#e0e0e0,#b8b8b8);}
+  .pi2{background:linear-gradient(135deg,#8b1a1a,#5c0d0d);}
+  .pi3{background:linear-gradient(135deg,#1a5c8b,#0d3a5c);}
+  .pcard-body{padding:16px;}
+  .pcard-body h4{font-size:13px;line-height:1.5;color:#1a1a2e;font-weight:400;margin-bottom:8px;}
+  .psource{font-size:11px;color:#aaa;font-family:Arial,sans-serif;}
+
+  /* Careers */
+  .careers-section{background:#f8f4ef;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+  .careers-section h2{font-size:clamp(1.7rem,2.8vw,2.5rem);font-weight:400;color:#1a1a2e;line-height:1.2;margin-bottom:14px;}
+  .careers-section p{font-size:14px;color:#555;line-height:1.8;font-family:Arial,sans-serif;margin-bottom:18px;}
+  .career-photos{display:grid;grid-template-columns:3fr 2fr;gap:8px;height:240px;}
+  .cphoto{border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:48px;}
+  .cp1{background:linear-gradient(145deg,#e8c8b4,#c09870);}
+  .cp2{background:linear-gradient(145deg,#c4d4e8,#7a9ac9);}
+
+  /* ESG */
+  .esg-section{background:linear-gradient(145deg,#0e180e,#1a2a1a);padding:100px 40px;display:flex;justify-content:flex-end;position:relative;overflow:hidden;}
+  .esg-section::before{content:'🌿';position:absolute;left:8%;top:50%;transform:translateY(-50%);font-size:140px;opacity:.07;}
+  .esg-card{background:rgba(255,255,255,.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:40px;max-width:420px;color:#fff;}
+  .esg-card .section-label{color:rgba(255,255,255,.55);}
+  .esg-card h2{font-size:clamp(1.4rem,2.2vw,1.9rem);font-weight:400;margin-bottom:14px;line-height:1.25;}
+  .esg-card p{font-size:13px;line-height:1.85;opacity:.78;font-family:Arial,sans-serif;margin-bottom:18px;}
+
+  /* Contact */
+  .contact-section{background:#f8f4ef;display:grid;grid-template-columns:1fr 1fr;gap:80px;}
+  .contact-left h2{font-size:clamp(1.7rem,2.8vw,2.5rem);font-weight:400;color:#1a1a2e;margin-bottom:36px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+  .ffield{margin-bottom:18px;}
+  .ffield input,.ffield textarea{width:100%;border:none;border-bottom:1px solid #bbb;background:transparent;padding:9px 0;font-size:13px;font-family:Arial,sans-serif;outline:none;color:#333;}
+  .ffield input::placeholder,.ffield textarea::placeholder{color:#bbb;}
+  .ffield textarea{resize:vertical;min-height:80px;border:1px solid #bbb;padding:8px;border-radius:2px;margin-top:6px;}
+  .radio-grp{margin-bottom:18px;}
+  .radio-grp label.rlabel{font-size:13px;font-family:Arial,sans-serif;color:#333;margin-bottom:8px;display:block;font-weight:600;}
+  .ropt{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:13px;font-family:Arial,sans-serif;color:#333;cursor:pointer;}
+  .ropt input{width:auto;}
+  .submit-btn{background:none;border:none;color:#8b1a1a;font-size:14px;cursor:pointer;font-family:Arial,sans-serif;border-bottom:1px solid #8b1a1a;padding-bottom:2px;margin-top:14px;}
+  .contact-right h3{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#1a1a2e;font-family:Arial,sans-serif;margin-bottom:8px;margin-top:22px;}
+  .contact-right p{font-size:13px;color:#555;font-family:Arial,sans-serif;line-height:1.85;}
+  .contact-right a{font-size:13px;color:#8b1a1a;font-family:Arial,sans-serif;text-decoration:none;}
+  .social-icons{display:flex;gap:10px;margin-top:10px;}
+  .si{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;text-decoration:none;font-weight:bold;}
+  .si-in{background:#0077b5;color:#fff;}
+  .si-yt{background:#ff0000;color:#fff;}
+  .si-tw{background:#000;color:#fff;}
+  .si-ig{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;}
+  .offices-list{margin-top:10px;}
+  .office-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #e8e8e8;font-family:Arial,sans-serif;font-size:14px;cursor:pointer;color:#1a1a2e;transition:.2s;}
+  .office-row:hover{color:#8b1a1a;}
+  .oplus{color:#8b1a1a;font-size:18px;transition:.2s;}
+  .recaptcha-mock{display:flex;align-items:center;gap:12px;border:1px solid #ddd;padding:11px 14px;border-radius:4px;width:fit-content;margin:14px 0;background:#fafafa;}
+  .recaptcha-mock input{width:auto;border:1px solid #ccc;}
+  .recaptcha-mock span{font-size:13px;font-family:Arial,sans-serif;color:#333;}
+
+  /* Footer */
+  footer{background:#f5ede0;padding:56px 40px 36px;}
+  .footer-top{display:grid;grid-template-columns:1.2fr 1fr 1.2fr 1.2fr .8fr;gap:36px;margin-bottom:40px;}
+  .footer-brand{font-family:Arial,sans-serif;}
+  .footer-brand .fb-logo{font-family:'Georgia',serif;font-size:14px;letter-spacing:4px;font-weight:bold;color:#2c2c2c;display:flex;align-items:center;gap:6px;text-transform:uppercase;margin-bottom:8px;}
+  .footer-brand .fb-logo span{color:#8b1a1a;}
+  .footer-brand p{font-size:13px;color:#555;line-height:1.5;}
+  .fcol h4{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#1a1a2e;font-family:Arial,sans-serif;margin-bottom:10px;}
+  .fcol a{display:block;font-size:12px;color:#777;font-family:Arial,sans-serif;text-decoration:none;line-height:2.1;}
+  .fcol a:hover{color:#8b1a1a;}
+  .fcol+.fcol{margin-top:0;}
+  .footer-bottom{border-top:1px solid #ddd;padding-top:22px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;}
+  .footer-legal{font-size:11px;color:#aaa;font-family:Arial,sans-serif;line-height:1.75;}
+  .footer-legal strong{display:block;color:#666;margin-bottom:3px;font-size:11px;}
+  .complaints{font-size:11px;color:#aaa;font-family:Arial,sans-serif;line-height:1.75;}
+  .complaints strong{display:block;color:#666;font-size:11px;margin-bottom:3px;}
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:900px){
+    nav{padding:0 16px;}
+    .nav-left{display:none;}
+    .nav-right{display:none;}
+    .hamburger{display:flex;}
+    section{padding:50px 20px;}
+    .solutions{grid-template-columns:1fr;gap:22px;}
+    .cards-grid{grid-template-columns:1fr;}
+    .vault-section{grid-template-columns:1fr;}
+    .ceo-quote{grid-template-columns:1fr;padding:50px 20px;}
+    .ceo-photo{display:none;}
+    .press-cards{grid-template-columns:1fr;}
+    .careers-section{grid-template-columns:1fr;}
+    .career-photos{display:none;}
+    .contact-section{grid-template-columns:1fr;gap:40px;}
+    .footer-top{grid-template-columns:1fr 1fr;}
+    .footer-bottom{grid-template-columns:1fr;}
+    .articles-grid{grid-template-columns:1fr 1fr;}
+    .uhnw-banner{grid-template-columns:1fr;}
+    .uhnw-right{min-height:140px;}
+    .wf-today{flex-direction:column;gap:12px;padding:14px 20px;}
+    .today-articles{flex-direction:column;gap:10px;}
+    .form-row{grid-template-columns:1fr;}
+    .esg-section{justify-content:center;padding:60px 20px;}
+    .esg-card{max-width:100%;}
+    .hero{padding:80px 20px 200px;}
+    .year-line{gap:12px;}
+  }
+  @media(max-width:520px){
+    .articles-grid{grid-template-columns:1fr;}
+    .footer-top{grid-template-columns:1fr;}
+    .footer-bottom{grid-template-columns:1fr;}
+    .nav-badge{display:none;}
+    .press-section h2{max-width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-left">
+    <a href="#solutions">About</a>
+    <a href="#wealth">Wealth Management</a>
+    <a href="#asset">Asset Management</a>
+    <a href="#vault">Vault</a>
+  </div>
+  <a class="logo" href="#">
+    <span class="logo-w">⊞</span> WATERFIELD
+  </a>
+  <div class="nav-right">
+    <div class="nav-badge">
+      <span class="badge-new">New</span>
+      UHNW Event Calendar 2026
+    </div>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="hamburger" id="hbg"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-road">🌉🌉🌉</div>
+  <h1>Bridging the gap between<br>your reality &amp; your<span class="italic-gold">Purpose</span></h1>
+  <p class="hero-sub">Work with a wealth management firm that has pioneered the concept of unbiased wealth &amp; family office advisory in India.</p>
+  <div class="slide-dots">
+    <div class="slide-dot"></div>
+    <div class="slide-dot active"></div>
+    <div class="slide-dot"></div>
+  </div>
+  <!-- Waterfield Today -->
+  <div class="wf-today">
+    <div class="today-label">WATERFIELD TODAY</div>
+    <div class="today-articles">
+      <div class="today-article">
+        <div class="ta-img" style="background:linear-gradient(135deg,#c0a060,#7a6020);">🌾</div>
+        <div>
+          <div class="ta-tag">ARTICLE</div>
+          <div class="ta-title">Understanding the Iran-Israel-U.S. Conflict</div>
+        </div>
+      </div>
+      <div class="today-article">
+        <div class="ta-img" style="background:linear-gradient(135deg,#5080a0,#304060);">🏛️</div>
+        <div>
+          <div class="ta-tag">ARTICLE</div>
+          <div class="ta-title">Union Budget 2026–27 Decoded</div>
+        </div>
+      </div>
+      <div class="today-article">
+        <div class="ta-img" style="background:linear-gradient(135deg,#c0a020,#806800);">🥇</div>
+        <div>
+          <div class="ta-tag">ARTICLE</div>
+          <div class="ta-title">Where does gold go from here?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section class="solutions" id="solutions">
+  <div>
+    <div class="section-label">SOLUTIONS</div>
+    <h2>Helping you create an enduring legacy</h2>
+  </div>
+  <div>
+    <p>Wealth Advisory is beyond just building a portfolio. By serving some of India's most prominent business families since 2011, we have learnt the importance of taking a holistic, global yet personalised approach to meeting our clients' wealth management needs.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- WEALTH MANAGEMENT -->
+<section class="wm-section" id="wealth">
+  <div class="section-label">SERVICES</div>
+  <h2>Wealth Management</h2>
+  <p>Our wealth management services are tailored to your unique wealth creation journeys. Explore bespoke solutions for your specific requirements.</p>
+  <div class="cards-grid">
+    <div class="scard c-family">
+      <div>
+        <h3>Family<br>Businesses</h3>
+        <p>Investment advisory, succession, family governance solutions, and philanthropic advisory for family patriarchs and the next generation.</p>
+      </div>
+      <div>
+        <div class="ia-label">INVESTABLE ASSET</div>
+        <div class="ia-val">Greater than INR 100 Crores</div>
+      </div>
+      <div class="scard-emoji">🏛️</div>
+    </div>
+    <div class="scard c-pro">
+      <div>
+        <h3>Professionals<br>and CXOs</h3>
+        <p>Holistic offerings for senior corporate leaders &amp; professionals such as doctors, lawyers, designers, and more.</p>
+      </div>
+      <div>
+        <div class="ia-label">INVESTABLE ASSET</div>
+        <div class="ia-val">Greater than INR 10 Crores</div>
+      </div>
+      <div class="scard-emoji">💼</div>
+    </div>
+    <div class="scard c-found">
+      <div>
+        <h3>Founders &amp;<br>Entrepreneurs</h3>
+        <p>Comprehensive personal wealth planning for India's notable startup founders, from pre-liquidity to post-exit stage.</p>
+      </div>
+      <div>
+        <div class="ia-label">INVESTABLE ASSET</div>
+        <div class="ia-val">Greater than INR 5 Crores</div>
+      </div>
+      <div class="scard-emoji">🚀</div>
+    </div>
+    <div class="scard c-women">
+      <div>
+        <h3>Women Clients</h3>
+        <p>Investment advisory, financial literacy, and community building for women leaders through our HERitage programme.</p>
+      </div>
+      <div>
+        <div class="ia-label">INVESTABLE ASSET</div>
+        <div class="ia-val">Greater than INR 5 Crores</div>
+      </div>
+      <div class="scard-emoji">👩‍💼</div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSET MANAGEMENT -->
+<section class="am-section" id="asset" style="background:#f8f4ef;">
+  <div class="section-label">SERVICES</div>
+  <h2>Asset Management</h2>
+  <p>Strategic solutions curated to facilitate meaningful and efficient access to sophisticated asset classes. Learn more about our distinctive set of asset management solutions.</p>
+  <div class="cards-grid">
+    <div class="scard c-pms">
+      <div>
+        <h3>Discretionary PMS</h3>
+        <p>Outsource your investment portfolio decision-making to Waterfield's expert advisors.</p>
+      </div>
+      <div>
+        <div class="ia-label">MINIMUM AMOUNT</div>
+        <div class="ia-val">INR 1 Crore</div>
+      </div>
+      <div class="scard-emoji">📊</div>
+    </div>
+    <div class="scard c-fof">
+      <div>
+        <h3>Waterfield<br>Fund of Funds</h3>
+        <p>Access top quartile private market fund managers via our Fund of Funds platform.</p>
+      </div>
+      <div>
+        <div class="ia-label">MINIMUM AMOUNT</div>
+        <div class="ia-val">INR 1 Crore</div>
+      </div>
+      <div class="scard-emoji">🌐</div>
+    </div>
+    <div class="scard c-sb">
+      <div>
+        <h3>Smart Beta</h3>
+        <p>Create consistent alpha at low cost with a unique 3rd strategy beyond active &amp; passive investing.</p>
+      </div>
+      <div>
+        <div class="ia-label">MINIMUM AMOUNT</div>
+        <div class="ia-val">INR 1 Crore</div>
+      </div>
+      <div class="scard-emoji">⚡</div>
+    </div>
+    <div class="scard c-gl">
+      <div>
+        <h3>Global Investments</h3>
+        <p>Build a globally diversified portfolio with advise from a global investment manager.</p>
+      </div>
+      <div>
+        <div class="ia-label">MINIMUM AMOUNT</div>
+        <div class="ia-val">INR 1 Crore</div>
+      </div>
+      <div class="scard-emoji">🌍</div>
+    </div>
+  </div>
+</section>
+
+<!-- VAULT -->
+<section class="vault-section" id="vault">
+  <div class="vault-left">
+    <div class="section-label">VAULT</div>
+    <h2>Your access to<br>rich insights</h2>
+    <p>From experienced partners at the forefront of today's financial trends and beyond.</p>
+    <a href="#" class="lnk">Explore Vault →</a>
+    <div class="signup-box">
+      <h3>Sign up for priority access</h3>
+      <p>Get our insights delivered straight to your inbox.<br>Trusted by the top 0.01% of the country.</p>
+      <div class="email-form">
+        <input type="email" placeholder="Email Address">
+        <button class="sub-btn">Subscribe →</button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="vault-card">
+      <div>
+        <div class="v-tag">ARTICLE</div>
+        <h3>Understanding the Iran-Israel-U.S. Conflict</h3>
+        <p>The unfolding geopolitical tensions and their impact on markets.</p>
+        <div class="v-date">03 March 2026 • CIO's Desk</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES GRID -->
+<section class="articles-section">
+  <div class="articles-grid">
+    <div class="art-thumb">
+      <div class="art-img ai1">🏛️</div>
+      <div class="art-tag">ARTICLE</div>
+      <h4>Union Budget 2026-27 Decoded</h4>
+      <div class="art-date">03 February 2026 •</div>
+    </div>
+    <div class="art-thumb">
+      <div class="art-img ai2">🥇</div>
+      <div class="art-tag">ARTICLE</div>
+      <h4>Where does gold go from here?</h4>
+      <div class="art-date">20 January 2026 • CIO's Desk</div>
+    </div>
+    <div class="art-thumb">
+      <div class="art-img ai3">🌍</div>
+      <div class="art-tag">ARTICLE</div>
+      <h4>The GIFT City Advantage</h4>
+      <div class="art-date">20 January 2026 • CIO's Desk</div>
+    </div>
+    <div class="art-thumb">
+      <div class="art-img ai4">🪙</div>
+      <div class="art-tag">ARTICLE</div>
+      <h4>Silver: Protecting Gains, Avoiding FOMO</h4>
+      <div class="art-date">20 January 2026 • CIO's Desk</div>
+    </div>
+  </div>
+</section>
+
+<!-- UHNW BANNER -->
+<div class="uhnw-banner">
+  <div class="uhnw-left">
+    <div class="cal-cover">
+      <div class="c-year">2026</div>
+      <div class="c-icon">🗓️</div>
+      <div class="c-title">The UHNW Event Calendar</div>
+    </div>
+    <div class="uhnw-text">
+      <div class="section-label">2026</div>
+      <h3>UHNW Event Calendar</h3>
+      <p>Stay ahead of top-drawer global events and experiences</p>
+      <a href="#" class="lnk">Learn More →</a>
+    </div>
+  </div>
+  <div class="uhnw-right">
+    <div style="text-align:center;">
+      <div class="uhnw-play">♟️</div>
+    </div>
+    <div class="play-btn">▶</div>
+  </div>
+</div>
+
+<!-- CEO QUOTE -->
+<section class="ceo-quote">
+  <div class="quote-text">
+    <blockquote class="ceo-blockquote">
+      "The hallmark of our offering is professional and personalised wealth advisory services. Our clients rely on us to work with them on important and deeply personal issues around their financial well-being"
+    </blockquote>
+    <span class="ceo-sig">Soumya Rajan</span>
+    <span class="ceo-role">FOUNDER &amp; CEO</span>
+  </div>
+  <div class="ceo-photo">👩</div>
+</section>
+
+<!-- AWARDS -->
+<section class="awards-section">
+  <div class="section-label">AWARDS</div>
+  <h2>Recognition driven by</h2>
+  <span class="italic-gold">Results</span>
+  <p>Our awards are a matter of great pride for us. Recognition is natural when our services and processes have added significant value to our clients' lives and businesses.</p>
+  <div class="award-dome">
+    <div class="award-name">Soumya Rajan – Forbes 50 over 50</div>
+    <div class="award-icon">🏆</div>
+    <div class="award-org">Forbes Global</div>
+  </div>
+  <div class="year-line">
+    <div class="yr active" onclick="setYr(this)">2026</div>
+    <div class="yr" onclick="setYr(this)">2025</div>
+    <div class="yr" onclick="setYr(this)">2024</div>
+    <div class="yr" onclick="setYr(this)">2023</div>
+    <div class="yr" onclick="setYr(this)">2022</div>
+    <div class="yr" onclick="setYr(this)">2021</div>
+    <div class="yr" onclick="setYr(this)">2020</div>
+    <div class="yr" onclick="setYr(this)">2019</div>
+  </div>
+</section>
+
+<!-- PRESS -->
+<section class="press-section">
+  <div class="section-label">PRESSCLUB</div>
+  <h2>What the press<br>has been saying</h2>
+  <div class="press-links">
+    <a href="#" class="lnk">Explore Pressclub →</a>
+    <a href="#" class="lnk">Download Media Kit →</a>
+  </div>
+  <div class="press-cards">
+    <div class="pcard">
+      <div class="pcard-img pi1">🤖</div>
+      <div class="pcard-body">
+        <h4>AI a secular, long-term theme; worst of earnings firmly behind us, says Waterfield Advisors MD</h4>
+        <div class="psource">mint &nbsp;·&nbsp; 24 February 2026</div>
+      </div>
+    </div>
+    <div class="pcard">
+      <div class="pcard-img pi2">📉</div>
+      <div class="pcard-body">
+        <h4>Fractal Analytics drops 5% in trading debut as AI jitters keep investors cautious</h4>
+        <div class="psource">VCCIRCLE &nbsp;·&nbsp; 16 February 2026</div>
+      </div>
+    </div>
+    <div class="pcard">
+      <div class="pcard-img pi3">📊</div>
+      <div class="pcard-body">
+        <h4>India's Fractal Analytics drops 5% in trading debut as AI jitters keep investors cautious</h4>
+        <div class="psource">REUTERS &nbsp;·&nbsp; 16 February 2026</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-dots" style="margin-top:28px;">
+    <div class="slide-dot" style="background:#ccc;"></div>
+    <div class="slide-dot" style="background:#8b1a1a;"></div>
+    <div class="slide-dot" style="background:#ccc;"></div>
+  </div>
+</section>
+
+<!-- CAREERS -->
+<section class="careers-section">
+  <div>
+    <div class="section-label">CAREERS</div>
+    <h2>If ethics and integrity drive you, look no further</h2>
+    <p>Some of the most prominent business families in India place their trust in our family office advisory services to manage their wealth. Know what it takes to grow with us.</p>
+    <a href="#" class="lnk">View Open Position →</a>
+  </div>
+  <div class="career-photos">
+    <div class="cphoto cp1">👥</div>
+    <div class="cphoto cp2">🤝</div>
+  </div>
+</section>
+
+<!-- ESG -->
+<section class="esg-section">
+  <div class="esg-card">
+    <div class="section-label">RESPONSIBLE INVESTING</div>
+    <h2>Our responsible vision for a better &amp; brighter future</h2>
+    <p>As capital allocators, we recognize the impact of our investment advice on the world around us. To that end, we are committed to enabling our clients to allocate their capital in a manner that fully optimises the opportunities and minimizes the risks to various environmental, social, and governance (ESG) factors.</p>
+    <a href="#" style="color:rgba(255,255,255,.8);text-decoration:none;font-size:13px;font-family:Arial,sans-serif;border-bottom:1px solid rgba(255,255,255,.5);padding-bottom:2px;">Explore ESG →</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-left">
+    <div class="section-label">CONTACT US</div>
+    <h2>Your legacy awaits</h2>
+    <div class="ffield"><input type="text" placeholder="Full Name*"></div>
+    <div class="form-row">
+      <div class="ffield" style="margin-bottom:0;"><input type="email" placeholder="Email Address*"></div>
+      <div class
