@@ -18,6 +18,9 @@
   --white:#ffffff;--offwh:#faf7f2;
   --blush:#f5ede0;
 }
+.solutions-wrap, .intro-section, #about {
+  background: #ffffff !important;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:17px;scroll-behavior:smooth}
 body{font-family:'Jost',sans-serif;color:var(--char);background:var(--blush);overflow-x:hidden;line-height:1.65}
@@ -726,6 +729,7 @@ nav.scrolled{box-shadow:0 4px 32px rgba(0,0,0,.18)}
 .founder-wrap {
   background: var(--blush);
   display: grid;
+  background: #ffffff;
   grid-template-columns: 52% 48%;
   align-items: start;       /* TOP aligned, not center */
   padding: 80px 2% 80px 6%;
@@ -759,6 +763,8 @@ nav.scrolled{box-shadow:0 4px 32px rgba(0,0,0,.18)}
 
 /* Signature — true cursive Google Font style */
 .founder-sig {
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 28px;
   font-family: 'Cormorant Garamond', serif;
   font-size: 36px;
@@ -768,7 +774,7 @@ nav.scrolled{box-shadow:0 4px 32px rgba(0,0,0,.18)}
   text-align: center;
   display: block;
   width: 100%;
-  /* Simulate handwriting slant */
+  white-space: nowrap;
   letter-spacing: 2px;
   transform: rotate(-3deg) translateX(-4px);
   transform-origin: center;
@@ -1547,20 +1553,20 @@ footer{background:var(--blush);padding:72px 5% 32px;border-top:1px solid var(--b
   </div>
 </div>
 
-<!-- ══ FOUNDER QUOTE — Waterfield Soumya Rajan style ══ -->
+<!-- ══ FOUNDER QUOTE — Waterfield Tanish Gupta style ══ -->
 <!-- Replace entire founder-wrap -->
 <div class="founder-wrap" id="about-founder">
-  <div class="founder-left reveal-left">
-    <div class="founder-quote">
-      "The hallmark of our offering is professional
-      and personalised wealth advisory services.
-      Our clients rely on us to work with them on
-      important and deeply personal issues around
-      their financial well-being"
-    </div>
-    <span class="founder-sig">Soumya Rajan</span>
-    <span class="founder-title-label">Founder &amp; CEO</span>
+<div class="founder-left reveal-left" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+  <div class="founder-quote" style="text-align:center;">
+    "The hallmark of our offering is professional
+    and personalised wealth advisory services.
+    Our clients rely on us to work with them on
+    important and deeply personal issues around
+    their financial well-being"
   </div>
+  <span class="founder-sig" style="display:block;text-align:center;margin:28px auto 0;transform:none;white-space:nowrap;">Tanish Gupta</span>
+  <span class="founder-title-label" style="display:block;text-align:center;margin-top:10px;">Founder &amp; CEO</span>
+</div>
 
   <div class="founder-right reveal">
     <img
@@ -1580,14 +1586,14 @@ footer{background:var(--blush);padding:72px 5% 32px;border-top:1px solid var(--b
   </p>
   <!-- Waterfield arch/semicircle award display -->
   <div class="recog-arch reveal">
-    <div id="archAwardName" class="recog-award-name">Soumya Rajan — Forbes 50 over 50</div>
+    <div id="archAwardName" class="recog-award-name">Tanish Gupta — Forbes 50 over 50</div>
     <div id="archAwardSub" class="recog-award-sub" style="color:var(--warm);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px">2026</div>
     <div class="recog-award-icon">🏆</div>
     <div id="archAwardSource" class="recog-award-source">Forbes Global</div>
   </div>
 
   <div class="award-years reveal">
-    <div class="award-year active" onclick="switchYear(this,'Soumya Rajan — Forbes 50 over 50','Forbes Global','🏆')">2026</div>
+    <div class="award-year active" onclick="switchYear(this,'Tanish Gupta — Forbes 50 over 50','Forbes Global','🏆')">2026</div>
     <div class="award-year" onclick="switchYear(this,'ET Best Wealth Management Firms','Economic Times','🌟')">2025</div>
     <div class="award-year" onclick="switchYear(this,'CNBCTV18 Wealth Excellence Award','CNBC TV18','🎖️')">2024</div>
     <div class="award-year" onclick="switchYear(this,'Business Standard Elite Partner','Business Standard','💎')">2023</div>

@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EPM Wealth — Financial Independence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+/* ═══════════════════════════════════════
+   RESET & CSS VARIABLES
+═══════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Outfit',sans-serif;
+  color:#111;background:#faf9f7;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6;
+}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:inherit;border:none;background:none;}
+img{max-width:100%;display:block;}
+
+:root{
+  --amber:#c8622a;
+  --amber-light:#e07840;
+  --amber-pale:#f5e8dc;
+  --black:#0c0b09;
+  --off-white:#faf9f7;
+  --cream:#f2ede6;
+  --warm-gray:#e8e3dd;
+  --border:#ddd8d2;
+  --text-soft:#7a7268;
+  --text-mid:#4a4540;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',sans-serif;
+}
+
+/* ═══════════════════════════════════════
+   INVESTOR POPUP
+═══════════════════════════════════════ */
+#pop-overlay{
+  position:fixed;inset:0;
+  background:rgba(12,11,9,.6);backdrop-filter:blur(4px);
+  z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;animation:poFade .3s ease;
+}
+@keyframes poFade{from{opacity:0}to{opacity:1}}
+#pop{
+  background:#fff;width:100%;max-width:860px;
+  max-height:88vh;display:flex;flex-direction:column;
+  overflow:hidden;
+  box-shadow:0 24px 80px rgba(0,0,0,.25);
+  border-top:3px solid var(--amber);
+  animation:poUp .35s ease;
+}
+@keyframes poUp{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
+.pop-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 28px 16px;border-bottom:1px solid #eee;flex-shrink:0;
+}
+.pop-logo-text{
+  display:flex;align-items:baseline;gap:6px;
+}
+.pop-logo-epm{
+  font-family:var(--serif);font-size:26px;font-weight:700;
+  color:var(--black);letter-spacing:-0.5px;
+}
+.pop-logo-wealth{
+  font-size:11px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;color:var(--amber);
+}
+.pop-close{
+  width:32px;height:32px;border:1.5px solid #ccc;
+  background:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:#888;transition:all .18s;
+}
+.pop-close:hover{border-color:var(--black);color:var(--black);}
+.pop-body{padding:24px 28px 32px;overflow-y:auto;flex:1;}
+.pop-body h2{font-size:15px;font-weight:600;color:#111;line-height:1.55;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid #eee;}
+.pop-body p{font-size:13.5px;color:#444;line-height:1.82;margin-bottom:11px;}
+.pop-body a{color:var(--amber);text-decoration:underline;}
+.pop-note{font-size:13px;color:#555;line-height:1.75;padding-left:16px;position:relative;margin-bottom:8px;}
+.pop-note::before{content:'▸';position:absolute;left:0;color:var(--amber);}
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+nav{
+  position:sticky;top:0;z-index:800;
+  background:rgba(250,249,247,.97);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  height:72px;padding:0 52px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:box-shadow .3s;
+}
+nav.scrolled{box-shadow:0 2px 32px rgba(0,0,0,.08);}
+/* Logo SVG inline */
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-svg{height:40px;width:auto;}
+.nav-logo-wordmark{display:flex;flex-direction:column;line-height:1;}
+.nav-logo-epm{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--black);letter-spacing:-.5px;}
+.nav-logo-sub{font-size:9px;font-weight:600;letter-spacing:3.5px;text-transform:uppercase;color:var(--amber);margin-top:1px;}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-link{
+  font-size:13px;color:var(--text-soft);font-weight:400;
+  position:relative;padding-bottom:3px;transition:color .2s;
+  white-space:nowrap;letter-spacing:.2px;
+}
+.nav-link::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:1.5px;background:var(--amber);
+  transform:scaleX(0);transform-origin:left;transition:transform .25s ease;
+}
+.nav-link.active,.nav-link:hover{color:var(--black);}
+.nav-link.active::after,.nav-link:hover::after{transform:scaleX(1);}
+.nav-cta{
+  padding:10px 22px;background:var(--black);color:#fff !important;
+  font-size:12px;font-weight:500;letter-spacing:.8px;
+  transition:background .2s;
+}
+.nav-cta::after{display:none;}
+.nav-cta:hover{background:var(--amber) !important;}
+
+/* ═══════════════════════════════════════
+   TICKER
+═══════════════════════════════════════ */
+.ticker{background:var(--amber);overflow:hidden;padding:9px 0;}
+.ticker-inner{display:flex;white-space:nowrap;width:max-content;animation:tickAnim 45s linear infinite;}
+.ticker-item{padding:0 28px;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.85);font-weight:600;flex-shrink:0;}
+.ticker-item::after{content:'◆';margin-left:28px;opacity:.4;}
+@keyframes tickAnim{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero{background:#000;position:relative;overflow:hidden;min-height:100vh;display:flex;flex-direction:column;}
+.hero-media{flex:1;position:relative;min-height:64vh;display:flex;align-items:flex-end;overflow:hidden;}
+/* Replace .hero-bg with this */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.42) saturate(1.1);
+  transition: transform 10s ease;
+  z-index: 0;
+}
+/* Hero text fade on video play */
+.hero-content {
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+.hero-content.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+.hero:hover .hero-video {
+  transform: scale(1.04);
+}
+.hero:hover .hero-bg{transform:scale(1.04);}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(170deg,rgba(0,0,0,.05) 0%,rgba(12,11,9,.0) 35%,rgba(12,11,9,.72) 100%);
+}
+.hero-grain{position:absolute;inset:0;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");}
+.hero-content{position:relative;z-index:2;width:100%;padding:52px 64px 60px;}
+.hero-kicker{
+  font-size:11px;letter-spacing:5px;text-transform:uppercase;
+  color:rgba(255,255,255,.4);font-weight:500;display:block;margin-bottom:6px;
+}
+.hero-title-line1{
+  font-family:var(--serif);
+  font-size:clamp(68px,11vw,140px);
+  font-weight:600;line-height:.88;letter-spacing:-4px;
+  color:rgba(255,255,255,.25);display:block;
+}
+.hero-title-line1 .ht-accent{color:var(--amber);}
+.hero-title-line2{
+  font-family:var(--serif);
+  font-size:clamp(68px,11vw,140px);
+  font-weight:600;line-height:.88;letter-spacing:-4px;
+  color:rgba(255,255,255,.16);display:block;margin-top:8px;
+}
+.hero-play{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:64px;height:64px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.45);
+  display:flex;align-items:center;justify-content:center;
+  z-index:5;cursor:pointer;transition:all .28s;
+  background:rgba(255,255,255,.06);backdrop-filter:blur(6px);
+}
+.hero-play:hover{border-color:rgba(255,255,255,.9);background:rgba(255,255,255,.12);transform:translate(-50%,-50%) scale(1.07);}
+.hero-play-tri{width:0;height:0;border-top:12px solid transparent;border-bottom:12px solid transparent;border-left:20px solid rgba(255,255,255,.75);margin-left:5px;}
+.hero-bar{border-top:1px solid rgba(255,255,255,.09);display:grid;grid-template-columns:1fr 1fr;background:#0c0b09;}
+.hero-bar-left{padding:38px 52px 44px;border-right:1px solid rgba(255,255,255,.08);}
+.hero-bar-left h2{font-family:var(--serif);font-size:26px;font-weight:500;color:#fff;line-height:1.35;}
+.hero-bar-right{padding:38px 52px 44px;display:flex;flex-direction:column;justify-content:space-between;gap:22px;}
+.hero-bar-desc{font-size:14px;color:rgba(255,255,255,.55);line-height:1.8;}
+.hero-bar-desc b{color:rgba(255,255,255,.9);}
+.hero-view-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1.5px solid rgba(255,255,255,.35);
+  color:rgba(255,255,255,.72);font-size:11px;font-weight:500;
+  letter-spacing:2px;text-transform:uppercase;padding:12px 28px;
+  width:fit-content;transition:all .22s;
+}
+.hero-view-btn:hover{border-color:var(--amber);color:var(--amber);}
+
+/* ═══════════════════════════════════════
+   COMMITMENT
+═══════════════════════════════════════ */
+.commitment{padding:96px 64px 0;background:var(--off-white);}
+.commit-h1{font-family:var(--serif);font-size:42px;font-weight:600;color:var(--black);margin-bottom:16px;letter-spacing:-.5px;}
+.commit-intro{font-size:15px;color:var(--text-mid);line-height:1.8;max-width:680px;margin-bottom:64px;}
+.commit-intro em{color:var(--amber);font-style:italic;}
+.commit-two{display:grid;grid-template-columns:400px 1fr;gap:0;align-items:stretch;min-height:420px;}
+.commit-card{background:var(--warm-gray);padding:56px 48px 52px;display:flex;flex-direction:column;justify-content:space-between;}
+/* Inline EPM logo in card */
+.commit-card-logo{display:flex;align-items:baseline;gap:7px;margin-bottom:32px;}
+.ccl-epm{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--black);letter-spacing:-.5px;}
+.ccl-wealth{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);}
+.commit-card h3{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--black);margin-bottom:16px;line-height:1.3;}
+.commit-card p{font-size:14px;color:var(--text-mid);line-height:1.82;}
+.commit-img{position:relative;overflow:hidden;min-height:420px;}
+.commit-img img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform 7s ease;}
+.commit-img:hover img{transform:scale(1.04);}
+.commit-icons{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);}
+.commit-icon-col{padding:56px 64px 60px;border-right:1px solid var(--border);}
+.commit-icon-col:last-child{border-right:none;}
+.commit-icon-col h4{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--black);margin-bottom:14px;line-height:1.3;}
+.commit-icon-col>p{font-size:14px;color:var(--text-soft);line-height:1.78;margin-bottom:36px;}
+.icon-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);}
+.icon-cell{padding:24px 22px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:12px;transition:background .2s;}
+.icon-cell:nth-child(2n){border-right:none;}
+.icon-cell:nth-child(3),.icon-cell:nth-child(4){border-bottom:none;}
+.icon-cell:hover{background:var(--cream);}
+.icon-cell svg{width:26px;height:26px;stroke:var(--amber);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.icon-cell p{font-size:13px;color:var(--text-soft);line-height:1.65;}
+
+/* ═══════════════════════════════════════
+   STATS BAND
+═══════════════════════════════════════ */
+.stats-band{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--off-white);}
+.stat-item{padding:64px 40px;text-align:center;border-right:1px solid var(--border);transition:background .2s;}
+.stat-item:last-child{border-right:none;}
+.stat-item:hover{background:var(--cream);}
+.stat-num{font-family:var(--serif);font-size:72px;font-weight:600;color:var(--black);line-height:1;letter-spacing:-3px;margin-bottom:12px;}
+.stat-label{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#aaa;}
+.stat-bar{width:36px;height:2px;background:var(--amber);margin:16px auto 0;}
+
+/* ═══════════════════════════════════════
+   OFFERINGS
+═══════════════════════════════════════ */
+.offerings{background:var(--black);padding:96px 64px 0;}
+.offerings-tag{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px;}
+.offerings-h{font-family:var(--serif);font-size:44px;font-weight:600;color:#fff;margin-bottom:16px;letter-spacing:-.5px;}
+.offerings-desc{font-size:14.5px;color:rgba(255,255,255,.42);line-height:1.82;max-width:660px;margin-bottom:56px;}
+.offer-cards{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.offer-card{position:relative;overflow:hidden;min-height:480px;display:flex;flex-direction:column;justify-content:flex-end;}
+.offer-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 7s ease;}
+.offer-card:hover .offer-bg{transform:scale(1.06);}
+.offer-card.wealth .offer-bg{background-image:url('https://images.unsplash.com/photo-1560472355-536de3962603?w=900&q=80');}
+.offer-card.asset .offer-bg{background-image:url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&q=80');}
+.offer-grad{position:absolute;inset:0;}
+.offer-card.wealth .offer-grad{background:linear-gradient(to top,rgba(140,50,0,.92) 0%,rgba(70,25,0,.55) 55%,rgba(0,0,0,.2) 100%);}
+.offer-card.asset .offer-grad{background:linear-gradient(to top,rgba(30,15,100,.94) 0%,rgba(15,8,60,.55) 55%,rgba(0,0,0,.2) 100%);}
+.offer-badge{
+  position:absolute;top:24px;right:24px;z-index:4;
+  background:rgba(255,255,255,.96);
+  padding:10px 14px;
+  backdrop-filter:blur(10px);
+}
+.ob-label{font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#999;margin-bottom:4px;}
+.ob-logo-text{display:flex;align-items:baseline;gap:4px;}
+.ob-epm{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--black);}
+.ob-sub{font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--amber);}
+.offer-content{position:relative;z-index:2;padding:36px 40px 40px;}
+.offer-content h3{font-family:var(--serif);font-size:30px;font-weight:600;color:#fff;margin-bottom:14px;}
+.offer-content p{font-size:13.5px;color:rgba(255,255,255,.68);line-height:1.8;margin-bottom:26px;}
+.offer-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1.5px solid rgba(255,255,255,.42);
+  color:rgba(255,255,255,.8);font-size:11px;font-weight:500;
+  letter-spacing:2px;text-transform:uppercase;padding:11px 24px;
+  transition:all .22s;
+}
+.offer-btn:hover{border-color:#fff;color:#fff;background:rgba(255,255,255,.08);}
+
+/* ═══════════════════════════════════════
+   RISK SECTION — Photo panels with big letters (matches reference image exactly)
+═══════════════════════════════════════ */
+.risk-section{background:var(--off-white);padding:0;}
+.risk-header{
+  padding:88px 64px 52px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:48px;
+  border-bottom:1px solid var(--border);
+}
+.risk-tag{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:14px;}
+.risk-h{font-family:var(--serif);font-size:56px;font-weight:600;color:var(--black);line-height:.98;letter-spacing:-1.5px;}
+.risk-h em{font-style:italic;color:var(--amber);}
+.risk-header-right{max-width:420px;flex-shrink:0;}
+.risk-header-right p{font-size:15px;color:var(--text-soft);line-height:1.82;}
+/* Photo panels — 4 columns */
+.risk-panels{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+.risk-panel{
+  position:relative;overflow:hidden;
+  height:380px;cursor:default;
+}
+.risk-panel-img{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  transition:transform .7s ease, filter .4s ease;
+  filter:grayscale(20%) brightness(.75);
+}
+.risk-panel:hover .risk-panel-img{transform:scale(1.06);filter:grayscale(0%) brightness(.65);}
+.risk-panel-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(12,11,9,.55) 0%,rgba(12,11,9,.1) 60%,transparent 100%);
+  transition:background .4s;
+}
+.risk-panel:hover .risk-panel-overlay{background:linear-gradient(to top,rgba(12,11,9,.72) 0%,rgba(12,11,9,.2) 60%,transparent 100%);}
+/* Big letter */
+.risk-panel-letter{
+  position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-52%);
+  font-family:var(--serif);
+  font-size:200px;font-weight:700;
+  color:rgba(255,255,255,.62);line-height:1;
+  transition:color .4s, transform .4s;
+  pointer-events:none;user-select:none;
+  letter-spacing:-8px;
+}
+.risk-panel:hover .risk-panel-letter{color:rgba(255,255,255,.88);transform:translate(-50%,-52%) scale(1.04);}
+/* Bottom amber line on hover */
+.risk-panel::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:3px;background:var(--amber);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s ease;z-index:5;
+}
+.risk-panel:hover::after{transform:scaleX(1);}
+/* Image sources */
+.risk-panel.r .risk-panel-img{background-image:url('https://images.unsplash.com/photo-1521791136064-7986c2920216?w=700&q=80');}
+.risk-panel.i .risk-panel-img{background-image:url('https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=700&q=80');}
+.risk-panel.s .risk-panel-img{background-image:url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&q=80');}
+.risk-panel.k .risk-panel-img{background-image:url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=700&q=80');}
+/* Description row below panels */
+.risk-descs{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--border);background:#fff;}
+.risk-desc{padding:36px 32px 40px;border-right:1px solid var(--border);}
+.risk-desc:last-child{border-right:none;}
+.risk-desc-word{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:12px;}
+.risk-desc p{font-size:13.5px;color:var(--text-soft);line-height:1.78;}
+
+/* ═══════════════════════════════════════
+   WISE SECTION — New section (same layout as RISK)
+   W–I–S–E: Wealth, Innovation, Strategy, Excellence
+═══════════════════════════════════════ */
+.wise-section{background:var(--black);padding:0;}
+.wise-header{
+  padding:88px 64px 52px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:48px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.wise-tag{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:14px;}
+.wise-h{font-family:var(--serif);font-size:56px;font-weight:600;color:#fff;line-height:.98;letter-spacing:-1.5px;}
+.wise-h em{font-style:italic;color:var(--amber);}
+.wise-header-right{max-width:420px;flex-shrink:0;}
+.wise-header-right p{font-size:15px;color:rgba(255,255,255,.42);line-height:1.82;}
+/* Photo panels */
+.wise-panels{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+.wise-panel{position:relative;overflow:hidden;height:380px;cursor:default;}
+.wise-panel-img{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  transition:transform .7s ease, filter .4s ease;
+  filter:grayscale(30%) brightness(.55) saturate(.8);
+}
+.wise-panel:hover .wise-panel-img{transform:scale(1.06);filter:grayscale(0%) brightness(.5) saturate(1.1);}
+.wise-panel-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.65) 0%,rgba(0,0,0,.15) 60%,transparent 100%);
+}
+.wise-panel-letter{
+  position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-52%);
+  font-family:var(--serif);
+  font-size:200px;font-weight:700;
+  color:rgba(255,255,255,.5);line-height:1;
+  transition:color .4s, transform .4s;
+  pointer-events:none;user-select:none;
+  letter-spacing:-8px;
+}
+.wise-panel:hover .wise-panel-letter{color:rgba(200,98,42,.9);transform:translate(-50%,-52%) scale(1.05);}
+.wise-panel::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:3px;background:var(--amber);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s ease;z-index:5;
+}
+.wise-panel:hover::after{transform:scaleX(1);}
+/* Images */
+.wise-panel.w .wise-panel-img{background-image:url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=700&q=80');}
+.wise-panel.i .wise-panel-img{background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=700&q=80');}
+.wise-panel.s .wise-panel-img{background-image:url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=700&q=80');}
+.wise-panel.e .wise-panel-img{background-image:url('https://images.unsplash.com/photo-1551836022-4c4c79ecde51?w=700&q=80');}
+/* Description row */
+.wise-descs{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid rgba(255,255,255,.07);}
+.wise-desc{padding:36px 32px 40px;border-right:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);}
+.wise-desc:last-child{border-right:none;}
+.wise-desc:hover{background:rgba(255,255,255,.04);}
+.wise-desc-word{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:12px;}
+.wise-desc p{font-size:13.5px;color:rgba(255,255,255,.38);line-height:1.78;}
+
+/* ═══════════════════════════════════════
+   SIP CALCULATOR
+═══════════════════════════════════════ */
+.sip-section{padding:96px 64px;background:var(--cream);border-bottom:1px solid var(--border);}
+.sip-inner{max-width:780px;margin:0 auto;}
+.sip-tag{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:12px;}
+.sip-h{font-family:var(--serif);font-size:40px;font-weight:600;color:var(--black);margin-bottom:40px;letter-spacing:-.5px;}
+.sip-form{background:#fff;padding:44px;border:1px solid var(--border);box-shadow:0 4px 32px rgba(0,0,0,.06);}
+.sip-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:30px;}
+.sip-field label{display:block;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#aaa;margin-bottom:9px;}
+.sip-field input,
+.sip-field select{
+  width:100%;padding:13px 16px;border:1.5px solid var(--border);
+  font-size:14px;color:var(--black);font-family:var(--sans);
+  outline:none;transition:border-color .18s;background:#fff;appearance:none;
+}
+.sip-field input:focus,.sip-field select:focus{border-color:var(--amber);}
+.sip-btn{
+  display:block;width:100%;padding:15px 24px;
+  background:var(--black);color:#fff;
+  font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;
+  border:none;cursor:pointer;transition:background .2s;
+}
+.sip-btn:hover{background:var(--amber);}
+.sip-result{display:none;margin-top:2px;}
+.sip-result.show{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.sip-r-cell{background:var(--black);padding:26px 20px;text-align:center;}
+.sip-r-num{font-family:var(--serif);font-size:32px;font-weight:600;color:#fff;margin-bottom:7px;}
+.sip-r-label{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.32);}
+
+/* ═══════════════════════════════════════
+   GALLERY
+═══════════════════════════════════════ */
+.gallery-section{padding:80px 0;overflow:hidden;border-bottom:1px solid var(--border);background:var(--off-white);}
+.gallery-hd{padding:0 64px 40px;}
+.gallery-tag{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:12px;}
+.gallery-h{font-family:var(--serif);font-size:40px;font-weight:600;color:var(--black);letter-spacing:-.5px;}
+.gallery-track-outer{overflow:hidden;position:relative;}
+.gallery-track-outer::before,.gallery-track-outer::after{
+  content:'';position:absolute;top:0;bottom:0;width:120px;z-index:4;pointer-events:none;
+}
+.gallery-track-outer::before{left:0;background:linear-gradient(to right,var(--off-white),transparent);}
+.gallery-track-outer::after{right:0;background:linear-gradient(to left,var(--off-white),transparent);}
+.gallery-track{display:flex;gap:16px;width:max-content;animation:gScroll 32s linear infinite;}
+.gallery-track:hover{animation-play-state:paused;}
+@keyframes gScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.gallery-item{
+  flex-shrink:0;width:270px;height:186px;overflow:hidden;
+  border:1px solid var(--border);position:relative;
+  transition:box-shadow .28s;
+}
+.gallery-item:hover{box-shadow:0 12px 40px rgba(0,0,0,.12);}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+.gallery-item:hover img{transform:scale(1.07);}
+.gallery-item-label{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(to top,rgba(12,11,9,.72),transparent);
+  padding:22px 14px 12px;
+  font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.75);
+}
+
+/* ═══════════════════════════════════════
+   PROCESS
+═══════════════════════════════════════ */
+.process-section{
+  padding:96px 64px;
+  display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center;
+  border-bottom:1px solid var(--border);background:#fff;
+}
+.process-tag{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:14px;}
+.process-h{font-family:var(--serif);font-size:42px;font-weight:600;color:var(--black);margin-bottom:18px;line-height:1.1;letter-spacing:-.5px;}
+.process-p{font-size:14.5px;color:var(--text-soft);line-height:1.82;margin-bottom:40px;}
+.process-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--black);color:#fff;
+  font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  padding:15px 34px;transition:background .2s;
+}
+.process-cta:hover{background:var(--amber);}
+.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+.p-cell{background:#fff;padding:32px 18px;text-align:center;transition:background .2s;}
+.p-cell:hover{background:var(--off-white);}
+.p-cell.you{background:var(--black);}
+.p-cell-icon{font-size:28px;margin-bottom:12px;}
+.p-cell-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#bbb;}
+.p-cell.you .p-cell-main{font-family:var(--serif);font-size:28px;font-weight:600;color:#fff;}
+.p-cell.you .p-cell-sub{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:5px;}
+
+/* ═══════════════════════════════════════
+   WHY
+═══════════════════════════════════════ */
+.why-section{padding:96px 64px;background:var(--off-white);border-bottom:1px solid var(--border);}
+.why-tag{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:14px;}
+.why-h{font-family:var(--serif);font-size:42px;font-weight:600;color:var(--black);margin-bottom:56px;line-height:1.1;letter-spacing:-.5px;}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+.why-card{background:#fff;padding:40px 28px;transition:background .2s;}
+.why-card:hover{background:var(--cream);}
+.why-num{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#ddd;margin-bottom:24px;}
+.why-icon{font-size:32px;margin-bottom:18px;}
+.why-title{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--black);margin-bottom:12px;line-height:1.2;}
+.why-desc{font-size:13px;color:var(--text-soft);line-height:1.75;}
+
+/* ═══════════════════════════════════════
+   SERVICES
+═══════════════════════════════════════ */
+.services-section{padding:96px 64px;border-bottom:1px solid var(--border);background:#fff;}
+.svc-tag{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:14px;}
+.svc-h{font-family:var(--serif);font-size:42px;font-weight:600;color:var(--black);margin-bottom:56px;letter-spacing:-.5px;}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+.svc-card{background:#fff;padding:36px 24px;display:flex;flex-direction:column;gap:14px;transition:background .2s;}
+.svc-card:hover{background:var(--off-white);}
+.svc-icon{width:48px;height:48px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;background:#fff;margin-bottom:6px;}
+.svc-title{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--black);line-height:1.2;}
+.svc-desc{font-size:13px;color:var(--text-soft);line-height:1.7;}
+
+/* ═══════════════════════════════════════
+   ENTREPRENEURIAL
+═══════════════════════════════════════ */
+.entre-section{background:var(--black);padding:96px 64px 0;}
+.entre-tag{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px;}
+.entre-h{font-family:var(--serif);font-size:44px;font-weight:600;color:#fff;margin-bottom:16px;letter-spacing:-.5px;}
+.entre-intro{font-size:14.5px;color:rgba(255,255,255,.42);line-height:1.82;max-width:660px;margin-bottom:56px;}
+.entre-cards{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.e-card{position:relative;overflow:hidden;min-height:460px;display:flex;flex-direction:column;justify-content:flex-end;}
+.e-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 7s ease;}
+.e-card:hover .e-bg{transform:scale(1.05);}
+.e-card.creation .e-bg{background-image:url('https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=900&q=80');}
+.e-card.protection .e-bg{background-image:url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&q=80');}
+.e-card.creation .e-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(140,50,0,.94) 0%,rgba(70,25,0,.65) 50%,rgba(0,0,0,.3) 100%);}
+.e-card.protection .e-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(18,8,80,.95) 0%,rgba(10,5,50,.65) 50%,rgba(0,0,0,.3) 100%);}
+.e-content{position:relative;z-index:2;padding:36px 40px 40px;}
+.e-num{font-family:var(--serif);font-size:72px;font-weight:600;color:rgba(255,255,255,.08);line-height:1;margin-bottom:10px;letter-spacing:-3px;}
+.e-title{font-family:var(--serif);font-size:30px;font-weight:600;color:#fff;margin-bottom:14px;}
+.e-text{font-size:14px;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:26px;}
+.e-list{list-style:none;margin-bottom:28px;}
+.e-list li{font-size:13.5px;color:rgba(255,255,255,.55);padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:flex-start;gap:12px;}
+.e-list li::before{content:'—';color:rgba(200,98,42,.5);flex-shrink:0;}
+.e-btn{display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(255,255,255,.38);color:rgba(255,255,255,.78);font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:11px 24px;transition:all .22s;}
+.e-btn:hover{border-color:#fff;color:#fff;}
+
+/* ═══════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════ */
+.testi-section{padding:96px 64px;border-bottom:1px solid var(--border);background:var(--off-white);}
+.testi-tag{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:14px;}
+.testi-h{font-family:var(--serif);font-size:42px;font-weight:600;color:var(--black);margin-bottom:56px;letter-spacing:-.5px;}
+.testi-slider{overflow:hidden;max-width:820px;margin:0 auto;}
+.testi-track{display:flex;transition:transform .5s ease;}
+.testi-slide{flex:0 0 100%;}
+.testi-card{border:1px solid var(--border);padding:48px 52px;background:#fff;box-shadow:0 4px 28px rgba(0,0,0,.05);}
+.testi-quote{
+  font-family:var(--serif);font-size:24px;color:#333;line-height:1.68;
+  font-style:italic;margin-bottom:32px;padding-top:24px;position:relative;
+}
+.testi-quote::before{content:'\201C';font-size:96px;color:var(--warm-gray);position:absolute;top:-12px;left:-8px;line-height:1;font-family:var(--serif);}
+.testi-author{display:flex;align-items:center;gap:16px;padding-top:24px;border-top:1px solid var(--border);}
+.testi-av{width:50px;height:50px;border-radius:50%;background:var(--warm-gray);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:22px;font-weight:600;color:var(--text-mid);flex-shrink:0;}
+.testi-name{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--black);}
+.testi-role{font-size:13px;color:#aaa;margin-top:3px;}
+.testi-dots{display:flex;justify-content:center;gap:8px;margin-top:36px;}
+.testi-dot{width:8px;height:8px;border-radius:50%;background:#ddd;border:none;cursor:pointer;transition:all .2s;}
+.testi-dot.active{width:32px;border-radius:4px;background:var(--amber);}
+
+/* ═══════════════════════════════════════
+   CTA BAND
+═══════════════════════════════════════ */
+.cta-band{
+  background:var(--black);padding:96px 64px;
+  display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:center;
+}
+.cta-tag{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:16px;}
+.cta-h{font-family:var(--serif);font-size:48px;font-weight:600;color:#fff;line-height:1.05;margin-bottom:18px;letter-spacing:-.5px;}
+.cta-sub{font-size:14.5px;color:rgba(255,255,255,.42);line-height:1.82;margin-bottom:36px;}
+.cta-metas{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:40px;}
+.cta-m{font-size:13px;color:rgba(255,255,255,.38);display:flex;align-items:center;gap:8px;}
+.cta-m-dot{width:5px;height:5px;border-radius:50%;background:var(--amber);flex-shrink:0;}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--amber);color:#fff;
+  font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  padding:16px 38px;border:none;cursor:pointer;transition:background .2s;
+}
+.cta-btn:hover{background:var(--amber-light);}
+.cta-right{border:1px solid rgba(255,255,255,.08);padding:48px;background:rgba(255,255,255,.025);}
+.cta-right-label{font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:14px;}
+.cta-right-h{font-family:var(--serif);font-size:24px;font-weight:600;color:#fff;margin-bottom:24px;line-height:1.3;}
+.cta-right-pts{list-style:none;}
+.cta-right-pts li{font-size:13.5px;color:rgba(255,255,255,.45);padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:14px;}
+.cta-right-pts li:last-child{border-bottom:none;}
+.cta-right-pts li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--amber);flex-shrink:0;}
+
+/* ═══════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════ */
+.contact-section{padding:96px 64px;border-bottom:1px solid var(--border);background:#fff;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:start;}
+.contact-tag{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:14px;}
+.contact-h{font-family:var(--serif);font-size:40px;font-weight:600;color:var(--black);margin-bottom:10px;letter-spacing:-.5px;}
+.contact-sub{font-size:14px;color:var(--text-soft);margin-bottom:36px;line-height:1.75;}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.cf-field{margin-bottom:18px;}
+.cf-field label{display:block;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#bbb;margin-bottom:9px;}
+.cf-field input,.cf-field textarea,.cf-field select{
+  width:100%;padding:13px 16px;border:1.5px solid var(--border);
+  font-size:14px;color:var(--black);font-family:var(--sans);
+  outline:none;transition:border-color .18s;background:#fff;appearance:none;
+}
+.cf-field input:focus,.cf-field textarea:focus,.cf-field select:focus{border-color:var(--amber);}
+.cf-field textarea{min-height:118px;resize:vertical;}
+.cf-sel-wrap{position:relative;}
+.cf-sel-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#bbb;pointer-events:none;}
+.cf-submit{
+  width:100%;padding:15px;background:var(--black);color:#fff;
+  font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;
+  border:none;cursor:pointer;transition:background .2s;
+}
+.cf-submit:hover{background:var(--amber);}
+.cf-ok{display:none;margin-top:16px;padding:14px 18px;background:var(--off-white);border-left:3px solid var(--amber);font-size:13.5px;color:#444;}
+.contact-info h3{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--black);margin-bottom:32px;}
+.ci-item{display:flex;gap:18px;padding:18px 0;border-bottom:1px solid var(--border);transition:padding-left .18s;}
+.ci-item:first-of-type{padding-top:0;}
+.ci-item:last-of-type{border-bottom:none;}
+.ci-item:hover{padding-left:6px;}
+.ci-icon{width:44px;height:44px;flex-shrink:0;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--off-white);}
+.ci-label{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:5px;}
+.ci-val{font-size:13.5px;color:var(--text-soft);line-height:1.68;}
+.ci-val a{color:var(--text-soft);transition:color .18s;}
+.ci-val a:hover{color:var(--black);}
+.ci-socials{display:flex;gap:8px;margin-top:28px;padding-top:24px;border-top:1px solid var(--border);}
+.ci-soc{width:38px;height:38px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px;color:#aaa;text-decoration:none;transition:all .18s;}
+.ci-soc:hover{border-color:var(--black);color:var(--black);background:var(--off-white);}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer{padding:64px 64px 0;border-top:1px solid var(--border);background:var(--off-white);}
+.footer-top{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;padding-bottom:56px;border-bottom:1px solid var(--border);}
+.footer-col{padding-right:52px;border-right:1px solid var(--border);}
+.footer-col:nth-child(2){padding-left:52px;}
+.footer-col:last-child{border-right:none;padding-right:0;padding-left:52px;display:flex;flex-direction:column;}
+.footer-col h4{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--black);margin-bottom:24px;}
+.footer-col a{display:block;font-size:13.5px;color:var(--text-soft);margin-bottom:12px;transition:color .18s;}
+.footer-col a:hover{color:var(--black);}
+.footer-col a.ul{text-decoration:underline;color:var(--text-mid);}
+/* Footer logo */
+.footer-logo{display:flex;align-items:baseline;gap:8px;margin-bottom:auto;}
+.footer-logo-epm{font-family:var(--serif);font-size:32px;font-weight:700;color:var(--black);letter-spacing:-.5px;}
+.footer-logo-wealth{font-size:10px;font-weight:600;letter-spacing:3.5px;text-transform:uppercase;color:var(--amber);}
+.footer-tagline{font-size:13px;color:var(--text-soft);margin-top:12px;margin-bottom:auto;line-height:1.65;}
+.footer-socials{display:flex;gap:10px;margin-top:36px;}
+.footer-soc{width:38px;height:38px;border-radius:50%;background:var(--black);display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff;text-decoration:none;transition:background .18s;}
+.footer-soc:hover{background:var(--amber);}
+.footer-bottom{padding:20px 0 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer-legal{display:flex;flex-wrap:wrap;}
+.footer-legal a{font-size:12px;color:#bbb;padding:0 16px;border-right:1px solid #ddd;transition:color .18s;}
+.footer-legal a:first-child{padding-left:0;}
+.footer-legal a:last-child{border-right:none;}
+.footer-legal a:hover{color:var(--black);}
+.footer-copy{font-size:12px;color:#ccc;}
+
+/* ═══════════════════════════════════════
+   SOCIAL FLOAT + WA
+═══════════════════════════════════════ */
+.social-float{position:fixed;left:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:200;}
+.sf-btn{width:34px;height:34px;border:1.5px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;color:#aaa;text-decoration:none;transition:all .18s;}
+.sf-btn:hover{border-color:var(--amber);color:var(--amber);}
+.wa-fab{position:fixed;bottom:28px;right:28px;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:26px;z-index:200;box-shadow:0 6px 24px rgba(37,211,102,.38);text-decoration:none;transition:transform .22s;}
+.wa-fab:hover{transform:scale(1.09);}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:1100px){
+  nav{padding:0 28px;}
+  .hero-content{padding:40px 40px 48px;}
+  .hero-bar-left,.hero-bar-right{padding:32px 36px;}
+  .commitment,.offerings,.entre-section{padding-left:40px;padding-right:40px;}
+  .sip-section,.gallery-hd,.process-section,.why-section,
+  .services-section,.cta-band,.contact-section,.testi-section{padding-left:40px;padding-right:40px;}
+  .risk-header,.wise-header{padding:64px 40px 44px;}
+  .risk-descs{gap:0;}
+  .risk-desc,.wise-desc{padding:28px 24px 32px;}
+  .why-grid,.svc-grid{grid-template-columns:repeat(2,1fr);}
+  footer{padding:52px 40px 0;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .footer-col:last-child{padding-left:0;border-right:none;}
+}
+@media(max-width:768px){
+  .nav-links a:not(.nav-cta){display:none;}
+  nav{padding:0 20px;}
+  .hero-bar{grid-template-columns:1fr;}
+  .hero-bar-left{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);}
+  .commit-two{grid-template-columns:1fr;}
+  .commit-img{display:none;}
+  .commit-icons{grid-template-columns:1fr;}
+  .commit-icon-col{border-right:none;border-bottom:1px solid var(--border);}
+  .offer-cards,.entre-cards{grid-template-columns:1fr;}
+  .risk-panels,.wise-panels{grid-template-columns:1fr 1fr;}
+  .risk-descs,.wise-descs{grid-template-columns:1fr 1fr;}
+  .process-section,.cta-band,.contact-grid{grid-template-columns:1fr;gap:52px;}
+  .why-grid,.svc-grid{grid-template-columns:repeat(2,1fr);}
+  .stats-band{grid-template-columns:1fr;}
+  .stat-item{border-right:none;border-bottom:1px solid var(--border);}
+  .footer-top{grid-template-columns:1fr;gap:36px;}
+  .footer-col,.footer-col:nth-child(2),.footer-col:last-child{padding-left:0;padding-right:0;border-right:none;border-bottom:1px solid var(--border);padding-bottom:32px;}
+  .social-float{display:none;}
+  .cf-row{grid-template-columns:1fr;}
+}
+@media(max-width:480px){
+  .risk-panels,.wise-panels{grid-template-columns:1fr;}
+  .risk-descs,.wise-descs{grid-template-columns:1fr;}
+  .risk-desc,.wise-desc{border-right:none !important;}
+}
+</style>
+</head>
+<body>
+
+<!-- POPUP -->
+<div id="pop-overlay" role="dialog" aria-modal="true">
+  <div id="pop">
+    <div class="pop-head">
+      <div class="pop-logo-text">
+        <span class="pop-logo-epm">EPM</span>
+        <span class="pop-logo-wealth">Wealth</span>
+      </div>
+      <button class="pop-close" onclick="closePop()" aria-label="Close">✕</button>
+    </div>
+    <div class="pop-body">
+      <h2>Investor Awareness: Beware of Unauthorised Investment Promises from Individuals Claiming Association with EPM Wealth</h2>
+      <p>We have come across reports of individuals and unauthorised groups on WhatsApp and other social media platforms falsely claiming association with EPM Wealth, its senior leadership and brand identity — offering investment opportunities with intent to mislead and defraud individuals. EPM Wealth is not associated with these individuals or unauthorised groups. Investors are advised to exercise extreme caution and independently verify the authenticity of such individuals before engaging in any transaction.</p>
+      <p>Please <a href="#">Click here</a> to view a list of identified fraud accounts.</p>
+      <p><strong>Please note:</strong></p>
+      <p class="pop-note">EPM Wealth does NOT approach investors through unsolicited phone calls, messages, emails, or social media platforms for investments.</p>
+      <p class="pop-note">EPM Wealth does NOT offer or assure guaranteed returns for any investment whatsoever.</p>
+      <p class="pop-note">For investments, payments are made only to designated accounts bearing the name of the fund and scheme — not to any unrelated accounts.</p>
+      <p class="pop-note">Investors are encouraged to verify all investment-related communications through our website at <a href="#">www.epmwealth.com</a></p>
+      <p class="pop-note">If you receive any such unauthorized communication, please inform us at <a href="mailto:info@epmwealth.com">info@epmwealth.com</a> or report it with local authorities and AMFI/SEBI.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SOCIAL FLOAT -->
+<div class="social-float">
+  <a href="https://www.instagram.com/epm_wealth/" target="_blank" class="sf-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+  <a href="https://www.youtube.com/@epmwealth101" target="_blank" class="sf-btn" title="YouTube"><i class="fab fa-youtube"></i></a>
+  <a href="https://www.linkedin.com/company/epm-wealth/" target="_blank" class="sf-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+  <a href="https://www.facebook.com/epmwealthadvisor" target="_blank" class="sf-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+</div>
+<a href="https://wa.me/919999939333" class="wa-fab" target="_blank" title="WhatsApp">💬</a>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#home" class="nav-logo">
+  <img 
+    src="logo-emp.png" 
+    alt="EPM Wealth" 
+    class="nav-logo-img"
+    style="height:48px;width:auto;object-fit:contain;"
+  />
+</a>
+  <div class="nav-links">
+    <a href="#home" class="nav-link active">Home</a>
+    <a href="#about" class="nav-link">About Us</a>
+    <a href="#solutions" class="nav-link">EPM Wealth</a>
+    <a href="#entrepreneurial" class="nav-link">EPM Asset</a>
+    <a href="#perspective" class="nav-link">Perspective</a>
+    <a href="#" class="nav-link">Investor Relations</a>
+    <a href="#contact" class="nav-cta nav-link">Client Login</a>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">AMFI Registered — Code 100255</span>
+    <span class="ticker-item">BSE Registered — Code 1197501</span>
+    <span class="ticker-item">Wealth Management</span>
+    <span class="ticker-item">Portfolio Consultation</span>
+    <span class="ticker-item">Financial Independence</span>
+    <span class="ticker-item">Entrepreneurial Growth</span>
+    <span class="ticker-item">Wealth Creation</span>
+    <span class="ticker-item">Wealth Protection</span>
+    <span class="ticker-item">15+ Years of Trust</span>
+    <span class="ticker-item">AMFI Registered — Code 100255</span>
+    <span class="ticker-item">BSE Registered — Code 1197501</span>
+    <span class="ticker-item">Wealth Management</span>
+    <span class="ticker-item">Portfolio Consultation</span>
+    <span class="ticker-item">Financial Independence</span>
+    <span class="ticker-item">Entrepreneurial Growth</span>
+    <span class="ticker-item">Wealth Creation</span>
+    <span class="ticker-item">Wealth Protection</span>
+    <span class="ticker-item">15+ Years of Trust</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-media">
+    <video 
+  class="hero-video" 
+  id="heroVideo"
+  autoplay 
+  muted 
+  loop 
+  playsinline
+  poster="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1800&q=85"
+>
+  <source src="EPM header theme.mp4" type="video/mp4"/>
+</video>
+   
+    <div class="hero-overlay"></div>
+    <div class="hero-grain"></div>
+    <div class="hero-content">
+      <span class="hero-kicker">The</span>
+      <div class="hero-title-wrap">
+        <span class="hero-title-line1"><span class="ht-accent">EPM</span>WEALTH</span>
+        <span class="hero-title-line2">INDEPENDENCE</span>
+      </div>
+    </div>
+    <div class="hero-play"><div class="hero-play-tri"></div></div>
+  </div>
+  <div class="hero-bar">
+    <div class="hero-bar-left">
+      <h2>Introducing the EPM<br>Wealth Creators Network</h2>
+    </div>
+    <div class="hero-bar-right">
+      <p class="hero-bar-desc">A first-of-its-kind financial partnership platform for India's aspiring wealth creators. <b>1,000+ clients. ₹100 Cr+ AUM. 25+ cities served.</b></p>
+      <a href="#solutions" class="hero-view-btn">VIEW OUR SOLUTIONS <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- COMMITMENT -->
+<section class="commitment" id="about">
+  <h2 class="commit-h1">The EPM Wealth Commitment</h2>
+  <p class="commit-intro">Our name reflects our approach to service. EPM denotes the holistic view we take of the ONE person whose interests are always first: Our Client. It is manifested through our purpose: <em>Financial Independence</em>.</p>
+  <div class="commit-two">
+    <div class="commit-card">
+      <div class="commit-card-logo">
+        <span class="ccl-epm">EPM</span>
+        <span class="ccl-wealth">Wealth</span>
+      </div>
+      <h3>The EPM Wealth<br>Performance Edge</h3>
+      <p>Performance for us is hard, long-term and objectively measured by numbers. It is our commitment to our clients, towards delivering long-term wealth growth through market ups and downs.</p>
+    </div>
+    <div class="commit-img">
+      <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1000&q=80" alt="EPM Wealth Advisory" loading="lazy"/>
+    </div>
+  </div>
+  <div class="commit-icons">
+    <div class="commit-icon-col">
+      <h4>The EPM Wealth<br>Performance Edge</h4>
+      <p>Performance for us is hard, long-term and objectively measured by numbers — our commitment towards delivering results through every market cycle.</p>
+      <div class="icon-grid">
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><p>Validated track record of delivering results</p></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10"/><path d="M12 6v6l4 2"/></svg><p>Unbiased advice centred around client goals</p></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg><p>A thorough investment framework with deep expertise</p></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><p>Innovative strategies crafted for evolving priorities</p></div>
+      </div>
+    </div>
+    <div class="commit-icon-col">
+      <h4>The EPM Wealth<br>Plus Advantage</h4>
+      <p>Our clients deeply value the relationships we build. No two clients are alike — our solutions are distinct, variable and deeply personalised to each individual.</p>
+      <div class="icon-grid">
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><p>Access to innovative financial products</p></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><p>Bespoke experiences curated for the entire family</p></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><p>Culture of being always on and responsive</p></div>
+        <div class="icon-cell"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p>Ability to decipher complex needs and package solutions</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-band">
+  <div class="stat-item"><div class="stat-num">100+</div><div class="stat-label">Cr Total AUM</div><div class="stat-bar"></div></div>
+  <div class="stat-item"><div class="stat-num">1,000+</div><div class="stat-label">Unique Clients</div><div class="stat-bar"></div></div>
+  <div class="stat-item"><div class="stat-num">25+</div><div class="stat-label">Cities Served</div><div class="stat-bar"></div></div>
+</div>
+
+<!-- OFFERINGS -->
+<section class="offerings" id="solutions">
+  <div class="offerings-tag">Our Platform</div>
+  <h2 class="offerings-h">EPM Wealth Offerings</h2>
+  <p class="offerings-desc">Both our Wealth Creation and Wealth Protection verticals have a deeply synergistic relationship. Our insights into the Indian economy enable us to identify opportunities and offer them first to our clients — this flywheel effect powers growth.</p>
+  <div class="offer-cards">
+    <div class="offer-card wealth">
+      <div class="offer-bg"></div>
+      <div class="offer-grad"></div>
+      <div class="offer-badge">
+        <div class="ob-label">wealth</div>
+        <div class="ob-logo-text"><span class="ob-epm">EPM</span><span class="ob-sub">Wealth</span></div>
+      </div>
+      <div class="offer-content">
+        <h3>EPM Wealth</h3>
+        <p>Our focus is on advising clients to preserve, manage and grow their wealth and legacy. Achieved through deep research and the best team of product experts across all asset classes.</p>
+        <a href="#contact" class="offer-btn">VISIT EPM WEALTH <i class="fas fa-arrow-right" style="font-size:9px"></i></a>
+      </div>
+    </div>
+    <div class="offer-card asset">
+      <div class="offer-bg"></div>
+      <div class="offer-grad"></div>
+      <div class="offer-badge">
+        <div class="ob-label">asset</div>
+        <div class="ob-logo-text"><span class="ob-epm">EPM</span><span class="ob-sub">Asset</span></div>
+      </div>
+      <div class="offer-content">
+        <h3>EPM Asset</h3>
+        <p>As one of India's emerging asset management platforms, we offer products across multiple asset classes with deep-domain knowledge and a highly experienced investment team focused on risk-adjusted returns.</p>
+        <a href="#contact" class="offer-btn">VISIT EPM ASSET <i class="fas fa-arrow-right" style="font-size:9px"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     RISK SECTION — Photo panels with large letter overlays
+     (Matches reference image exactly)
+══════════════════════════════════ -->
+<section class="risk-section" id="values">
+  <div class="risk-header">
+    <div class="risk-header-left">
+      <div class="risk-tag">Core Values</div>
+      <h2 class="risk-h">We believe<br>in <em>RISK</em></h2>
+    </div>
+    <div class="risk-header-right">
+      <p>Our four core values form the foundation of every client relationship and every investment decision we make. These principles guide our approach to wealth management.</p>
+    </div>
+  </div>
+  <!-- Photo panels: R I S K -->
+  <div class="risk-panels">
+    <div class="risk-panel r">
+      <div class="risk-panel-img"></div>
+      <div class="risk-panel-overlay"></div>
+      <div class="risk-panel-letter">R</div>
+    </div>
+    <div class="risk-panel i">
+      <div class="risk-panel-img"></div>
+      <div class="risk-panel-overlay"></div>
+      <div class="risk-panel-letter">I</div>
+    </div>
+    <div class="risk-panel s">
+      <div class="risk-panel-img"></div>
+      <div class="risk-panel-overlay"></div>
+      <div class="risk-panel-letter">S</div>
+    </div>
+    <div class="risk-panel k">
+      <div class="risk-panel-img"></div>
+      <div class="risk-panel-overlay"></div>
+      <div class="risk-panel-letter">K</div>
+    </div>
+  </div>
+  <!-- Descriptions below -->
+  <div class="risk-descs">
+    <div class="risk-desc">
+      <div class="risk-desc-word">Relationship</div>
+      <p>We build lasting partnerships with our clients, grounded in trust, transparency, and a genuine commitment to their long-term success and well-being.</p>
+    </div>
+    <div class="risk-desc">
+      <div class="risk-desc-word">Integrity</div>
+      <p>Every recommendation we make is unbiased and fully aligned with the client's interest. We operate with complete transparency, never accepting commissions that create conflicts.</p>
+    </div>
+    <div class="risk-desc">
+      <div class="risk-desc-word">Simplicity</div>
+      <p>We distil the complex world of finance into clear, actionable insights. Great wealth management doesn't require complexity — it requires clarity and conviction.</p>
+    </div>
+    <div class="risk-desc">
+      <div class="risk-desc-word">Knowledge</div>
+      <p>Deep expertise across asset classes, geographies, and generations drives our advice. We invest constantly in research to stay at the forefront of the ever-evolving financial landscape.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     WISE SECTION — New section (same design as RISK, dark theme)
+     W–I–S–E: Wealth, Innovation, Strategy, Excellence
+══════════════════════════════════ -->
+<section class="wise-section" id="wise">
+  <div class="wise-header">
+    <div>
+      <div class="wise-tag">Our Promise</div>
+      <h2 class="wise-h">We commit<br>to be <em>WISE</em></h2>
+    </div>
+    <div class="wise-header-right">
+      <p>WISE represents the four pillars of our promise to every client — the standards we hold ourselves to in building, protecting, and growing the wealth you've worked so hard to create.</p>
+    </div>
+  </div>
+  <!-- Photo panels: W I S E -->
+  <div class="wise-panels">
+    <div class="wise-panel w">
+      <div class="wise-panel-img"></div>
+      <div class="wise-panel-overlay"></div>
+      <div class="wise-panel-letter">W</div>
+    </div>
+    <div class="wise-panel i">
+      <div class="wise-panel-img"></div>
+      <div class="wise-panel-overlay"></div>
+      <div class="wise-panel-letter">I</div>
+    </div>
+    <div class="wise-panel s">
+      <div class="wise-panel-img"></div>
+      <div class="wise-panel-overlay"></div>
+      <div class="wise-panel-letter">S</div>
+    </div>
+    <div class="wise-panel e">
+      <div class="wise-panel-img"></div>
+      <div class="wise-panel-overlay"></div>
+      <div class="wise-panel-letter">E</div>
+    </div>
+  </div>
+  <!-- Descriptions below -->
+  <div class="wise-descs">
+    <div class="wise-desc">
+      <div class="wise-desc-word">Wealth-Focused</div>
+      <p>Every decision we make centres on building sustainable, long-term wealth for our clients. We never lose sight of the singular goal: your financial independence.</p>
+    </div>
+    <div class="wise-desc">
+      <div class="wise-desc-word">Innovation</div>
+      <p>We continuously evolve our strategies, tools, and thinking. In a rapidly changing financial world, staying ahead means embracing innovation without compromising on discipline.</p>
+    </div>
+    <div class="wise-desc">
+      <div class="wise-desc-word">Strategy</div>
+      <p>Bespoke, research-backed strategies tailored to each client. We never apply a one-size-fits-all approach — your financial plan is as unique as your ambitions.</p>
+    </div>
+    <div class="wise-desc">
+      <div class="wise-desc-word">Excellence</div>
+      <p>We hold ourselves to the highest standards in every interaction, every recommendation, and every outcome we deliver. Excellence is not an aspiration — it is our baseline.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SIP CALCULATOR -->
+<section class="sip-section" id="sip">
+  <div class="sip-inner">
+    <div class="sip-tag">Plan Your Future</div>
+    <h2 class="sip-h">SIP Returns Calculator</h2>
+    <div class="sip-form">
+      <div class="sip-grid">
+        <div class="sip-field"><label>Investment Amount (₹)</label><input type="number" id="sipAmt" placeholder="e.g. 10,000"/></div>
+        <div class="sip-field"><label>Frequency</label><select id="sipFreq"><option value="12">Monthly</option><option value="4">Quarterly</option><option value="1">Yearly</option></select></div>
+        <div class="sip-field"><label>Period (Years)</label><input type="number" id="sipYrs" placeholder="e.g. 10"/></div>
+        <div class="sip-field"><label>Expected Returns (%)</label><input type="number" id="sipRate" placeholder="e.g. 12"/></div>
+        <div class="sip-field"><label>Inflation Adjustment</label><select id="sipInfl"><option value="0">No Adjustment</option><option value="6">6% Inflation</option><option value="7">7% Inflation</option><option value="8">8% Inflation</option></select></div>
+      </div>
+      <button class="sip-btn" onclick="calcSip()">CALCULATE RETURNS</button>
+      <div class="sip-result" id="sipResult">
+        <div class="sip-r-cell"><div class="sip-r-num" id="rInv">₹0</div><div class="sip-r-label">Total Invested</div></div>
+        <div class="sip-r-cell"><div class="sip-r-num" id="rGain">₹0</div><div class="sip-r-label">Estimated Returns</div></div>
+        <div class="sip-r-cell"><div class="sip-r-num" id="rTotal">₹0</div><div class="sip-r-label">Maturity Value</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="gallery-hd">
+    <div class="gallery-tag">Our Moments</div>
+    <h2 class="gallery-h">Awards &amp; Recognition</h2>
+  </div>
+  <div class="gallery-track-outer">
+    <div class="gallery-track">
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1551836022-4c4c79ecde51?w=400&q=75" alt="Award 2023" loading="lazy"/><div class="gallery-item-label">Award 2023</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=75" alt="Partnership" loading="lazy"/><div class="gallery-item-label">Partnership</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&q=75" alt="Excellence" loading="lazy"/><div class="gallery-item-label">Excellence</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=75" alt="Top Performer" loading="lazy"/><div class="gallery-item-label">Top Performer</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=400&q=75" alt="Recognition" loading="lazy"/><div class="gallery-item-label">Recognition</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=400&q=75" alt="Award 2024" loading="lazy"/><div class="gallery-item-label">Award 2024</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&q=75" alt="Elite Partner" loading="lazy"/><div class="gallery-item-label">Elite Partner</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&q=75" alt="Certificate" loading="lazy"/><div class="gallery-item-label">Certificate</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1551836022-4c4c79ecde51?w=400&q=75" alt="Award 2023" loading="lazy"/><div class="gallery-item-label">Award 2023</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=75" alt="Partnership" loading="lazy"/><div class="gallery-item-label">Partnership</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&q=75" alt="Excellence" loading="lazy"/><div class="gallery-item-label">Excellence</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=75" alt="Top Performer" loading="lazy"/><div class="gallery-item-label">Top Performer</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=400&q=75" alt="Recognition" loading="lazy"/><div class="gallery-item-label">Recognition</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=400&q=75" alt="Award 2024" loading="lazy"/><div class="gallery-item-label">Award 2024</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&q=75" alt="Elite Partner" loading="lazy"/><div class="gallery-item-label">Elite Partner</div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&q=75" alt="Certificate" loading="lazy"/><div class="gallery-item-label">Certificate</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="perspective">
+  <div class="process-left">
+    <div class="process-tag">Our Approach</div>
+    <h2 class="process-h">Everything Revolves<br>Around You</h2>
+    <p class="process-p">Combining our in-depth knowledge and innovative technology, we create a plan tailored to your complex needs. Your financial consultant — backed by an experienced team — can help you navigate every important decision in your wealth journey.</p>
+    <a href="#contact" class="process-cta">LET'S TALK <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
+  </div>
+  <div class="process-right">
+    <div class="process-grid">
+      <div class="p-cell"><div class="p-cell-icon">🤝</div><div class="p-cell-label">Meet</div></div>
+      <div class="p-cell you"><div class="p-cell-main">YOU</div><div class="p-cell-sub">At the centre</div></div>
+      <div class="p-cell"><div class="p-cell-icon">🎯</div><div class="p-cell-label">Guide</div></div>
+      <div class="p-cell"><div class="p-cell-icon">📋</div><div class="p-cell-label">Plan</div></div>
+      <div class="p-cell"><div class="p-cell-icon">💡</div><div class="p-cell-label">Implement</div></div>
+      <div class="p-cell"><div class="p-cell-icon">📊</div><div class="p-cell-label">Report</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why-section" id="why">
+  <div class="why-tag">Why This Industry</div>
+  <h2 class="why-h">Four Reasons This<br>Changes Everything</h2>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-num">01</div><div class="why-icon">🏆</div><div class="why-title">High-Prestige Profession</div><div class="why-desc">Join an elite circle of financial professionals who shape the wealth landscape of tomorrow's India.</div></div>
+    <div class="why-card"><div class="why-num">02</div><div class="why-icon">💎</div><div class="why-title">Lucrative Income Potential</div><div class="why-desc">Unlock unlimited earning potential with performance-based rewards and multiple income streams.</div></div>
+    <div class="why-card"><div class="why-num">03</div><div class="why-icon">🎯</div><div class="why-title">Luxury Rewards</div><div class="why-desc">Partners enjoy exclusive rewards, international travel, and a lifestyle reflecting their achievements.</div></div>
+    <div class="why-card"><div class="why-num">04</div><div class="why-icon">📈</div><div class="why-title">Unlimited Growth</div><div class="why-desc">Scale without ceiling. The finance industry rewards ambition with an unlimited growth runway.</div></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <div class="svc-tag">Our Platform</div>
+  <h2 class="svc-h">Why Choose EPM Wealth</h2>
+  <div class="svc-grid">
+    <div class="svc-card"><div class="svc-icon">🌐</div><div class="svc-title">Online Portal</div><div class="svc-desc">Best-in-class technology platform. Free to use.</div></div>
+    <div class="svc-card"><div class="svc-icon">📱</div><div class="svc-title">Mobile App</div><div class="svc-desc">Feature-rich mobile app — manage portfolios on the go.</div></div>
+    <div class="svc-card"><div class="svc-icon">🤝</div><div class="svc-title">Sales Support</div><div class="svc-desc">Expert guidance for closing deals and growing your book.</div></div>
+    <div class="svc-card"><div class="svc-icon">📣</div><div class="svc-title">Marketing Support</div><div class="svc-desc">On-demand marketing to grow your client base fast.</div></div>
+    <div class="svc-card"><div class="svc-icon">🔬</div><div class="svc-title">Research &amp; Reports</div><div class="svc-desc">Regular market updates and in-depth research reports.</div></div>
+    <div class="svc-card"><div class="svc-icon">💰</div><div class="svc-title">High Earnings</div><div class="svc-desc">Excellent earning opportunity with competitive payouts.</div></div>
+    <div class="svc-card"><div class="svc-icon">🏢</div><div class="svc-title">Back Office</div><div class="svc-desc">Robust infrastructure so you can focus on growth.</div></div>
+    <div class="svc-card"><div class="svc-icon">👥</div><div class="svc-title">Client Servicing</div><div class="svc-desc">Portfolio and Capital Gain Reports made seamless.</div></div>
+  </div>
+</section>
+
+<!-- ENTREPRENEURIAL -->
+<section class="entre-section" id="entrepreneurial">
+  <div class="entre-tag">Entrepreneurial Initiative</div>
+  <h2 class="entre-h">Your Legacy Awaits Here</h2>
+  <p class="entre-intro">Our platform offers the ideal foundation for anyone looking to make their mark in the finance industry. Become a Financial Partner with EPM Wealth — your legacy awaits here.</p>
+  <div class="entre-cards">
+    <div class="e-card creation">
+      <div class="e-bg"></div>
+      <div class="e-grad"></div>
+      <div class="e-content">
+        <div class="e-num">01</div>
+        <div class="e-title">Wealth Creation</div>
+        <div class="e-text">Strategic mutual fund investments, equity portfolios, and SIPs designed for long-term wealth accumulation.</div>
+        <ul class="e-list">
+          <li>Become a Financial Partner with EPM Wealth</li>
+          <li>Access exclusive training &amp; certification programs</li>
+          <li>Build your own client portfolio from day one</li>
+          <li>Earn passive income through referral networks</li>
+        </ul>
+        <a href="#contact" class="e-btn">START YOUR JOURNEY <i class="fas fa-arrow-right" style="font-size:9px"></i></a>
+      </div>
+    </div>
+    <div class="e-card protection">
+      <div class="e-bg"></div>
+      <div class="e-grad"></div>
+      <div class="e-content">
+        <div class="e-num">02</div>
+        <div class="e-title">Wealth Protection</div>
+        <div class="e-text">Comprehensive insurance solutions, estate planning, and risk management strategies to safeguard what you've built.</div>
+        <ul class="e-list">
+          <li>Get mentored by industry veterans</li>
+          <li>Scale with our proven frameworks</li>
+          <li>15+ years of trust and experience</li>
+          <li>AMFI &amp; BSE registered platform</li>
+        </ul>
+        <a href="#contact" class="e-btn">LEARN MORE <i class="fas fa-arrow-right" style="font-size:9px"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section" id="testimonials">
+  <div class="testi-tag">People Are Talking</div>
+  <h2 class="testi-h">What Our Clients Are Saying</h2>
+  <div class="testi-slider">
+    <div class="testi-track" id="testiTrack">
+      <div class="testi-slide"><div class="testi-card"><div class="testi-quote">I am grateful to have EPM Wealth as my financial advisor. Their services have always been exceptional in every way.</div><div class="testi-author"><div class="testi-av">S</div><div><div class="testi-name">Shantanu Gupta</div><div class="testi-role">Managing Director, Roots Group Of Institutes</div></div></div></div></div>
+      <div class="testi-slide"><div class="testi-card"><div class="testi-quote">EPM Wealth helped me build a diversified portfolio and understand my financial health in a way no one else had done before.</div><div class="testi-author"><div class="testi-av">R</div><div><div class="testi-name">Rajesh Gupta</div><div class="testi-role">Business Owner, Delhi NCR</div></div></div></div></div>
+      <div class="testi-slide"><div class="testi-card"><div class="testi-quote">From the first consultation to ongoing support, the team has been outstanding. I feel genuinely guided at every step.</div><div class="testi-author"><div class="testi-av">P</div><div><div class="testi-name">Priya Verma</div><div class="testi-role">IT Professional, Lucknow</div></div></div></div></div>
+      <div class="testi-slide"><div class="testi-card"><div class="testi-quote">Their SIP strategy helped my family achieve financial security. Truly professional and personalised guidance.</div><div class="testi-author"><div class="testi-av">A</div><div><div class="testi-name">Anita Sharma</div><div class="testi-role">Homemaker &amp; Investor, Noida</div></div></div></div></div>
+    </div>
+  </div>
+  <div class="testi-dots" id="testiDots"></div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band" id="portfolio">
+  <div class="cta-left">
+    <div class="cta-tag">Schedule a Meeting</div>
+    <h2 class="cta-h">Let's Talk About<br>Your Portfolio</h2>
+    <p class="cta-sub">Take control of your investments with a personalised consultation from an EPM Wealth expert. In just 20–30 minutes, you'll gain valuable insights.</p>
+    <div class="cta-metas">
+      <div class="cta-m"><div class="cta-m-dot"></div>30 minutes</div>
+      <div class="cta-m"><div class="cta-m-dot"></div>Web conferencing</div>
+      <div class="cta-m"><div class="cta-m-dot"></div>India Standard Time</div>
+    </div>
+    <a href="#contact" class="cta-btn">BOOK FREE CONSULTATION <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
+  </div>
+  <div class="cta-right">
+    <div class="cta-right-label">Free Consultation Includes</div>
+    <div class="cta-right-h">Everything you need to start your wealth journey</div>
+    <ul class="cta-right-pts">
+      <li>Personalised portfolio review and analysis</li>
+      <li>SIP planning tailored to your income &amp; goals</li>
+      <li>Insurance &amp; protection gap assessment</li>
+      <li>Estate planning overview and guidance</li>
+      <li>No strings attached — 100% free</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-grid">
+    <div>
+      <div class="contact-tag">Get In Touch</div>
+      <h2 class="contact-h">Send Us a Message</h2>
+      <p class="contact-sub">Fill in the form and we'll get back to you within 24 hours.</p>
+      <form onsubmit="submitForm(event)" novalidate>
+        <div class="cf-row">
+          <div class="cf-field"><label>First Name *</label><input type="text" placeholder="First Name" required/></div>
+          <div class="cf-field"><label>Last Name *</label><input type="text" placeholder="Last Name" required/></div>
+        </div>
+        <div class="cf-row">
+          <div class="cf-field"><label>Phone *</label><input type="tel" placeholder="+91 XXXXX XXXXX" required/></div>
+          <div class="cf-field"><label>Email *</label><input type="email" placeholder="you@example.com" required/></div>
+        </div>
+        <div class="cf-field"><label>City</label><input type="text" placeholder="Your city"/></div>
+        <div class="cf-field"><label>I Am Interested In</label><div class="cf-sel-wrap"><select><option value="">Select a service…</option><option>Mutual Fund Investment</option><option>SIP Planning</option><option>Insurance &amp; Protection</option><option>Estate Planning</option><option>Portfolio Review</option><option>Becoming a Financial Partner</option><option>Other</option></select></div></div>
+        <div class="cf-field"><label>Message</label><textarea placeholder="How can we help you?"></textarea></div>
+        <button type="submit" class="cf-submit">SUBMIT MESSAGE</button>
+      </form>
+      <div class="cf-ok" id="cfOk">✓ Thank you! We'll be in touch within 24 hours.</div>
+    </div>
+    <div class="contact-info">
+      <h3>Visit Or Call Us</h3>
+      <div class="ci-item"><div class="ci-icon">📍</div><div><div class="ci-label">Address</div><div class="ci-val">612-A, 6th Floor, Wave Silver Tower,<br>Sector-18, Noida, UP 201301</div></div></div>
+      <div class="ci-item"><div class="ci-icon">📞</div><div><div class="ci-label">Phone</div><div class="ci-val"><a href="tel:+911204264717">+91 0120 426 4717</a><br><a href="tel:+919899939333">+91 9899939333</a></div></div></div>
+      <div class="ci-item"><div class="ci-icon">💬</div><div><div class="ci-label">WhatsApp</div><div class="ci-val"><a href="https://wa.me/919999939333" target="_blank">+91 9999939333</a></div></div></div>
+      <div class="ci-item"><div class="ci-icon">✉️</div><div><div class="ci-label">Email</div><div class="ci-val"><a href="mailto:info@epmwealth.com">info@epmwealth.com</a></div></div></div>
+      <div class="ci-item"><div class="ci-icon">🕐</div><div><div class="ci-label">Office Hours</div><div class="ci-val">Monday – Saturday: 9:30 AM – 6:30 PM IST</div></div></div>
+      <div class="ci-item"><div class="ci-icon">🏅</div><div><div class="ci-label">Registrations</div><div class="ci-val">AMFI Registered — Code 100255<br>BSE Registered — Code 1197501</div></div></div>
+      <div class="ci-socials">
+        <a href="https://www.instagram.com/epm_wealth/" target="_blank" class="ci-soc" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@epmwealth101" target="_blank" class="ci-soc" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.linkedin.com/company/epm-wealth/" target="_blank" class="ci-soc" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.facebook.com/epmwealthadvisor" target="_blank" class="ci-soc" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-col">
+      <h4>EPM Wealth</h4>
+      <a href="#about">About us</a>
+      <a href="#solutions">Solutions</a>
+      <a href="#contact" class="ul">Client Portfolio Login</a>
+      <a href="#contact" class="ul">Client Online Trading</a>
+      <a href="#contact" class="ul">Wealth Open Login</a>
+      <a href="#entrepreneurial" class="ul">Partner Login</a>
+      <a href="#sip" class="ul">SIP Calculator</a>
+    </div>
+    <div class="footer-col">
+      <h4>EPM Asset</h4>
+      <a href="#about">About us</a>
+      <a href="#solutions">Services</a>
+      <a href="#contact" class="ul">AIF Investor Login</a>
+      <a href="#contact" class="ul">View PMS Portfolio</a>
+      <a href="#sip" class="ul">Invest in MF Online</a>
+      <a href="#contact" class="ul">Distributor Login</a>
+      <a href="#contact" class="ul">AIF</a>
+      <a href="#contact" class="ul">PMS</a>
+    </div>
+    <!-- Footer logo column -->
+    <div class="footer-col">
+      <div class="footer-logo">
+  <img 
+    src="logo-emp.png" 
+    alt="EPM Wealth" 
+    style="height:44px;width:auto;object-fit:contain;filter:brightness(0);"
+  />
+</div>
+      <p class="footer-tagline">Financial Independence.<br>Built on Relationship, Integrity,<br>Simplicity &amp; Knowledge.</p>
+      
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      <a href="#">Legal Notice</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Disclaimer</a>
+      <a href="#">ODR Portal</a>
+    </div>
+    <div class="footer-copy">Copyright © 2025 EPM Wealth. All rights Reserved.</div>
+  </div>
+</footer>
+
+<script>
+/* POPUP */
+function closePop(){
+  const o=document.getElementById('pop-overlay');
+  o.style.transition='opacity .22s';o.style.opacity='0';
+  setTimeout(()=>o.style.display='none',230);
+}
+document.getElementById('pop-overlay').addEventListener('click',function(e){if(e.target===this)closePop();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePop();});
+
+/* NAV scroll effect */
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>20);
+},{passive:true});
+
+/* TESTIMONIALS */
+let tIdx=0;
+const tSlides=document.querySelectorAll('.testi-slide');
+const tDots=document.getElementById('testiDots');
+tSlides.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='testi-dot'+(i===0?' active':'');
+  d.addEventListener('click',()=>goT(i));
+  tDots.appendChild(d);
+});
+function goT(i){
+  tIdx=i;
+  document.getElementById('testiTrack').style.transform=`translateX(${-i*100}%)`;
+  document.querySelectorAll('.testi-dot').forEach((d,j)=>d.classList.toggle('active',j===i));
+}
+setInterval(()=>goT((tIdx+1)%tSlides.length),5500);
+
+/* SIP */
+function calcSip(){
+  const P=parseFloat(document.getElementById('sipAmt').value)||0;
+  const n=parseInt(document.getElementById('sipFreq').value)||12;
+  const Y=parseFloat(document.getElementById('sipYrs').value)||0;
+  let R=parseFloat(document.getElementById('sipRate').value)||0;
+  const infl=parseFloat(document.getElementById('sipInfl').value)||0;
+  R=Math.max(0,R-infl);
+  const r=R/100/n,tt=n*Y;
+  const mat=r>0?P*((Math.pow(1+r,tt)-1)/r)*(1+r):P*tt;
+  const inv=P*tt;
+  const fmt=v=>'₹'+Math.round(v).toLocaleString('en-IN');
+  document.getElementById('rInv').textContent=fmt(inv);
+  document.getElementById('rGain').textContent=fmt(mat-inv);
+  document.getElementById('rTotal').textContent=fmt(mat);
+  document.getElementById('sipResult').classList.add('show');
+}
+
+/* FORM */
+function submitForm(e){
+  e.preventDefault();
+  const ok=document.getElementById('cfOk');
+  ok.style.display='block';
+  e.target.reset();
+  setTimeout(()=>ok.style.display='none',7000);
+}
+
+/* Hero section*/
+/* Hero text disappears when video plays, reappears when paused/ended */
+const heroVideo = document.getElementById('heroVideo');
+const heroContent = document.querySelector('.hero-content');
+
+if (heroVideo) {
+
+  // Hide text as soon as video starts playing
+  heroVideo.addEventListener('play', () => {
+    heroContent.classList.add('hidden');
+  });
+
+  // Show text when video is paused
+  heroVideo.addEventListener('pause', () => {
+    heroContent.classList.remove('hidden');
+  });
+
+  // Show text when video ends (if not looping)
+  heroVideo.addEventListener('ended', () => {
+    heroContent.classList.remove('hidden');
+  });
+
+  // On page load — if video is already autoplaying, hide text immediately
+  heroVideo.addEventListener('canplay', () => {
+    if (!heroVideo.paused) {
+      heroContent.classList.add('hidden');
+    }
+  });
+
+  // Show text back on hover over hero (optional UX touch)
+  document.querySelector('.hero').addEventListener('mouseenter', () => {
+    heroContent.classList.remove('hidden');
+  });
+  document.querySelector('.hero').addEventListener('mouseleave', () => {
+    if (!heroVideo.paused) {
+      heroContent.classList.add('hidden');
+    }
+  });
+
+}
+/* ACTIVE NAV */
+const secs=document.querySelectorAll('section[id]');
+const nLinks=document.querySelectorAll('.nav-link');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-80)cur=s.id;});
+  nLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
+},{passive:true});
+</script>
+</body>
+</html>
