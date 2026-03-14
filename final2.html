@@ -91,14 +91,39 @@ img{max-width:100%;display:block;}
    NAV
 ═══════════════════════════════════════ */
 nav{
-  position:sticky;top:0;z-index:800;
-  background:rgba(250,249,247,.97);backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);
-  height:72px;padding:0 52px;
-  display:flex;align-items:center;justify-content:space-between;
-  transition:box-shadow .3s;
+  background:rgba(236,232,224,0.97);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(200,192,180,.5);
+  border-radius:8px;
+  height:52px;
+  padding:0 28px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  box-shadow:0 4px 32px rgba(0,0,0,.12);
+}
+.nav-outer{
+  position:absolute;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 60px);
+  max-width:1400px;
+  z-index:800;
+}
+.hero{
+  .hero{
+  position:relative;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  margin-top:0;
+}
 }
 nav.scrolled{box-shadow:0 2px 32px rgba(0,0,0,.08);}
+.nav-left{display:flex;align-items:center;gap:28px;}
+.nav-center{display:flex;justify-content:center;align-items:center;}
+.nav-right{display:flex;align-items:center;justify-content:flex-end;gap:28px;}
 /* Logo SVG inline */
 .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
 .nav-logo-svg{height:40px;width:auto;}
@@ -107,7 +132,7 @@ nav.scrolled{box-shadow:0 2px 32px rgba(0,0,0,.08);}
 .nav-logo-sub{font-size:9px;font-weight:600;letter-spacing:3.5px;text-transform:uppercase;color:var(--amber);margin-top:1px;}
 .nav-links{display:flex;align-items:center;gap:32px;}
 .nav-link{
-  font-size:13px;color:var(--text-soft);font-weight:400;
+  font-size:13px;color:var(--text-soft);font-weight:600;
   position:relative;padding-bottom:3px;transition:color .2s;
   white-space:nowrap;letter-spacing:.2px;
 }
@@ -138,78 +163,123 @@ nav.scrolled{box-shadow:0 2px 32px rgba(0,0,0,.08);}
 /* ═══════════════════════════════════════
    HERO
 ═══════════════════════════════════════ */
-.hero{background:#000;position:relative;overflow:hidden;min-height:100vh;display:flex;flex-direction:column;}
-.hero-media{flex:1;position:relative;min-height:64vh;display:flex;align-items:flex-end;overflow:hidden;}
-/* Replace .hero-bg with this */
-.hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  filter: brightness(0.42) saturate(1.1);
-  transition: transform 10s ease;
-  z-index: 0;
+.hero{
+  background:#000;
+  display:flex;
+  flex-direction:column;
 }
-/* Hero text fade on video play */
-.hero-content {
-  transition: opacity 1.2s ease, transform 1.2s ease;
+
+.hero-media{
+  position:relative;
+  width:100%;
+  height:80vh;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
-.hero-content.hidden {
-  opacity: 0;
-  transform: translateY(20px);
-  pointer-events: none;
+
+.hero-video{
+   position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  filter:brightness(0.55) saturate(0.9);
+  z-index:0;
 }
-.hero:hover .hero-video {
-  transform: scale(1.04);
+
+/* Ghost stacked text */
+.hero-ghost-text{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  line-height:0.88;
+  pointer-events:none;
+  user-select:none;
 }
-.hero:hover .hero-bg{transform:scale(1.04);}
-.hero-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(170deg,rgba(0,0,0,.05) 0%,rgba(12,11,9,.0) 35%,rgba(12,11,9,.72) 100%);
-}
-.hero-grain{position:absolute;inset:0;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");}
-.hero-content{position:relative;z-index:2;width:100%;padding:52px 64px 60px;}
-.hero-kicker{
-  font-size:11px;letter-spacing:5px;text-transform:uppercase;
-  color:rgba(255,255,255,.4);font-weight:500;display:block;margin-bottom:6px;
-}
-.hero-title-line1{
+.hg-line1{
   font-family:var(--serif);
-  font-size:clamp(68px,11vw,140px);
-  font-weight:600;line-height:.88;letter-spacing:-4px;
-  color:rgba(255,255,255,.25);display:block;
+  font-size:clamp(80px,14vw,180px);
+  font-weight:700;
+  color:rgba(255,255,255,.18);
+  letter-spacing:-4px;
+  display:block;
 }
-.hero-title-line1 .ht-accent{color:var(--amber);}
-.hero-title-line2{
+.hg-line2{
   font-family:var(--serif);
-  font-size:clamp(68px,11vw,140px);
-  font-weight:600;line-height:.88;letter-spacing:-4px;
-  color:rgba(255,255,255,.16);display:block;margin-top:8px;
+  font-size:clamp(80px,14vw,180px);
+  font-weight:700;
+  color:rgba(255,255,255,.12);
+  letter-spacing:-4px;
+  display:block;
 }
+
+/* Play button — centered over ghost text */
 .hero-play{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:64px;height:64px;border-radius:50%;
-  border:2px solid rgba(255,255,255,.45);
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:68px;height:68px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.5);
+  background:rgba(255,255,255,.07);
+  backdrop-filter:blur(6px);
   display:flex;align-items:center;justify-content:center;
-  z-index:5;cursor:pointer;transition:all .28s;
-  background:rgba(255,255,255,.06);backdrop-filter:blur(6px);
+  z-index:5;cursor:pointer;
+  transition:all .28s;
 }
-.hero-play:hover{border-color:rgba(255,255,255,.9);background:rgba(255,255,255,.12);transform:translate(-50%,-50%) scale(1.07);}
-.hero-play-tri{width:0;height:0;border-top:12px solid transparent;border-bottom:12px solid transparent;border-left:20px solid rgba(255,255,255,.75);margin-left:5px;}
-.hero-bar{border-top:1px solid rgba(255,255,255,.09);display:grid;grid-template-columns:1fr 1fr;background:#0c0b09;}
-.hero-bar-left{padding:38px 52px 44px;border-right:1px solid rgba(255,255,255,.08);}
-.hero-bar-left h2{font-family:var(--serif);font-size:26px;font-weight:500;color:#fff;line-height:1.35;}
-.hero-bar-right{padding:38px 52px 44px;display:flex;flex-direction:column;justify-content:space-between;gap:22px;}
-.hero-bar-desc{font-size:14px;color:rgba(255,255,255,.55);line-height:1.8;}
-.hero-bar-desc b{color:rgba(255,255,255,.9);}
-.hero-view-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1.5px solid rgba(255,255,255,.35);
-  color:rgba(255,255,255,.72);font-size:11px;font-weight:500;
-  letter-spacing:2px;text-transform:uppercase;padding:12px 28px;
-  width:fit-content;transition:all .22s;
+.hero-play:hover{
+  border-color:#fff;
+  background:rgba(255,255,255,.15);
+  transform:translate(-50%,-50%) scale(1.08);
+}
+.hero-play-tri{
+  width:0;height:0;
+  border-top:11px solid transparent;
+  border-bottom:11px solid transparent;
+  border-left:18px solid rgba(255,255,255,.8);
+  margin-left:4px;
+}
+
+/* Bottom bar */
+.hero-bar{
+  background:#000;
+  border-top:1px solid rgba(255,255,255,.08);
+  display:grid;
+  grid-template-columns:1fr 1px 1fr;
+  align-items:center;
+  min-height:160px;
+}
+.hero-bar-left{
+  padding:44px 64px;
+}
+.hero-bar-left h2{
+  font-family:var(--serif);
+  font-size:clamp(22px,2.4vw,32px);
+  font-weight:500;
+  color:#fff;
+  line-height:1.3;
+}
+.hero-bar-divider{
+  background:rgba(255,255,255,.1);
+  height:60%;
+  align-self:center;
+}
+.hero-bar-right{
+  padding:44px 64px;
+}
+.hero-bar-right p{
+  font-size:15px;
+  color:rgba(255,255,255,.5);
+  line-height:1.8;
+}
+.hero-bar-right b{
+  color:rgba(255,255,255,.85);
 }
 .hero-view-btn:hover{border-color:var(--amber);color:var(--amber);}
 
@@ -691,7 +761,50 @@ footer{padding:64px 64px 0;border-top:1px solid var(--border);background:var(--o
    RESPONSIVE
 ═══════════════════════════════════════ */
 @media(max-width:1100px){
-  nav{padding:0 28px;}
+  nav{nav{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:800;
+  background:rgba(250,249,247,.97);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  height:72px;
+  padding:0 52px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  transition:box-shadow .3s;
+}
+
+.hero{
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  margin-top:72px;
+}
+.hero-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  filter:brightness(0.15) saturate(0.4);
+  z-index:0;
+}
+
+.hero-media{
+  position:relative;
+  width:100vw;
+  height:calc(100vh - 72px);
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}}
   .hero-content{padding:40px 40px 48px;}
   .hero-bar-left,.hero-bar-right{padding:32px 36px;}
   .commitment,.offerings,.entre-section{padding-left:40px;padding-right:40px;}
@@ -768,88 +881,68 @@ footer{padding:64px 64px 0;border-top:1px solid var(--border);background:var(--o
 </div>
 <a href="https://wa.me/919999939333" class="wa-fab" target="_blank" title="WhatsApp">💬</a>
 
-<!-- NAV -->
-<nav id="mainNav">
-  <a href="#home" class="nav-logo">
-  <img 
-    src="logo-emp.png" 
-    alt="EPM Wealth" 
-    class="nav-logo-img"
-    style="height:48px;width:auto;object-fit:contain;"
-  />
-</a>
-  <div class="nav-links">
-    <a href="#home" class="nav-link active">Home</a>
-    <a href="#about" class="nav-link">About Us</a>
-    <a href="#solutions" class="nav-link">EPM Wealth</a>
-    <a href="#entrepreneurial" class="nav-link">EPM Asset</a>
-    <a href="#perspective" class="nav-link">Perspective</a>
-    <a href="#" class="nav-link">Investor Relations</a>
-    <a href="#contact" class="nav-cta nav-link">Client Login</a>
-  </div>
-</nav>
-
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner">
-    <span class="ticker-item">AMFI Registered — Code 100255</span>
-    <span class="ticker-item">BSE Registered — Code 1197501</span>
-    <span class="ticker-item">Wealth Management</span>
-    <span class="ticker-item">Portfolio Consultation</span>
-    <span class="ticker-item">Financial Independence</span>
-    <span class="ticker-item">Entrepreneurial Growth</span>
-    <span class="ticker-item">Wealth Creation</span>
-    <span class="ticker-item">Wealth Protection</span>
-    <span class="ticker-item">15+ Years of Trust</span>
-    <span class="ticker-item">AMFI Registered — Code 100255</span>
-    <span class="ticker-item">BSE Registered — Code 1197501</span>
-    <span class="ticker-item">Wealth Management</span>
-    <span class="ticker-item">Portfolio Consultation</span>
-    <span class="ticker-item">Financial Independence</span>
-    <span class="ticker-item">Entrepreneurial Growth</span>
-    <span class="ticker-item">Wealth Creation</span>
-    <span class="ticker-item">Wealth Protection</span>
-    <span class="ticker-item">15+ Years of Trust</span>
-  </div>
-</div>
-
-<!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-media">
-    <video 
-  class="hero-video" 
-  id="heroVideo"
-  autoplay 
-  muted 
-  loop 
-  playsinline
-  poster="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1800&q=85"
->
-  <source src="EPM header theme.mp4" type="video/mp4"/>
-</video>
-   
-    <div class="hero-overlay"></div>
-    <div class="hero-grain"></div>
-    <div class="hero-content">
-      <span class="hero-kicker">The</span>
-      <div class="hero-title-wrap">
-        <span class="hero-title-line1"><span class="ht-accent">EPM</span>WEALTH</span>
-        <span class="hero-title-line2">INDEPENDENCE</span>
-      </div>
+
+    <!-- Nav INSIDE hero-media -->
+    <div class="nav-outer" id="navOuter">
+      <nav id="mainNav">
+        <div class="nav-left">
+          <a href="#about" class="nav-link">About Us</a>
+          <a href="#solutions" class="nav-link">EPM Wealth</a>
+          <a href="#entrepreneurial" class="nav-link">EPM Asset</a>
+          <a href="#perspective" class="nav-link">Perspective</a>
+        </div>
+        <div class="nav-center">
+          <a href="#home" class="nav-logo">
+            <img src="logo-emp.png" alt="EPM Wealth" style="height:44px;width:auto;object-fit:contain;"/>
+          </a>
+        </div>
+        <div class="nav-right">
+          <a href="#" class="nav-link">Investor Relations</a>
+          <a href="#contact" class="nav-link" style="display:flex;align-items:center;gap:6px;">
+            <span style="background:#8b6f47;color:#fff;font-size:8px;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:20px;text-transform:uppercase;">New</span>
+            UHNW Event Calendar 2026
+          </a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+      </nav>
     </div>
-    <div class="hero-play"><div class="hero-play-tri"></div></div>
+
+    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline
+      poster="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1800&q=85">
+      <source src="EPM header theme.mp4" type="video/mp4"/>
+    </video>
+
+    
+
+    <div class="hero-play" id="heroPlay">
+      <div class="hero-play-tri"></div>
+    </div>
+
   </div>
+
   <div class="hero-bar">
     <div class="hero-bar-left">
       <h2>Introducing the EPM<br>Wealth Creators Network</h2>
     </div>
+    <div class="hero-bar-divider"></div>
     <div class="hero-bar-right">
-      <p class="hero-bar-desc">A first-of-its-kind financial partnership platform for India's aspiring wealth creators. <b>1,000+ clients. ₹100 Cr+ AUM. 25+ cities served.</b></p>
-      <a href="#solutions" class="hero-view-btn">VIEW OUR SOLUTIONS <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
+      <p>A first-of-its-kind financial partnership platform for India's aspiring wealth creators. <b>1,000+ clients. ₹100 Cr+ AUM. 25+ cities served.</b></p>
     </div>
   </div>
 </section>
-
+<!-- Fullscreen video overlay -->
+<div id="videoOverlay" style="display:none;position:fixed;inset:0;background:#000;z-index:9999;align-items:center;justify-content:center;">
+  <video id="fullVideo" controls autoplay
+    style="width:100%;height:100%;object-fit:contain;">
+    <source src="EPM header theme.mp4" type="video/mp4"/>
+  </video>
+  <button onclick="closeVideo()"
+    style="position:absolute;top:20px;right:20px;width:44px;height:44px;border:2px solid rgba(255,255,255,.5);background:none;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10000;">
+    ✕
+  </button>
+</div>
 <!-- COMMITMENT -->
 <section class="commitment" id="about">
   <h2 class="commit-h1">The EPM Wealth Commitment</h2>
@@ -1419,6 +1512,33 @@ if (heroVideo) {
   });
 
 }
+/* video*/
+document.getElementById('heroPlay').addEventListener('click', function(){
+  const overlay = document.getElementById('videoOverlay');
+  const vid = document.getElementById('fullVideo');
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  vid.play();
+});
+
+function closeVideo(){
+  const overlay = document.getElementById('videoOverlay');
+  const vid = document.getElementById('fullVideo');
+  overlay.style.display = 'none';
+  document.body.style.overflow = '';
+  vid.pause();
+  vid.currentTime = 0;
+}
+
+// Close on clicking outside video
+document.getElementById('videoOverlay').addEventListener('click', function(e){
+  if(e.target === this) closeVideo();
+});
+
+// Close on Escape key
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeVideo();
+}); 
 /* ACTIVE NAV */
 const secs=document.querySelectorAll('section[id]');
 const nLinks=document.querySelectorAll('.nav-link');
